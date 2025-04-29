@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Saved on 2023-12-12 15:18:06 by developer-->
+<display version="2.0.0">
+  <width>400</width>
+  <height>295</height>
+  <background_color>
+    <color name="FLAME ThemeVariationLigher1" red="225" green="225" blue="225">
+    </color>
+  </background_color>
+  <actions>
+  </actions>
+  <widget type="rectangle" version="2.0.0">
+    <name>Rectangle_2</name>
+    <class>FLAME_BarHeavy</class>
+    <y>15</y>
+    <width>400</width>
+    <height use_class="true">3</height>
+    <line_color use_class="true">
+      <color name="FLAME Border Dark" red="128" green="128" blue="128">
+      </color>
+    </line_color>
+    <background_color use_class="true">
+      <color name="FLAME Border Dark" red="128" green="128" blue="128">
+      </color>
+    </background_color>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_2</name>
+    <class>FLAME_Title</class>
+    <text>ROI</text>
+    <x>174</x>
+    <width>52</width>
+    <height>24</height>
+    <font use_class="true">
+      <font name="FLAME Header" family="Noto Sans" style="BOLD" size="18.0">
+      </font>
+    </font>
+    <foreground_color use_class="true">
+      <color name="FLAME Text Main" red="0" green="0" blue="0">
+      </color>
+    </foreground_color>
+    <background_color use_class="true">
+      <color name="FLAME BackgroundDisplay" red="225" green="225" blue="225">
+      </color>
+    </background_color>
+    <transparent>false</transparent>
+    <horizontal_alignment>1</horizontal_alignment>
+  </widget>
+  <widget type="embedded" version="2.0.0">
+    <name>Embedded Display_12</name>
+    <macros>
+      <DESC>X position:</DESC>
+      <RB_PV>$(DEVICE):$(ROI):MinX_RBV</RB_PV>
+      <SP_PV>$(DEVICE):$(ROI):MinX</SP_PV>
+    </macros>
+    <file>widgets/spinner&amp;readback.bob</file>
+    <y>35</y>
+    <height>30</height>
+    <resize>2</resize>
+    <transparent>true</transparent>
+  </widget>
+  <widget type="embedded" version="2.0.0">
+    <name>Embedded Display_13</name>
+    <macros>
+      <DESC>Y position:</DESC>
+      <RB_PV>$(DEVICE):$(ROI):MinY_RBV</RB_PV>
+      <SP_PV>$(DEVICE):$(ROI):MinY</SP_PV>
+    </macros>
+    <file>widgets/spinner&amp;readback.bob</file>
+    <y>65</y>
+    <height>30</height>
+    <resize>2</resize>
+    <transparent>true</transparent>
+  </widget>
+  <widget type="embedded" version="2.0.0">
+    <name>Embedded Display_14</name>
+    <macros>
+      <DESC>Width:</DESC>
+      <RB_PV>$(DEVICE):$(ROI):SizeX_RBV</RB_PV>
+      <SP_PV>$(DEVICE):$(ROI):SizeX</SP_PV>
+    </macros>
+    <file>widgets/spinner&amp;readback.bob</file>
+    <y>95</y>
+    <height>30</height>
+    <resize>2</resize>
+    <transparent>true</transparent>
+  </widget>
+  <widget type="embedded" version="2.0.0">
+    <name>Embedded Display_15</name>
+    <macros>
+      <DESC>Height:</DESC>
+      <RB_PV>$(DEVICE):$(ROI):SizeY_RBV</RB_PV>
+      <SP_PV>$(DEVICE):$(ROI):SizeY</SP_PV>
+    </macros>
+    <file>widgets/spinner&amp;readback.bob</file>
+    <y>125</y>
+    <height>30</height>
+    <resize>2</resize>
+    <transparent>true</transparent>
+  </widget>
+  <widget type="embedded" version="2.0.0">
+    <name>Embedded Display_16</name>
+    <macros>
+      <DESC>Dropped frames:</DESC>
+      <PV>$(DEVICE):$(ROI):DroppedArrays_RBV</PV>
+    </macros>
+    <file>widgets/readback.bob</file>
+    <y>155</y>
+    <height>30</height>
+    <resize>2</resize>
+    <transparent>true</transparent>
+  </widget>
+</display>
