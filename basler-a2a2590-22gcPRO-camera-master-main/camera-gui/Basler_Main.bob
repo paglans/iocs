@@ -1,0 +1,468 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Saved on 2024-01-19 13:55:53 by developer-->
+<display version="2.0.0">
+  <name>Basler Camera</name>
+  <macros>
+    <CAM>Cam</CAM>
+    <DEVICE>BaslerAce1920</DEVICE>
+    <IMAGE>RawImg</IMAGE>
+    <IMGHEIGHT>480</IMGHEIGHT>
+    <IMGWIDTH>768</IMGWIDTH>
+    <OVERLAY>Overlay</OVERLAY>
+    <OVERLAYIMAGE>OverlayImg</OVERLAYIMAGE>
+    <ROI>ROI</ROI>
+    <ROIIMAGE>ROIImg</ROIIMAGE>
+    <STATS>Stats</STATS>
+  </macros>
+  <width>1682</width>
+  <height>890</height>
+  <background_color>
+    <color name="FLAME BackgroundDisplay" red="225" green="225" blue="225">
+    </color>
+  </background_color>
+  <actions>
+  </actions>
+  <widget type="rectangle" version="2.0.0">
+    <name>Title</name>
+    <class>FLAME_Area5TitleBar</class>
+    <x use_class="true">0</x>
+    <y use_class="true">0</y>
+    <width>1682</width>
+    <height use_class="true">50</height>
+    <line_width use_class="true">0</line_width>
+    <line_color>
+      <color name="FLAME Area11 Color" red="250" green="250" blue="210">
+      </color>
+    </line_color>
+    <background_color use_class="true">
+      <color name="FLAME Area5 Color" red="195" green="200" blue="160">
+      </color>
+    </background_color>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Title label</name>
+    <class>FLAME_Header</class>
+    <text>Camera - $(DEVICE)</text>
+    <x>10</x>
+    <y use_class="true">0</y>
+    <width>1680</width>
+    <height use_class="true">50</height>
+    <font use_class="true">
+      <font name="FLAME Title Bar" family="Noto Sans" style="REGULAR" size="28.0">
+      </font>
+    </font>
+    <foreground_color use_class="true">
+      <color name="FLAME Text Main" red="0" green="0" blue="0">
+      </color>
+    </foreground_color>
+    <horizontal_alignment use_class="true">1</horizontal_alignment>
+    <vertical_alignment use_class="true">1</vertical_alignment>
+    <auto_size use_class="true">false</auto_size>
+  </widget>
+  <widget type="tabs" version="2.0.0">
+    <name>Images Live and ROI</name>
+    <class>FLAME_Tabs</class>
+    <tabs>
+      <tab>
+        <name>Live image</name>
+        <children>
+          <widget type="embedded" version="2.0.0">
+            <name>Linking Container Template</name>
+            <file>resources/Basler_ImagePanel.bob</file>
+            <width>820</width>
+            <height>500</height>
+            <resize>2</resize>
+            <transparent>true</transparent>
+            <actions>
+            </actions>
+            <border_color>
+              <color name="IO Border" red="215" green="215" blue="215">
+              </color>
+            </border_color>
+          </widget>
+        </children>
+      </tab>
+      <tab>
+        <name>ROI</name>
+        <children>
+          <widget type="embedded" version="2.0.0">
+            <name>Linking Container Template</name>
+            <macros>
+              <IMAGE>RoiImg</IMAGE>
+            </macros>
+            <file>resources/Basler_ImageROI.bob</file>
+            <width>820</width>
+            <height>550</height>
+            <resize>2</resize>
+            <transparent>true</transparent>
+            <actions>
+            </actions>
+            <border_color>
+              <color name="IO Border" red="215" green="215" blue="215">
+              </color>
+            </border_color>
+          </widget>
+        </children>
+      </tab>
+      <tab>
+        <name>Overlay</name>
+        <children>
+          <widget type="embedded" version="2.0.0">
+            <name>Linking Container Template_1</name>
+            <macros>
+              <IMAGE>OverlayImg</IMAGE>
+            </macros>
+            <file>resources/Basler_ImageOverlay.bob</file>
+            <width>1230</width>
+            <height>840</height>
+            <resize>2</resize>
+            <transparent>true</transparent>
+            <actions>
+            </actions>
+            <border_color>
+              <color name="IO Border" red="215" green="215" blue="215">
+              </color>
+            </border_color>
+          </widget>
+        </children>
+      </tab>
+      <tab>
+        <name>Statistics</name>
+        <children>
+          <widget type="embedded" version="2.0.0">
+            <name>Embedded Display_6</name>
+            <macros>
+              <P>$(DEVICE):</P>
+              <R>$(STATS):</R>
+            </macros>
+            <file>resources/areaDetector/NDStats.bob</file>
+            <x>10</x>
+            <y>10</y>
+            <width>1120</width>
+            <height>675</height>
+            <resize>2</resize>
+            <transparent>true</transparent>
+          </widget>
+        </children>
+      </tab>
+    </tabs>
+    <x>450</x>
+    <y>50</y>
+    <width>1232</width>
+    <height>840</height>
+    <font use_class="true">
+      <font name="FLAME Header 3" family="Noto Sans" style="BOLD" size="16.0">
+      </font>
+    </font>
+    <background_color>
+      <color name="FLAME BackgroundContainer" red="230" green="230" blue="230">
+      </color>
+    </background_color>
+    <tab_height>20</tab_height>
+    <actions>
+    </actions>
+  </widget>
+  <widget type="group" version="2.0.0">
+    <name>Group_3</name>
+    <x>1270</x>
+    <y>10</y>
+    <width>400</width>
+    <height>30</height>
+    <style>3</style>
+    <transparent>true</transparent>
+    <widget type="label" version="2.0.0">
+      <name>Label_7</name>
+      <class>FLAME_Label</class>
+      <text>Camera state:</text>
+      <x>10</x>
+      <width>180</width>
+      <height>30</height>
+      <font use_class="true">
+        <font name="FLAME Label" family="Noto Sans" style="REGULAR" size="14.0">
+        </font>
+      </font>
+      <foreground_color use_class="true">
+        <color name="FLAME Text Main" red="0" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <background_color use_class="true">
+        <color name="FLAME BackgroundDisplay" red="225" green="225" blue="225">
+        </color>
+      </background_color>
+      <vertical_alignment>1</vertical_alignment>
+    </widget>
+    <widget type="textupdate" version="2.0.0">
+      <name>Text Update</name>
+      <class>FLAME_TextUpd</class>
+      <pv_name>$(DEVICE):$(CAM):DetectorState_RBV</pv_name>
+      <x>230</x>
+      <y>4</y>
+      <width>160</width>
+      <height use_class="true">22</height>
+      <font use_class="true">
+        <font name="FLAME Label" family="Noto Sans" style="REGULAR" size="14.0">
+        </font>
+      </font>
+      <foreground_color use_class="true">
+        <color name="FLAME Text Main" red="0" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <background_color use_class="true">
+        <color name="FLAME BackgroundReadback" red="240" green="240" blue="240">
+        </color>
+      </background_color>
+      <horizontal_alignment use_class="true">1</horizontal_alignment>
+      <vertical_alignment use_class="true">1</vertical_alignment>
+      <border_width use_class="true">1</border_width>
+      <border_color use_class="true">
+        <color name="FLAME Border Dark" red="128" green="128" blue="128">
+        </color>
+      </border_color>
+    </widget>
+    <widget type="multi_state_led" version="2.0.0">
+      <name>LED (Multi State)</name>
+      <pv_name>$(DEVICE):$(CAM):DetectorState_RBV</pv_name>
+      <x>200</x>
+      <y>4</y>
+      <states>
+        <state>
+          <value>0</value>
+          <label></label>
+          <color>
+            <color name="FLAME Off Green" red="60" green="100" blue="60">
+            </color>
+          </color>
+        </state>
+        <state>
+          <value>1</value>
+          <label></label>
+          <color>
+            <color name="FLAME On Green" red="150" green="240" blue="0">
+            </color>
+          </color>
+        </state>
+        <state>
+          <value>2</value>
+          <label></label>
+          <color>
+            <color name="FLAME Off Green" red="60" green="100" blue="60">
+            </color>
+          </color>
+        </state>
+        <state>
+          <value>3</value>
+          <label></label>
+          <color>
+            <color name="FLAME Off Green" red="60" green="100" blue="60">
+            </color>
+          </color>
+        </state>
+        <state>
+          <value>4</value>
+          <label></label>
+          <color>
+            <color name="FLAME Yellow" red="245" green="200" blue="20">
+            </color>
+          </color>
+        </state>
+        <state>
+          <value>5</value>
+          <label></label>
+          <color>
+            <color name="FLAME Yellow" red="245" green="200" blue="20">
+            </color>
+          </color>
+        </state>
+        <state>
+          <value>6</value>
+          <label></label>
+          <color>
+            <color name="FLAME Error" red="250" green="80" blue="50">
+            </color>
+          </color>
+        </state>
+        <state>
+          <value>7</value>
+          <label></label>
+          <color>
+            <color name="FLAME Yellow" red="245" green="200" blue="20">
+            </color>
+          </color>
+        </state>
+        <state>
+          <value>8</value>
+          <label></label>
+          <color>
+            <color name="FLAME Yellow" red="245" green="200" blue="20">
+            </color>
+          </color>
+        </state>
+        <state>
+          <value>9</value>
+          <label></label>
+          <color>
+            <color name="FLAME Error" red="250" green="80" blue="50">
+            </color>
+          </color>
+        </state>
+        <state>
+          <value>10</value>
+          <label></label>
+          <color>
+            <color name="FLAME Yellow" red="245" green="200" blue="20">
+            </color>
+          </color>
+        </state>
+      </states>
+      <fallback_label></fallback_label>
+    </widget>
+  </widget>
+  <widget type="tabs" version="2.0.0">
+    <name>Operators Panels</name>
+    <class>FLAME_Tabs</class>
+    <tabs>
+      <tab>
+        <name>Acquire</name>
+        <children>
+          <widget type="embedded" version="2.0.0">
+            <name>Linking Container Template</name>
+            <file>resources/Basler_TabAcquisition.bob</file>
+            <x>8</x>
+            <y>1</y>
+            <height>645</height>
+            <resize>2</resize>
+            <transparent>true</transparent>
+          </widget>
+        </children>
+      </tab>
+      <tab>
+        <name>ROI</name>
+        <children>
+          <widget type="embedded" version="2.0.0">
+            <name>Embedded Display_1</name>
+            <file>resources/Basler_TabROI.bob</file>
+            <x>10</x>
+            <height>295</height>
+            <resize>2</resize>
+            <transparent>true</transparent>
+          </widget>
+        </children>
+      </tab>
+      <tab>
+        <name>Raw Tiff</name>
+        <children>
+          <widget type="embedded" version="2.0.0">
+            <name>Embedded Display</name>
+            <macros>
+              <FORMAT>RawTiff</FORMAT>
+              <IMG>Raw</IMG>
+            </macros>
+            <file>resources/Basler_TabSaveTiffJPEG.bob</file>
+            <x>10</x>
+            <height>445</height>
+            <resize>2</resize>
+            <transparent>true</transparent>
+          </widget>
+        </children>
+      </tab>
+      <tab>
+        <name>Raw JPEG</name>
+        <children>
+          <widget type="embedded" version="2.0.0">
+            <name>Embedded Display_7</name>
+            <macros>
+              <FORMAT>RawJPEG</FORMAT>
+              <IMG>Raw</IMG>
+            </macros>
+            <file>resources/Basler_TabSaveTiffJPEG.bob</file>
+            <x>8</x>
+            <height>445</height>
+            <resize>2</resize>
+            <transparent>true</transparent>
+          </widget>
+        </children>
+      </tab>
+      <tab>
+        <name>ROI Tiff</name>
+        <children>
+          <widget type="embedded" version="2.0.0">
+            <name>Embedded Display_3</name>
+            <macros>
+              <FORMAT>ROITiff</FORMAT>
+              <IMG>ROI</IMG>
+            </macros>
+            <file>resources/Basler_TabSaveTiffJPEG.bob</file>
+            <x>8</x>
+            <height>445</height>
+            <resize>2</resize>
+            <transparent>true</transparent>
+          </widget>
+        </children>
+      </tab>
+      <tab>
+        <name>ROI JPEG</name>
+        <children>
+          <widget type="embedded" version="2.0.0">
+            <name>Embedded Display_8</name>
+            <macros>
+              <FORMAT>ROIJPEG</FORMAT>
+              <IMG>ROI</IMG>
+            </macros>
+            <file>resources/Basler_TabSaveTiffJPEG.bob</file>
+            <x>8</x>
+            <height>445</height>
+            <resize>2</resize>
+            <transparent>true</transparent>
+          </widget>
+        </children>
+      </tab>
+      <tab>
+        <name>Info</name>
+        <children>
+          <widget type="embedded" version="2.0.0">
+            <name>Embedded Display_5</name>
+            <macros>
+              <IMG>Roi</IMG>
+              <TIFF>RoiTiff</TIFF>
+            </macros>
+            <file>resources/Basler_TabCamInfo.bob</file>
+            <x>8</x>
+            <y>1</y>
+            <height>295</height>
+            <resize>2</resize>
+            <transparent>true</transparent>
+          </widget>
+        </children>
+      </tab>
+      <tab>
+        <name>Expert</name>
+        <children>
+          <widget type="embedded" version="2.0.0">
+            <name>Embedded Display_4</name>
+            <file>resources/Basler_TabADExpert.bob</file>
+            <x>8</x>
+            <y>1</y>
+            <height>565</height>
+            <resize>2</resize>
+            <transparent>true</transparent>
+          </widget>
+        </children>
+      </tab>
+    </tabs>
+    <y>50</y>
+    <width>440</width>
+    <height>840</height>
+    <font use_class="true">
+      <font name="FLAME Header 3" family="Noto Sans" style="BOLD" size="16.0">
+      </font>
+    </font>
+    <background_color>
+      <color name="FLAME BackgroundContainer" red="230" green="230" blue="230">
+      </color>
+    </background_color>
+    <active_tab>1</active_tab>
+    <tab_height>20</tab_height>
+    <actions>
+    </actions>
+  </widget>
+</display>

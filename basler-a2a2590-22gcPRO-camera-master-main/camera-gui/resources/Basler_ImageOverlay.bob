@@ -1,0 +1,453 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Saved on 2024-01-19 13:54:49 by developer-->
+<display version="2.0.0">
+  <name>Overlay Image</name>
+  <width>1230</width>
+  <height>840</height>
+  <background_color>
+    <color red="237" green="236" blue="235">
+    </color>
+  </background_color>
+  <actions>
+  </actions>
+  <widget type="embedded" version="2.0.0">
+    <name>Embedded Display_14</name>
+    <macros>
+      <DESC>Live feed enable</DESC>
+      <EN_PV>$(DEVICE):$(OVERLAYIMAGE):EnableCallbacks</EN_PV>
+      <RB_PV>$(DEVICE):$(OVERLAYIMAGE):EnableCallbacks_RBV</RB_PV>
+    </macros>
+    <file>widgets/enable.bob</file>
+    <x>10</x>
+    <y>10</y>
+    <width>200</width>
+    <height>30</height>
+    <resize>2</resize>
+    <transparent>true</transparent>
+  </widget>
+  <widget type="image" version="2.0.0">
+    <name>$(DEVICE)_ROIImage</name>
+    <pv_name>pva://$(DEVICE):OverlayImg</pv_name>
+    <x>10</x>
+    <y>40</y>
+    <width>768</width>
+    <height>480</height>
+    <background_color>
+      <color name="FLAME BackgroundContainer" red="230" green="230" blue="230">
+      </color>
+    </background_color>
+    <foreground_color>
+      <color name="IO InputPV Fg" red="0" green="32" blue="92">
+      </color>
+    </foreground_color>
+    <color_map>
+      <name>GRAY</name>
+    </color_map>
+    <color_bar>
+      <visible>false</visible>
+      <bar_size>40</bar_size>
+      <scale_font>
+        <font name="IO Normal" family="sans" style="REGULAR" size="10.891089108910892">
+        </font>
+      </scale_font>
+    </color_bar>
+    <x_axis>
+      <visible>true</visible>
+      <title></title>
+      <minimum>0.0</minimum>
+      <maximum>100.0</maximum>
+      <title_font>
+        <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+        </font>
+      </title_font>
+      <scale_font>
+        <font name="Default" family="Liberation Sans" style="REGULAR" size="14.0">
+        </font>
+      </scale_font>
+    </x_axis>
+    <y_axis>
+      <visible>true</visible>
+      <title></title>
+      <minimum>100.0</minimum>
+      <maximum>0.0</maximum>
+      <title_font>
+        <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+        </font>
+      </title_font>
+      <scale_font>
+        <font name="Default" family="Liberation Sans" style="REGULAR" size="14.0">
+        </font>
+      </scale_font>
+    </y_axis>
+    <actions>
+    </actions>
+    <rules>
+      <rule name="DataWidth" prop_id="data_width" out_exp="true">
+        <exp bool_exp="true">
+          <expression>pv0</expression>
+        </exp>
+        <pv_name>$(DEVICE):$(ROIIMAGE):ArraySize0_RBV</pv_name>
+      </rule>
+      <rule name="DataHeight" prop_id="data_height" out_exp="true">
+        <exp bool_exp="true">
+          <expression>pv0</expression>
+        </exp>
+        <pv_name>$(DEVICE):$(ROIIMAGE):ArraySize1_RBV</pv_name>
+      </rule>
+    </rules>
+    <scripts>
+      <script file="Scripts/resize_screen.py">
+        <pv_name>$(DEVICE):$(ROIIMAGE):ArraySize0_RBV</pv_name>
+        <pv_name>$(DEVICE):$(ROIIMAGE):ArraySize1_RBV</pv_name>
+        <pv_name trigger="false">loc://$(DEVICE):ImageWidth</pv_name>
+      </script>
+    </scripts>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <data_width>500</data_width>
+    <data_height>630</data_height>
+    <interpolation>0</interpolation>
+    <unsigned>true</unsigned>
+    <maximum>256.0</maximum>
+  </widget>
+  <widget type="xyplot" version="3.0.0">
+    <name>X/Y Plot</name>
+    <x>790</x>
+    <y>40</y>
+    <height>242</height>
+    <background_color>
+      <color name="FLAME BackgroundContainer" red="230" green="230" blue="230">
+      </color>
+    </background_color>
+    <title_font>
+      <font name="FLAME Header 4" family="Noto Sans" style="BOLD" size="15.0">
+      </font>
+    </title_font>
+    <scripts>
+      <script file="Scripts/move_profilePlot.py">
+        <pv_name>loc://$(DEVICE):ImageWidth</pv_name>
+      </script>
+    </scripts>
+    <x_axis>
+      <title>Pixels</title>
+      <autoscale>true</autoscale>
+      <log_scale>false</log_scale>
+      <minimum>0.0</minimum>
+      <maximum>100.0</maximum>
+      <show_grid>false</show_grid>
+      <title_font>
+        <font name="FLAME Label Bold" family="Noto Sans" style="BOLD" size="14.0">
+        </font>
+      </title_font>
+      <scale_font>
+        <font name="Default" family="Liberation Sans" style="REGULAR" size="14.0">
+        </font>
+      </scale_font>
+      <visible>true</visible>
+    </x_axis>
+    <y_axes>
+      <y_axis>
+        <title>Counts</title>
+        <autoscale>false</autoscale>
+        <log_scale>false</log_scale>
+        <minimum>0.0</minimum>
+        <maximum>255.0</maximum>
+        <show_grid>false</show_grid>
+        <title_font>
+          <font name="FLAME Label Bold" family="Noto Sans" style="BOLD" size="14.0">
+          </font>
+        </title_font>
+        <scale_font>
+          <font name="Default" family="Liberation Sans" style="REGULAR" size="14.0">
+          </font>
+        </scale_font>
+        <on_right>false</on_right>
+        <visible>true</visible>
+        <color>
+          <color name="Text" red="0" green="0" blue="0">
+          </color>
+        </color>
+      </y_axis>
+    </y_axes>
+    <traces>
+      <trace>
+        <name>$(traces[0].y_pv)</name>
+        <x_pv></x_pv>
+        <y_pv>$(DEVICE):Stats:ProfileAverageX_RBV</y_pv>
+        <err_pv></err_pv>
+        <axis>0</axis>
+        <trace_type>1</trace_type>
+        <color>
+          <color red="0" green="0" blue="255">
+          </color>
+        </color>
+        <line_width>1</line_width>
+        <line_style>0</line_style>
+        <point_type>0</point_type>
+        <point_size>10</point_size>
+        <visible>true</visible>
+      </trace>
+    </traces>
+  </widget>
+  <widget type="xyplot" version="3.0.0">
+    <name>X/Y Plot_2</name>
+    <x>790</x>
+    <y>282</y>
+    <height>242</height>
+    <background_color>
+      <color name="FLAME BackgroundContainer" red="230" green="230" blue="230">
+      </color>
+    </background_color>
+    <title_font>
+      <font name="FLAME Header 4" family="Noto Sans" style="BOLD" size="15.0">
+      </font>
+    </title_font>
+    <scripts>
+      <script file="Scripts/move_profilePlot.py">
+        <pv_name>loc://$(DEVICE):ImageWidth</pv_name>
+      </script>
+    </scripts>
+    <x_axis>
+      <title>Pixels</title>
+      <autoscale>true</autoscale>
+      <log_scale>false</log_scale>
+      <minimum>0.0</minimum>
+      <maximum>100.0</maximum>
+      <show_grid>false</show_grid>
+      <title_font>
+        <font name="FLAME Label Bold" family="Noto Sans" style="BOLD" size="14.0">
+        </font>
+      </title_font>
+      <scale_font>
+        <font name="Default" family="Liberation Sans" style="REGULAR" size="14.0">
+        </font>
+      </scale_font>
+      <visible>true</visible>
+    </x_axis>
+    <y_axes>
+      <y_axis>
+        <title>Counts</title>
+        <autoscale>false</autoscale>
+        <log_scale>false</log_scale>
+        <minimum>0.0</minimum>
+        <maximum>255.0</maximum>
+        <show_grid>false</show_grid>
+        <title_font>
+          <font name="FLAME Label Bold" family="Noto Sans" style="BOLD" size="14.0">
+          </font>
+        </title_font>
+        <scale_font>
+          <font name="Default" family="Liberation Sans" style="REGULAR" size="14.0">
+          </font>
+        </scale_font>
+        <on_right>false</on_right>
+        <visible>true</visible>
+        <color>
+          <color name="Text" red="0" green="0" blue="0">
+          </color>
+        </color>
+      </y_axis>
+    </y_axes>
+    <traces>
+      <trace>
+        <name>$(traces[0].y_pv)</name>
+        <x_pv></x_pv>
+        <y_pv>$(DEVICE):Stats:ProfileAverageY_RBV</y_pv>
+        <err_pv></err_pv>
+        <axis>0</axis>
+        <trace_type>1</trace_type>
+        <color>
+          <color red="0" green="0" blue="255">
+          </color>
+        </color>
+        <line_width>1</line_width>
+        <line_style>0</line_style>
+        <point_type>0</point_type>
+        <point_size>10</point_size>
+        <visible>true</visible>
+      </trace>
+    </traces>
+  </widget>
+  <widget type="embedded" version="2.0.0">
+    <name>savepath_sp</name>
+    <macros>
+      <DESC>X:</DESC>
+      <PV>$(DEVICE):$(STATS):CentroidX_RBV</PV>
+    </macros>
+    <file>widgets/readback.bob</file>
+    <x>10</x>
+    <y>595</y>
+    <height>30</height>
+    <resize>2</resize>
+    <transparent>true</transparent>
+  </widget>
+  <widget type="embedded" version="2.0.0">
+    <name>savepath_sp_1</name>
+    <macros>
+      <DESC>Y:</DESC>
+      <PV>$(DEVICE):$(STATS):CentroidY_RBV</PV>
+    </macros>
+    <file>widgets/readback.bob</file>
+    <x>10</x>
+    <y>625</y>
+    <height>30</height>
+    <resize>2</resize>
+    <transparent>true</transparent>
+  </widget>
+  <widget type="rectangle" version="2.0.0">
+    <name>Rectangle_2</name>
+    <class>FLAME_BarHeavy</class>
+    <x>10</x>
+    <y>575</y>
+    <width>400</width>
+    <height use_class="true">3</height>
+    <line_color use_class="true">
+      <color name="FLAME Border Dark" red="128" green="128" blue="128">
+      </color>
+    </line_color>
+    <background_color use_class="true">
+      <color name="FLAME Border Dark" red="128" green="128" blue="128">
+      </color>
+    </background_color>
+  </widget>
+  <widget type="embedded" version="2.0.0">
+    <name>savepath_sp_5</name>
+    <macros>
+      <DESC>X:</DESC>
+      <PV>$(DEVICE):$(STATS):SigmaX_RBV</PV>
+    </macros>
+    <file>widgets/readback.bob</file>
+    <x>10</x>
+    <y>695</y>
+    <height>30</height>
+    <resize>2</resize>
+    <transparent>true</transparent>
+  </widget>
+  <widget type="embedded" version="2.0.0">
+    <name>savepath_sp_6</name>
+    <macros>
+      <DESC>Y:</DESC>
+      <PV>$(DEVICE):$(STATS):SigmaY_RBV</PV>
+    </macros>
+    <file>widgets/readback.bob</file>
+    <x>10</x>
+    <y>725</y>
+    <height>30</height>
+    <resize>2</resize>
+    <transparent>true</transparent>
+  </widget>
+  <widget type="rectangle" version="2.0.0">
+    <name>Rectangle_3</name>
+    <class>FLAME_BarHeavy</class>
+    <x>10</x>
+    <y>675</y>
+    <width>400</width>
+    <height use_class="true">3</height>
+    <line_color use_class="true">
+      <color name="FLAME Border Dark" red="128" green="128" blue="128">
+      </color>
+    </line_color>
+    <background_color use_class="true">
+      <color name="FLAME Border Dark" red="128" green="128" blue="128">
+      </color>
+    </background_color>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_5</name>
+    <class>FLAME_Title</class>
+    <text>Centroid</text>
+    <x>166</x>
+    <y>560</y>
+    <width>88</width>
+    <height>25</height>
+    <font use_class="true">
+      <font name="FLAME Header" family="Noto Sans" style="BOLD" size="18.0">
+      </font>
+    </font>
+    <foreground_color use_class="true">
+      <color name="FLAME Text Main" red="0" green="0" blue="0">
+      </color>
+    </foreground_color>
+    <background_color use_class="true">
+      <color name="FLAME BackgroundDisplay" red="225" green="225" blue="225">
+      </color>
+    </background_color>
+    <transparent>false</transparent>
+    <horizontal_alignment>1</horizontal_alignment>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_4</name>
+    <class>FLAME_Title</class>
+    <text>σ</text>
+    <x>195</x>
+    <y>660</y>
+    <width>30</width>
+    <height>25</height>
+    <font use_class="true">
+      <font name="FLAME Header" family="Noto Sans" style="BOLD" size="18.0">
+      </font>
+    </font>
+    <foreground_color use_class="true">
+      <color name="FLAME Text Main" red="0" green="0" blue="0">
+      </color>
+    </foreground_color>
+    <background_color use_class="true">
+      <color name="FLAME BackgroundDisplay" red="225" green="225" blue="225">
+      </color>
+    </background_color>
+    <transparent>false</transparent>
+    <horizontal_alignment>1</horizontal_alignment>
+  </widget>
+  <widget type="rectangle" version="2.0.0">
+    <name>Rectangle_5</name>
+    <class>FLAME_BarHeavy</class>
+    <x>420</x>
+    <y>575</y>
+    <width>400</width>
+    <height use_class="true">3</height>
+    <line_color use_class="true">
+      <color name="FLAME Border Dark" red="128" green="128" blue="128">
+      </color>
+    </line_color>
+    <background_color use_class="true">
+      <color name="FLAME Border Dark" red="128" green="128" blue="128">
+      </color>
+    </background_color>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_6</name>
+    <class>FLAME_Title</class>
+    <text>Overlay</text>
+    <x>576</x>
+    <y>560</y>
+    <width>88</width>
+    <height>25</height>
+    <font use_class="true">
+      <font name="FLAME Header" family="Noto Sans" style="BOLD" size="18.0">
+      </font>
+    </font>
+    <foreground_color use_class="true">
+      <color name="FLAME Text Main" red="0" green="0" blue="0">
+      </color>
+    </foreground_color>
+    <background_color use_class="true">
+      <color name="FLAME BackgroundDisplay" red="225" green="225" blue="225">
+      </color>
+    </background_color>
+    <transparent>false</transparent>
+    <horizontal_alignment>1</horizontal_alignment>
+  </widget>
+  <widget type="embedded" version="2.0.0">
+    <name>Embedded Display_17</name>
+    <macros>
+      <DESC>Cross overlay:</DESC>
+      <EN_PV>$(DEVICE):Overlay:1:Use</EN_PV>
+      <RB_PV>$(DEVICE):Overlay:1:Use_RBV</RB_PV>
+    </macros>
+    <file>widgets/enable_readback.bob</file>
+    <x>420</x>
+    <y>595</y>
+    <height>30</height>
+    <resize>2</resize>
+    <transparent>true</transparent>
+  </widget>
+</display>

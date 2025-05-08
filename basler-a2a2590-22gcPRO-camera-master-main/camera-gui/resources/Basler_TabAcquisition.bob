@@ -1,0 +1,754 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Saved on 2024-04-02 12:45:06 by developer-->
+<display version="2.0.0">
+  <width>400</width>
+  <height>675</height>
+  <background_color>
+    <color name="FLAME BackgroundDisplay" red="225" green="225" blue="225">
+    </color>
+  </background_color>
+  <actions>
+  </actions>
+  <widget type="group" version="2.0.0">
+    <name>Group_3</name>
+    <y>40</y>
+    <width>400</width>
+    <height>30</height>
+    <style>3</style>
+    <transparent>true</transparent>
+    <widget type="label" version="2.0.0">
+      <name>Label_7</name>
+      <class>FLAME_Label</class>
+      <text>Camera state:</text>
+      <x>10</x>
+      <width>180</width>
+      <height>30</height>
+      <font use_class="true">
+        <font name="FLAME Label" family="Noto Sans" style="REGULAR" size="14.0">
+        </font>
+      </font>
+      <foreground_color use_class="true">
+        <color name="FLAME Text Main" red="0" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <background_color use_class="true">
+        <color name="FLAME BackgroundDisplay" red="225" green="225" blue="225">
+        </color>
+      </background_color>
+      <vertical_alignment>1</vertical_alignment>
+    </widget>
+    <widget type="textupdate" version="2.0.0">
+      <name>Text Update</name>
+      <class>FLAME_TextUpd</class>
+      <pv_name>$(DEVICE):$(CAM):DetectorState_RBV</pv_name>
+      <x>230</x>
+      <y>4</y>
+      <width>160</width>
+      <height use_class="true">22</height>
+      <font use_class="true">
+        <font name="FLAME Label" family="Noto Sans" style="REGULAR" size="14.0">
+        </font>
+      </font>
+      <foreground_color use_class="true">
+        <color name="FLAME Text Main" red="0" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <background_color use_class="true">
+        <color name="FLAME BackgroundReadback" red="240" green="240" blue="240">
+        </color>
+      </background_color>
+      <horizontal_alignment use_class="true">1</horizontal_alignment>
+      <vertical_alignment use_class="true">1</vertical_alignment>
+      <border_width use_class="true">1</border_width>
+      <border_color use_class="true">
+        <color name="FLAME Border Dark" red="128" green="128" blue="128">
+        </color>
+      </border_color>
+    </widget>
+    <widget type="multi_state_led" version="2.0.0">
+      <name>LED (Multi State)</name>
+      <pv_name>$(DEVICE):$(CAM):DetectorState_RBV</pv_name>
+      <x>200</x>
+      <y>4</y>
+      <states>
+        <state>
+          <value>0</value>
+          <label></label>
+          <color>
+            <color name="FLAME Off Green" red="60" green="100" blue="60">
+            </color>
+          </color>
+        </state>
+        <state>
+          <value>1</value>
+          <label></label>
+          <color>
+            <color name="FLAME On Green" red="150" green="240" blue="0">
+            </color>
+          </color>
+        </state>
+        <state>
+          <value>2</value>
+          <label></label>
+          <color>
+            <color name="FLAME Off Green" red="60" green="100" blue="60">
+            </color>
+          </color>
+        </state>
+        <state>
+          <value>3</value>
+          <label></label>
+          <color>
+            <color name="FLAME Off Green" red="60" green="100" blue="60">
+            </color>
+          </color>
+        </state>
+        <state>
+          <value>4</value>
+          <label></label>
+          <color>
+            <color name="FLAME Yellow" red="245" green="200" blue="20">
+            </color>
+          </color>
+        </state>
+        <state>
+          <value>5</value>
+          <label></label>
+          <color>
+            <color name="FLAME Yellow" red="245" green="200" blue="20">
+            </color>
+          </color>
+        </state>
+        <state>
+          <value>6</value>
+          <label></label>
+          <color>
+            <color name="FLAME Error" red="250" green="80" blue="50">
+            </color>
+          </color>
+        </state>
+        <state>
+          <value>7</value>
+          <label></label>
+          <color>
+            <color name="FLAME Yellow" red="245" green="200" blue="20">
+            </color>
+          </color>
+        </state>
+        <state>
+          <value>8</value>
+          <label></label>
+          <color>
+            <color name="FLAME Yellow" red="245" green="200" blue="20">
+            </color>
+          </color>
+        </state>
+        <state>
+          <value>9</value>
+          <label></label>
+          <color>
+            <color name="FLAME Error" red="250" green="80" blue="50">
+            </color>
+          </color>
+        </state>
+        <state>
+          <value>10</value>
+          <label></label>
+          <color>
+            <color name="FLAME Yellow" red="245" green="200" blue="20">
+            </color>
+          </color>
+        </state>
+      </states>
+      <fallback_label></fallback_label>
+    </widget>
+  </widget>
+  <widget type="rectangle" version="2.0.0">
+    <name>Rectangle_3</name>
+    <class>FLAME_BarHeavy</class>
+    <y>20</y>
+    <width>400</width>
+    <height use_class="true">3</height>
+    <line_color use_class="true">
+      <color name="FLAME Border Dark" red="128" green="128" blue="128">
+      </color>
+    </line_color>
+    <background_color use_class="true">
+      <color name="FLAME Border Dark" red="128" green="128" blue="128">
+      </color>
+    </background_color>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_3</name>
+    <class>FLAME_Title</class>
+    <text>Acquisition</text>
+    <x>140</x>
+    <y>5</y>
+    <width>120</width>
+    <height>25</height>
+    <font use_class="true">
+      <font name="FLAME Header" family="Noto Sans" style="BOLD" size="18.0">
+      </font>
+    </font>
+    <foreground_color use_class="true">
+      <color name="FLAME Text Main" red="0" green="0" blue="0">
+      </color>
+    </foreground_color>
+    <background_color use_class="true">
+      <color name="FLAME BackgroundDisplay" red="225" green="225" blue="225">
+      </color>
+    </background_color>
+    <transparent>false</transparent>
+    <horizontal_alignment>1</horizontal_alignment>
+  </widget>
+  <widget type="rectangle" version="2.0.0">
+    <name>Rectangle_1</name>
+    <class>FLAME_BarHeavy</class>
+    <y>470</y>
+    <width>400</width>
+    <height use_class="true">3</height>
+    <line_color use_class="true">
+      <color name="FLAME Border Dark" red="128" green="128" blue="128">
+      </color>
+    </line_color>
+    <background_color use_class="true">
+      <color name="FLAME Border Dark" red="128" green="128" blue="128">
+      </color>
+    </background_color>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_1</name>
+    <class>FLAME_Title</class>
+    <text>Status</text>
+    <x>162</x>
+    <y>455</y>
+    <width>76</width>
+    <height>30</height>
+    <font use_class="true">
+      <font name="FLAME Header" family="Noto Sans" style="BOLD" size="18.0">
+      </font>
+    </font>
+    <foreground_color use_class="true">
+      <color name="FLAME Text Main" red="0" green="0" blue="0">
+      </color>
+    </foreground_color>
+    <background_color use_class="true">
+      <color name="FLAME BackgroundDisplay" red="225" green="225" blue="225">
+      </color>
+    </background_color>
+    <transparent>false</transparent>
+    <horizontal_alignment>1</horizontal_alignment>
+  </widget>
+  <widget type="embedded" version="2.0.0">
+    <name>Embedded Display_4</name>
+    <macros>
+      <DESC>Image counter:</DESC>
+      <PV>$(DEVICE):$(CAM):ArrayCounter_RBV</PV>
+    </macros>
+    <file>widgets/readback.bob</file>
+    <y>490</y>
+    <height>30</height>
+    <resize>2</resize>
+    <transparent>true</transparent>
+  </widget>
+  <widget type="embedded" version="2.0.0">
+    <name>Embedded Display_5</name>
+    <macros>
+      <DESC>Image rate:</DESC>
+      <PV>$(DEVICE):$(CAM):ArrayRate_RBV</PV>
+    </macros>
+    <file>widgets/readback.bob</file>
+    <y>520</y>
+    <height>30</height>
+    <resize>2</resize>
+    <transparent>true</transparent>
+  </widget>
+  <widget type="embedded" version="2.0.0">
+    <name>Embedded Display_6</name>
+    <macros>
+      <DESC>Dropped frames:</DESC>
+      <PV>$(DEVICE):$(CAM):ARFrameFailures</PV>
+    </macros>
+    <file>widgets/readback.bob</file>
+    <y>550</y>
+    <height>30</height>
+    <resize>2</resize>
+    <transparent>true</transparent>
+  </widget>
+  <widget type="embedded" version="2.0.0">
+    <name>Embedded Display_9</name>
+    <macros>
+      <DESC>Memory used:</DESC>
+      <PV>$(DEVICE):$(CAM):PoolUsedMem</PV>
+    </macros>
+    <file>widgets/readback.bob</file>
+    <y>580</y>
+    <height>30</height>
+    <resize>2</resize>
+    <transparent>true</transparent>
+  </widget>
+  <widget type="embedded" version="2.0.0">
+    <name>Embedded Display_10</name>
+    <macros>
+      <DESC>Status message:</DESC>
+      <PV>$(DEVICE):$(CAM):StatusMessage_RBV</PV>
+    </macros>
+    <file>widgets/readback.bob</file>
+    <y>610</y>
+    <height>30</height>
+    <resize>2</resize>
+    <transparent>true</transparent>
+  </widget>
+  <widget type="rectangle" version="2.0.0">
+    <name>Rectangle_2</name>
+    <class>FLAME_BarHeavy</class>
+    <y>340</y>
+    <width>400</width>
+    <height use_class="true">3</height>
+    <line_color use_class="true">
+      <color name="FLAME Border Dark" red="128" green="128" blue="128">
+      </color>
+    </line_color>
+    <background_color use_class="true">
+      <color name="FLAME Border Dark" red="128" green="128" blue="128">
+      </color>
+    </background_color>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_2</name>
+    <class>FLAME_Title</class>
+    <text>Settings</text>
+    <x>150</x>
+    <y>325</y>
+    <height>30</height>
+    <font use_class="true">
+      <font name="FLAME Header" family="Noto Sans" style="BOLD" size="18.0">
+      </font>
+    </font>
+    <foreground_color use_class="true">
+      <color name="FLAME Text Main" red="0" green="0" blue="0">
+      </color>
+    </foreground_color>
+    <background_color use_class="true">
+      <color name="FLAME BackgroundDisplay" red="225" green="225" blue="225">
+      </color>
+    </background_color>
+    <transparent>false</transparent>
+    <horizontal_alignment>1</horizontal_alignment>
+  </widget>
+  <widget type="embedded" version="2.0.0">
+    <name>Embedded Display_12</name>
+    <macros>
+      <DESC>Raw gain:</DESC>
+      <RB_PV>$(DEVICE):$(CAM):Gain_RBV</RB_PV>
+      <SP_PV>$(DEVICE):$(CAM):Gain</SP_PV>
+    </macros>
+    <file>widgets/spinner&amp;readback.bob</file>
+    <y>420</y>
+    <height>30</height>
+    <resize>2</resize>
+    <transparent>true</transparent>
+  </widget>
+  <widget type="embedded" version="2.0.0">
+    <name>Embedded Display_13</name>
+    <macros>
+      <DESC>Frame rate:</DESC>
+      <EN_PV>$(DEVICE):$(CAM):FrameRateEnable</EN_PV>
+      <RB_PV>$(DEVICE):$(CAM):FrameRate_RBV</RB_PV>
+      <SP_PV>$(DEVICE):$(CAM):FrameRate</SP_PV>
+    </macros>
+    <file>widgets/spinner&amp;readback_enable.bob</file>
+    <y>360</y>
+    <height>30</height>
+    <resize>2</resize>
+    <transparent>true</transparent>
+  </widget>
+  <widget type="embedded" version="2.0.0">
+    <name>Embedded Display_14</name>
+    <macros>
+      <DESC>Exposure time:</DESC>
+      <RB_PV>$(DEVICE):$(CAM):AcquireTime_RBV</RB_PV>
+      <SP_PV>$(DEVICE):$(CAM):AcquireTime</SP_PV>
+    </macros>
+    <file>widgets/spinner&amp;readback.bob</file>
+    <y>390</y>
+    <height>30</height>
+    <resize>2</resize>
+    <transparent>true</transparent>
+  </widget>
+  <widget type="embedded" version="2.0.0">
+    <name>Embedded Display_11</name>
+    <macros>
+      <DESC>Trigger source:</DESC>
+      <PV>$(DEVICE):$(CAM):TriggerSource</PV>
+    </macros>
+    <file>widgets/combobox.bob</file>
+    <y>230</y>
+    <height>30</height>
+    <resize>2</resize>
+    <transparent>true</transparent>
+  </widget>
+  <widget type="embedded" version="2.0.0">
+    <name>Embedded Display_17</name>
+    <macros>
+      <DESC>External trigger:</DESC>
+      <EN_PV>$(DEVICE):$(CAM):TriggerMode</EN_PV>
+      <RB_PV>$(DEVICE):$(CAM):TriggerMode_RBV</RB_PV>
+    </macros>
+    <file>widgets/enable_readback.bob</file>
+    <y>200</y>
+    <height>30</height>
+    <resize>2</resize>
+    <transparent>true</transparent>
+  </widget>
+  <widget type="embedded" version="2.0.0">
+    <name>Embedded Display_18</name>
+    <macros>
+      <DESC></DESC>
+      <PV>$(DEVICE):$(CAM):TriggerSource_RBV</PV>
+    </macros>
+    <file>widgets/readback_string.bob</file>
+    <y>260</y>
+    <height>30</height>
+    <resize>2</resize>
+    <transparent>true</transparent>
+  </widget>
+  <widget type="rectangle" version="2.0.0">
+    <name>Rectangle_4</name>
+    <class>FLAME_BarHeavy</class>
+    <y>180</y>
+    <width>400</width>
+    <height use_class="true">3</height>
+    <line_color use_class="true">
+      <color name="FLAME Border Dark" red="128" green="128" blue="128">
+      </color>
+    </line_color>
+    <background_color use_class="true">
+      <color name="FLAME Border Dark" red="128" green="128" blue="128">
+      </color>
+    </background_color>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_4</name>
+    <class>FLAME_Title</class>
+    <text>Trigger</text>
+    <x>162</x>
+    <y>165</y>
+    <width>76</width>
+    <height>25</height>
+    <font use_class="true">
+      <font name="FLAME Header" family="Noto Sans" style="BOLD" size="18.0">
+      </font>
+    </font>
+    <foreground_color use_class="true">
+      <color name="FLAME Text Main" red="0" green="0" blue="0">
+      </color>
+    </foreground_color>
+    <background_color use_class="true">
+      <color name="FLAME BackgroundDisplay" red="225" green="225" blue="225">
+      </color>
+    </background_color>
+    <transparent>false</transparent>
+    <horizontal_alignment>1</horizontal_alignment>
+  </widget>
+  <widget type="group" version="2.0.0">
+    <name>Group</name>
+    <y>290</y>
+    <width>400</width>
+    <height>30</height>
+    <style>3</style>
+    <transparent>true</transparent>
+    <widget type="label" version="2.0.0">
+      <name>Label</name>
+      <class>FLAME_Label</class>
+      <text>Software trigger:</text>
+      <x>10</x>
+      <width>180</width>
+      <height>30</height>
+      <font use_class="true">
+        <font name="FLAME Label" family="Noto Sans" style="REGULAR" size="14.0">
+        </font>
+      </font>
+      <foreground_color use_class="true">
+        <color name="FLAME Text Main" red="0" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <background_color use_class="true">
+        <color name="FLAME BackgroundDisplay" red="225" green="225" blue="225">
+        </color>
+      </background_color>
+      <vertical_alignment>1</vertical_alignment>
+    </widget>
+    <widget type="action_button" version="3.0.0">
+      <name>Text Entry</name>
+      <class>FLAME_ActionButton</class>
+      <actions>
+        <action type="write_pv">
+          <pv_name>$(pv_name)</pv_name>
+          <value>1</value>
+          <description>WritePV</description>
+        </action>
+      </actions>
+      <pv_name>$(DEVICE):$(CAM):TriggerSoftware</pv_name>
+      <text>TRIGGER</text>
+      <x>200</x>
+      <y>4</y>
+      <width>190</width>
+      <height>22</height>
+      <font use_class="true">
+        <font name="FLAME Label" family="Noto Sans" style="REGULAR" size="14.0">
+        </font>
+      </font>
+      <foreground_color use_class="true">
+        <color name="FLAME Text Main" red="0" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <background_color use_class="true">
+        <color name="FLAME BackgroundButton" red="200" green="200" blue="200">
+        </color>
+      </background_color>
+    </widget>
+  </widget>
+  <widget type="embedded" version="2.0.0">
+    <name>Embedded Display_16</name>
+    <macros>
+      <DESC></DESC>
+      <PV>$(DEVICE):$(CAM):ImageMode_RBV</PV>
+    </macros>
+    <file>widgets/readback.bob</file>
+    <y>100</y>
+    <height>30</height>
+    <resize>2</resize>
+    <transparent>true</transparent>
+  </widget>
+  <widget type="group" version="2.0.0">
+    <name>Group_1</name>
+    <y>70</y>
+    <width>400</width>
+    <height>30</height>
+    <style>3</style>
+    <transparent>true</transparent>
+    <widget type="combo" version="2.0.0">
+      <name>Text Entry_2</name>
+      <class>FLAME_Combobox</class>
+      <pv_name>$(DEVICE):$(CAM):ImageMode</pv_name>
+      <x>200</x>
+      <y>4</y>
+      <width>190</width>
+      <height use_class="true">22</height>
+      <font use_class="true">
+        <font name="FLAME Label" family="Noto Sans" style="REGULAR" size="14.0">
+        </font>
+      </font>
+      <foreground_color use_class="true">
+        <color name="FLAME Text Main" red="0" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <background_color use_class="true">
+        <color name="FLAME BackgroundSetpoint" red="250" green="250" blue="250">
+        </color>
+      </background_color>
+      <items>
+        <item>Single</item>
+        <item>Continuous</item>
+      </items>
+      <items_from_pv>false</items_from_pv>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>Label_5</name>
+      <class>FLAME_Label</class>
+      <text>Acquisition mode:</text>
+      <x>10</x>
+      <width>180</width>
+      <height>30</height>
+      <font use_class="true">
+        <font name="FLAME Label" family="Noto Sans" style="REGULAR" size="14.0">
+        </font>
+      </font>
+      <foreground_color use_class="true">
+        <color name="FLAME Text Main" red="0" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <background_color use_class="true">
+        <color name="FLAME BackgroundDisplay" red="225" green="225" blue="225">
+        </color>
+      </background_color>
+      <vertical_alignment>1</vertical_alignment>
+    </widget>
+  </widget>
+  <widget type="group" version="2.0.0">
+    <name>Group_2</name>
+    <y>130</y>
+    <width>400</width>
+    <height>30</height>
+    <style>3</style>
+    <transparent>true</transparent>
+    <widget type="label" version="2.0.0">
+      <name>Label_6</name>
+      <class>FLAME_Label</class>
+      <text>Acquisition:</text>
+      <x>10</x>
+      <width>180</width>
+      <height>30</height>
+      <font use_class="true">
+        <font name="FLAME Label" family="Noto Sans" style="REGULAR" size="14.0">
+        </font>
+      </font>
+      <foreground_color use_class="true">
+        <color name="FLAME Text Main" red="0" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <background_color use_class="true">
+        <color name="FLAME BackgroundDisplay" red="225" green="225" blue="225">
+        </color>
+      </background_color>
+      <vertical_alignment>1</vertical_alignment>
+    </widget>
+    <widget type="action_button" version="3.0.0">
+      <name>Start Button_2</name>
+      <class>FLAME_ActionButtonSmall</class>
+      <actions execute_as_one="true">
+        <action type="write_pv">
+          <pv_name>$(DEVICE):$(CAM):Acquire</pv_name>
+          <value>0</value>
+          <description>Stop Acquire</description>
+        </action>
+        <action type="write_pv">
+          <pv_name>$(DEVICE):$(CAM):ArrayCallbacks</pv_name>
+          <value>1</value>
+          <description>Disable array callbacks</description>
+        </action>
+      </actions>
+      <text>STOP</text>
+      <x>300</x>
+      <y>4</y>
+      <width>90</width>
+      <height use_class="true">22</height>
+      <font use_class="true">
+        <font name="FLAME Label" family="Noto Sans" style="REGULAR" size="14.0">
+        </font>
+      </font>
+      <foreground_color use_class="true">
+        <color name="FLAME Text Main" red="0" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <background_color use_class="true">
+        <color name="FLAME BackgroundButton" red="200" green="200" blue="200">
+        </color>
+      </background_color>
+      <tooltip></tooltip>
+    </widget>
+    <widget type="action_button" version="3.0.0">
+      <name>Start Button_3</name>
+      <class>FLAME_ActionButtonSmall</class>
+      <actions execute_as_one="true">
+        <action type="write_pv">
+          <pv_name>$(DEVICE):$(CAM):ArrayCallbacks</pv_name>
+          <value>1</value>
+          <description>Enable array callbacks</description>
+        </action>
+        <action type="write_pv">
+          <pv_name>$(DEVICE):$(CAM):Acquire</pv_name>
+          <value>1</value>
+          <description>Start Acquire</description>
+        </action>
+      </actions>
+      <text>START</text>
+      <x>200</x>
+      <y>4</y>
+      <width>90</width>
+      <height use_class="true">22</height>
+      <font use_class="true">
+        <font name="FLAME Label" family="Noto Sans" style="REGULAR" size="14.0">
+        </font>
+      </font>
+      <foreground_color use_class="true">
+        <color name="FLAME Text Main" red="0" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <background_color use_class="true">
+        <color name="FLAME BackgroundButton" red="200" green="200" blue="200">
+        </color>
+      </background_color>
+      <tooltip></tooltip>
+    </widget>
+  </widget>
+  <widget type="group" version="2.0.0">
+    <name>Group_4</name>
+    <y>640</y>
+    <width>400</width>
+    <height>30</height>
+    <style>3</style>
+    <transparent>true</transparent>
+    <widget type="label" version="2.0.0">
+      <name>Label_8</name>
+      <class>FLAME_Label</class>
+      <text>Pixel overflow:</text>
+      <x>10</x>
+      <width>180</width>
+      <height>30</height>
+      <font use_class="true">
+        <font name="FLAME Label" family="Noto Sans" style="REGULAR" size="14.0">
+        </font>
+      </font>
+      <foreground_color use_class="true">
+        <color name="FLAME Text Main" red="0" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <background_color use_class="true">
+        <color name="FLAME BackgroundDisplay" red="225" green="225" blue="225">
+        </color>
+      </background_color>
+      <vertical_alignment>1</vertical_alignment>
+    </widget>
+    <widget type="textupdate" version="2.0.0">
+      <name>Text Update_1</name>
+      <class>FLAME_TextUpd</class>
+      <pv_name>$(DEVICE):Stats:MaxValue_RBV</pv_name>
+      <x>230</x>
+      <y>4</y>
+      <width>160</width>
+      <height use_class="true">22</height>
+      <font use_class="true">
+        <font name="FLAME Label" family="Noto Sans" style="REGULAR" size="14.0">
+        </font>
+      </font>
+      <foreground_color use_class="true">
+        <color name="FLAME Text Main" red="0" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <background_color use_class="true">
+        <color name="FLAME BackgroundReadback" red="240" green="240" blue="240">
+        </color>
+      </background_color>
+      <horizontal_alignment use_class="true">1</horizontal_alignment>
+      <vertical_alignment use_class="true">1</vertical_alignment>
+      <border_width use_class="true">1</border_width>
+      <border_color use_class="true">
+        <color name="FLAME Border Dark" red="128" green="128" blue="128">
+        </color>
+      </border_color>
+    </widget>
+    <widget type="multi_state_led" version="2.0.0">
+      <name>LED (Multi State)_1</name>
+      <pv_name>$(DEVICE):Stats:MaxValue_RBV</pv_name>
+      <x>200</x>
+      <y>4</y>
+      <states>
+        <state>
+          <value>255</value>
+          <label></label>
+          <color>
+            <color name="FLAME Red" red="250" green="80" blue="50">
+            </color>
+          </color>
+        </state>
+      </states>
+      <fallback_label></fallback_label>
+      <fallback_color>
+        <color name="FLAME Off Grey" red="175" green="175" blue="175">
+        </color>
+      </fallback_color>
+    </widget>
+  </widget>
+</display>
