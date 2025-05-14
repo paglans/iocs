@@ -18,7 +18,7 @@ dbpf("$(PREFIX)Cam:AcquireTime_RBV.EGU", "ms")
 dbpf("$(PREFIX)RawImg:EnableCallbacks", 1)
 
 # CA Raw Image activation
-# dbpf("$(PREFIX)RawImgCA:EnableCallbacks", 1)
+dbpf("$(PREFIX)RawImgCA:EnableCallbacks", 1)
 
 # Raw Tiff plugin configuration
 dbpf("$(PREFIX)RawTiff:EnableCallbacks", 1)
@@ -52,7 +52,7 @@ dbpf("$(PREFIX)ROI:SizeY", 1000)
 dbpf("$(PREFIX)ROIImg:EnableCallbacks", 1)
 
 # CA ROI Image activation
-# dbpf("$(PREFIX)ROIImgCA:EnableCallbacks", 1)
+dbpf("$(PREFIX)ROIImgCA:EnableCallbacks", 1)
 
 # Roi Tiff plugin configuration
 dbpf("$(PREFIX)ROITiff:EnableCallbacks", 1)
@@ -102,5 +102,5 @@ dbpf("$(PREFIX)Overlay:1:SizeY", 200)
 dbpf("$(PREFIX)OverlayImg:EnableCallbacks", 1)
 
 # CA Overlay Image activation
-# dbpf("$(PREFIX)OverlayImgCA:EnableCallbacks", 1)
+dbpf("$(PREFIX)OverlayImgCA:EnableCallbacks", 1)
 

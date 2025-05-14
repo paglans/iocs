@@ -2,20 +2,22 @@
 # Copyright (c) 2024 Cosylab d.d.
 #
 
-CAMERA_APP=/opt/workspace/basler-ace-1920-camera/camera-epics
-EPICS_BASE=/opt/epics/base
-MODULES=/opt/epics/modules
-AD_MODULES=/opt/epics/modules/area_detector
+#CAMERA_APP=/opt/workspace/basler-ace-1920-camera/camera-epics
+CAMERA_APP=/home/anders/iocs/iocs/basler-a2a2590-22gcPRO-camera-master-main/camera-epics
+EPICS_BASE=/opt/epics/epics-base
+#MODULES=/opt/epics/modules
+MODULES=/opt/epics/synApps-R6-3-2a/support
+AD_MODULES=$(MODULES)/areaDetector
 
 ADCORE=$(AD_MODULES)/ADCore
 ADARAVIS=$(AD_MODULES)/ADAravis
 ADGENICAM=$(AD_MODULES)/ADGenICam
-ASYN=$(MODULES)/asyn
-AUTOSAVE=$(MODULES)/autosave
-BUSY=$(MODULES)/busy
-CALC=$(MODULES)/calc
-DEVIOCSTATS=$(MODULES)/devIocStats
-SSCAN=$(MODULES)/sscan
-SNCSEQ=$(MODULES)/sncseq
+ASYN=$(MODULES)/asyn-R4-45
+AUTOSAVE=$(MODULES)/autosave-R5-11
+BUSY=$(MODULES)/busy-R1-7-4
+CALC=$(MODULES)/calc-R3-7-5
+DEVIOCSTATS=$(MODULES)/iocStats-3-1-16
+SSCAN=$(MODULES)/sscan-R2-11-6
+SNCSEQ=$(MODULES)/sequencer-mirror-R2-2-9
 
 -include $(TOP)/../RELEASE.columns

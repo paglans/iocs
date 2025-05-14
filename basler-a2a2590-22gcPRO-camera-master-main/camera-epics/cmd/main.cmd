@@ -12,10 +12,10 @@ epicsEnvSet("EPICS_DB_INCLUDE_PATH", "$(ADCORE)/db:$(ADGENICAM)/db:$(ADARAVIS)/d
 epicsEnvSet("QSIZE",  "2000")
 
 ## $(XSIZE) The maximum image width; used to set the maximum size for row profiles in the NDPluginStats plugin and 1-D FFT
-epicsEnvSet("XSIZE", "1920")
+epicsEnvSet("XSIZE", "2590")
 
 ## $(YSIZE) The maximum image height; used to set the maximum size for column profiles in the NDPluginStats plugin
-epicsEnvSet("YSIZE", "1200")
+epicsEnvSet("YSIZE", "1944")
 
 ## $(NCHANS) The maximum number of time series points in the NDPluginStats, NDPluginROIStats, and NDPluginAttribute plugins
 epicsEnvSet("NCHANS", "2048")
@@ -26,8 +26,8 @@ epicsEnvSet("CBUFFS", "500")
 ## $(MAX_THREADS) The maximum number of threads for plugins which can run in multiple threads. Defaults to 5.
 epicsEnvSet("MAX_THREADS", "5")
 
-## $(NELEMENTS) for mono image = XSIZE * YSIZE (1920x1200 in this case)
-epicsEnvSet("NELEMENTS", "2304000")
+## $(NELEMENTS) for mono image = XSIZE * YSIZE (2590x2944 in this case)
+epicsEnvSet("NELEMENTS", "5034960585501")
 
 ## Description:
 ## This file loads areaDetector plugins on a single camera instance.
@@ -38,7 +38,7 @@ aravisConfig("Camera", "$(CAMERA_NAME)", $(ENABLE_CACHING=1), 0, 0, 0)
 
 # enable auto-connect: asynAutoConnect(portName, addr, yesNo)
 asynAutoConnect("Camera", 0, 1)
-aynSetAutoConnectTimeout(10)
+asynSetAutoConnectTimeout(10)
 
 # Load the main aravis database
 dbLoadRecords("$(ADARAVIS)/db/aravisCamera.template", "P=$(PREFIX),R=Cam:,PORT=Camera")

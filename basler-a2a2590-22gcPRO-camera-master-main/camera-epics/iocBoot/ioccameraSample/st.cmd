@@ -15,10 +15,10 @@ cameraSample_registerRecordDeviceDriver pdbbase
 
 ## PREFIX = Record prefix, each camera should have an unique PREFIX
 ## CAMERA_NAME = IP address or hostname of the camera 
-iocshLoad("$(CAMERA_APP)/cmd/main.cmd", "PREFIX=BaslerAce1920:, CAMERA_NAME=192.168.10.5")
+iocshLoad("$(CAMERA_APP)/cmd/main.cmd", "PREFIX=BaslerA2a2590:, CAMERA_NAME=192.168.11.11")
 
 
 cd "${TOP}/iocBoot/${IOC}"
 iocInit
 
-iocshLoad("$(CAMERA_APP)/cmd/post_init.cmd", "PREFIX=BaslerAce1920:")
+iocshLoad("$(CAMERA_APP)/cmd/post_init.cmd", "PREFIX=BaslerA2a2590:")
