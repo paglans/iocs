@@ -3,7 +3,7 @@
 #
 
 #CAMERA_APP=/opt/workspace/basler-ace-1920-camera/camera-epics
-CAMERA_APP=/home/anders/iocs/iocs/basler-a2a2590-22gcPRO-camera-master-main/camera-epics
+CAMERA_APP=/home/anders/iocs/basler-a2a2590-22gcPRO-camera-master-main/camera-epics
 EPICS_BASE=/opt/epics/epics-base
 #MODULES=/opt/epics/modules
 MODULES=/opt/epics/synApps-R6-3-2a/support
