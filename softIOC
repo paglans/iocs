@@ -1,4 +1,4 @@
-#! /bin/sh
+#! /bin/bash
 # Author: <Ralph.Lange@bessy.de>
 #
 # History:
@@ -17,9 +17,9 @@ SCRIPTNAME=/etc/init.d/softIOC
 HOST=`uname -n`
 
 
-PROCSERV=/usr/local/bin/procServ
-CONFFILE=/opt/IOC/softIOC/softiocs.$HOST
-HOMEDIRS=/home/controls
+PROCSERV=/usr/bin/procServ
+CONFFILE=/opt/epics/config//softiocs.$HOST
+HOMEDIRS=/home
 
 
 # Check for config file
@@ -58,13 +58,13 @@ evaluate_options()
                 echo "$CONFFILE: Value(s) required for $TAG.";
                 exit 1 
             else
-                VALUE=$1
+                VALUE = $1
                 shift
             fi
                                 # If more values follow assign them too
-            while[$1!='#' -a $#!=0] 
+            while [ $1 != '#' -a $# != 0 ] 
             do
-                VALUE="$VALUE $1"
+                VALUE = "$VALUE $1"
                 shift;
             done
             eval ${OPTION}=\$VALUE
@@ -84,6 +84,7 @@ default_options()
     IOC_UC=`echo $1 | tr [:lower:] [:upper:]`
 
     if [[ "$IOC_LC" = "mdi"* ]] 
+#    if [ "$IOC_LC" = "mdi"* ]
         then
         TOP=DiagR3.14.9.0.1-Tornado2.2.1 
     elif [[ "$IOC_LC" = *"p" ]]
@@ -114,10 +115,11 @@ assign_options()
             sed -n '/^[^#]/p' | \
             sed -e 's/^[ \t]*//' -e 's/[ \t]*$//' \
                 -e "s/$TAG://I" \
-                -e :a -e '/\\\\$/N; s/\\\\\\n//; ta' \ 
+                -e :a -e '/\\\\$/N; s/\\\\\\n//; ta' \
                 -e 's/$/ \#/' \
                 -e 's/[\t ]/ /g'`
     evaluate_options $SECTION
+}
 
 get_iocs() 
 {
@@ -252,7 +254,8 @@ do_stop()
 #
 # Function that sends a SIGHUP to the daemon/service 
 #
-do_reload() {
+do_reload()
+{
     #
     # If the daemon can reload its configuration without
     # restarting (for example, when it is sent a SIGHUP),
@@ -306,18 +309,18 @@ case "$COMMAND" in
         #do_reload
         #log_end_msg $?
         #;;
-restart|force-reload) 
+    restart|force-reload) 
     #
     # If the "reload" option is implemented then remove the 
     # 'force-reload' alias
     #
-    do_stop $IOCS
-    sleep 1
-    do_start $IOCS
-    ;;
-*)
-    #echo "Usage: $SCRIPTNAME {start|stop|restart|reload|force-reload}" >&2
-    echo "Usage: $SCRIPTNAME {start|stop|restart|force-reload} [iocs ...]" >&2
-    exit 3
-    ;;
+        do_stop $IOCS
+    	sleep 1
+    	do_start $IOCS
+    	;;
+    *)
+    	#echo "Usage: $SCRIPTNAME {start|stop|restart|reload|force-reload}" >&2
+    	echo "Usage: $SCRIPTNAME {start|stop|restart|force-reload} [iocs ...]" >&2
+    	exit 3
+    	;;
 esac
