@@ -1,0 +1,850 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Saved on 2024-01-19 14:25:48 by developer-->
+<display version="2.0.0">
+  <name>Display</name>
+  <width>400</width>
+  <height>565</height>
+  <background_color>
+    <color name="FLAME BackgroundDisplay" red="225" green="225" blue="225">
+    </color>
+  </background_color>
+  <widget type="action_button" version="3.0.0">
+    <name>Action Button</name>
+    <class>FLAME_ActionButton</class>
+    <actions>
+      <action type="open_display">
+        <file>areaDetector/ADAravis.bob</file>
+        <macros>
+          <P>$(DEVICE):</P>
+          <R>$(CAM):</R>
+        </macros>
+        <target>window</target>
+        <description>Open ADBase</description>
+      </action>
+    </actions>
+    <text>ADAravis</text>
+    <x>30</x>
+    <y>40</y>
+    <width>140</width>
+    <font use_class="true">
+      <font name="FLAME Label" family="Noto Sans" style="REGULAR" size="14.0">
+      </font>
+    </font>
+    <foreground_color use_class="true">
+      <color name="FLAME Text Main" red="0" green="0" blue="0">
+      </color>
+    </foreground_color>
+    <background_color use_class="true">
+      <color name="FLAME BackgroundButton" red="200" green="200" blue="200">
+      </color>
+    </background_color>
+    <tooltip>$(actions)</tooltip>
+  </widget>
+  <widget type="polyline" version="2.0.0">
+    <name>Polyline</name>
+    <x>100</x>
+    <y>70</y>
+    <width>1</width>
+    <height>100</height>
+    <points>
+      <point x="0.0" y="100.00000000000001">
+      </point>
+      <point x="0.0" y="0.0">
+      </point>
+    </points>
+    <line_width>2</line_width>
+    <line_color>
+      <color red="0" green="0" blue="0">
+      </color>
+    </line_color>
+  </widget>
+  <widget type="polyline" version="2.0.0">
+    <name>Polyline_6</name>
+    <x>170</x>
+    <y>60</y>
+    <width>40</width>
+    <height>1</height>
+    <points>
+      <point x="0.0" y="0.0">
+      </point>
+      <point x="40.0" y="0.0">
+      </point>
+    </points>
+    <line_width>2</line_width>
+    <line_color>
+      <color red="0" green="0" blue="0">
+      </color>
+    </line_color>
+  </widget>
+  <widget type="action_button" version="3.0.0">
+    <name>Action Button_4</name>
+    <class>FLAME_ActionButton</class>
+    <actions>
+      <action type="open_display">
+        <file>areaDetector/NDROI.bob</file>
+        <macros>
+          <P>$(DEVICE):</P>
+          <R>$(ROI):</R>
+        </macros>
+        <target>window</target>
+        <description>Open ROI</description>
+      </action>
+    </actions>
+    <text>ROI</text>
+    <x>30</x>
+    <y>170</y>
+    <width>140</width>
+    <font use_class="true">
+      <font name="FLAME Label" family="Noto Sans" style="REGULAR" size="14.0">
+      </font>
+    </font>
+    <foreground_color use_class="true">
+      <color name="FLAME Text Main" red="0" green="0" blue="0">
+      </color>
+    </foreground_color>
+    <background_color use_class="true">
+      <color name="FLAME BackgroundButton" red="200" green="200" blue="200">
+      </color>
+    </background_color>
+    <tooltip>$(actions)</tooltip>
+  </widget>
+  <widget type="polyline" version="2.0.0">
+    <name>Polyline_9</name>
+    <x>170</x>
+    <y>190</y>
+    <width>40</width>
+    <height>1</height>
+    <points>
+      <point x="0.0" y="0.0">
+      </point>
+      <point x="40.0" y="0.0">
+      </point>
+    </points>
+    <line_width>2</line_width>
+    <line_color>
+      <color red="0" green="0" blue="0">
+      </color>
+    </line_color>
+  </widget>
+  <widget type="action_button" version="3.0.0">
+    <name>Action Button_6</name>
+    <class>FLAME_ActionButton</class>
+    <actions>
+      <action type="open_display">
+        <file>areaDetector/NDFileTIFF.bob</file>
+        <macros>
+          <P>$(DEVICE):</P>
+          <R>RawTiff:</R>
+        </macros>
+        <target>window</target>
+        <description>Open ADBase</description>
+      </action>
+    </actions>
+    <text>RAW TIFF</text>
+    <x>210</x>
+    <y>40</y>
+    <width>140</width>
+    <font use_class="true">
+      <font name="FLAME Label" family="Noto Sans" style="REGULAR" size="14.0">
+      </font>
+    </font>
+    <foreground_color use_class="true">
+      <color name="FLAME Text Main" red="0" green="0" blue="0">
+      </color>
+    </foreground_color>
+    <background_color use_class="true">
+      <color name="FLAME BackgroundButton" red="200" green="200" blue="200">
+      </color>
+    </background_color>
+    <tooltip>$(actions)</tooltip>
+  </widget>
+  <widget type="action_button" version="3.0.0">
+    <name>Action Button_7</name>
+    <class>FLAME_ActionButton</class>
+    <actions>
+      <action type="open_display">
+        <file>areaDetector/NDStats.bob</file>
+        <macros>
+          <P>$(DEVICE):</P>
+          <R>$(STATS):</R>
+        </macros>
+        <target>window</target>
+        <description>Open STATS</description>
+      </action>
+    </actions>
+    <text>STATISTICS</text>
+    <x>30</x>
+    <y>300</y>
+    <width>140</width>
+    <font use_class="true">
+      <font name="FLAME Label" family="Noto Sans" style="REGULAR" size="14.0">
+      </font>
+    </font>
+    <foreground_color use_class="true">
+      <color name="FLAME Text Main" red="0" green="0" blue="0">
+      </color>
+    </foreground_color>
+    <background_color use_class="true">
+      <color name="FLAME BackgroundButton" red="200" green="200" blue="200">
+      </color>
+    </background_color>
+    <tooltip>$(actions)</tooltip>
+  </widget>
+  <widget type="polyline" version="2.0.0">
+    <name>Polyline_10</name>
+    <x>100</x>
+    <y>200</y>
+    <width>1</width>
+    <height>100</height>
+    <points>
+      <point x="0.0" y="100.0">
+      </point>
+      <point x="0.0" y="0.0">
+      </point>
+    </points>
+    <line_width>2</line_width>
+    <line_color>
+      <color red="0" green="0" blue="0">
+      </color>
+    </line_color>
+  </widget>
+  <widget type="action_button" version="3.0.0">
+    <name>Action Button_8</name>
+    <class>FLAME_ActionButton</class>
+    <actions>
+      <action type="open_display">
+        <file>areaDetector/NDFileTIFF.bob</file>
+        <macros>
+          <P>$(DEVICE):</P>
+          <R>ROITiff:</R>
+        </macros>
+        <target>window</target>
+        <description>Open TIFF</description>
+      </action>
+    </actions>
+    <text>ROI TIFF</text>
+    <x>210</x>
+    <y>170</y>
+    <width>140</width>
+    <font use_class="true">
+      <font name="FLAME Label" family="Noto Sans" style="REGULAR" size="14.0">
+      </font>
+    </font>
+    <foreground_color use_class="true">
+      <color name="FLAME Text Main" red="0" green="0" blue="0">
+      </color>
+    </foreground_color>
+    <background_color use_class="true">
+      <color name="FLAME BackgroundButton" red="200" green="200" blue="200">
+      </color>
+    </background_color>
+    <tooltip>$(actions)</tooltip>
+  </widget>
+  <widget type="rectangle" version="2.0.0">
+    <name>Rectangle_2</name>
+    <class>FLAME_BarHeavy</class>
+    <y>20</y>
+    <width>400</width>
+    <height use_class="true">3</height>
+    <line_color use_class="true">
+      <color name="FLAME Border Dark" red="128" green="128" blue="128">
+      </color>
+    </line_color>
+    <background_color use_class="true">
+      <color name="FLAME Border Dark" red="128" green="128" blue="128">
+      </color>
+    </background_color>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_4</name>
+    <class>FLAME_Title</class>
+    <text>areaDetector screens</text>
+    <x>99</x>
+    <y>5</y>
+    <width>203</width>
+    <height>25</height>
+    <font use_class="true">
+      <font name="FLAME Header" family="Noto Sans" style="BOLD" size="18.0">
+      </font>
+    </font>
+    <foreground_color use_class="true">
+      <color name="FLAME Text Main" red="0" green="0" blue="0">
+      </color>
+    </foreground_color>
+    <background_color use_class="true">
+      <color name="FLAME BackgroundDisplay" red="225" green="225" blue="225">
+      </color>
+    </background_color>
+    <transparent>false</transparent>
+    <horizontal_alignment>1</horizontal_alignment>
+  </widget>
+  <widget type="action_button" version="3.0.0">
+    <name>Action Button_9</name>
+    <class>FLAME_ActionButton</class>
+    <actions>
+      <action type="open_display">
+        <file>areaDetector/NDPva.bob</file>
+        <macros>
+          <P>$(DEVICE):</P>
+          <R>RawImg:</R>
+        </macros>
+        <target>window</target>
+        <description>Open ADImage</description>
+      </action>
+    </actions>
+    <text>RAW IMAGE</text>
+    <x>210</x>
+    <y>120</y>
+    <width>140</width>
+    <font use_class="true">
+      <font name="FLAME Label" family="Noto Sans" style="REGULAR" size="14.0">
+      </font>
+    </font>
+    <foreground_color use_class="true">
+      <color name="FLAME Text Main" red="0" green="0" blue="0">
+      </color>
+    </foreground_color>
+    <background_color use_class="true">
+      <color name="FLAME BackgroundButton" red="200" green="200" blue="200">
+      </color>
+    </background_color>
+    <tooltip>$(actions)</tooltip>
+  </widget>
+  <widget type="action_button" version="3.0.0">
+    <name>Action Button_10</name>
+    <class>FLAME_ActionButton</class>
+    <actions>
+      <action type="open_display">
+        <file>areaDetector/NDROI.bob</file>
+        <macros>
+          <P>$(DEVICE):</P>
+          <R>ROI:</R>
+        </macros>
+        <target>window</target>
+        <description>Open ADBase</description>
+      </action>
+    </actions>
+    <text>ROI IMAGE</text>
+    <x>210</x>
+    <y>250</y>
+    <width>140</width>
+    <font use_class="true">
+      <font name="FLAME Label" family="Noto Sans" style="REGULAR" size="14.0">
+      </font>
+    </font>
+    <foreground_color use_class="true">
+      <color name="FLAME Text Main" red="0" green="0" blue="0">
+      </color>
+    </foreground_color>
+    <background_color use_class="true">
+      <color name="FLAME BackgroundButton" red="200" green="200" blue="200">
+      </color>
+    </background_color>
+    <tooltip>$(actions)</tooltip>
+  </widget>
+  <widget type="action_button" version="3.0.0">
+    <name>Action Button_11</name>
+    <class>FLAME_ActionButton</class>
+    <actions>
+      <action type="open_display">
+        <file>areaDetector/NDOverlay.bob</file>
+        <macros>
+          <P>$(DEVICE):</P>
+          <R>$(STATS):</R>
+        </macros>
+        <target>window</target>
+        <description>Open Overlay</description>
+      </action>
+    </actions>
+    <text>OVERLAY</text>
+    <x>30</x>
+    <y>350</y>
+    <width>140</width>
+    <font use_class="true">
+      <font name="FLAME Label" family="Noto Sans" style="REGULAR" size="14.0">
+      </font>
+    </font>
+    <foreground_color use_class="true">
+      <color name="FLAME Text Main" red="0" green="0" blue="0">
+      </color>
+    </foreground_color>
+    <background_color use_class="true">
+      <color name="FLAME BackgroundButton" red="200" green="200" blue="200">
+      </color>
+    </background_color>
+    <tooltip>$(actions)</tooltip>
+  </widget>
+  <widget type="polyline" version="2.0.0">
+    <name>Polyline_11</name>
+    <x>100</x>
+    <y>330</y>
+    <width>1</width>
+    <points>
+      <point x="0.0" y="20.0">
+      </point>
+      <point x="0.0" y="0.0">
+      </point>
+    </points>
+    <line_width>2</line_width>
+    <line_color>
+      <color red="0" green="0" blue="0">
+      </color>
+    </line_color>
+  </widget>
+  <widget type="action_button" version="3.0.0">
+    <name>Action Button_12</name>
+    <class>FLAME_ActionButton</class>
+    <actions>
+      <action type="open_display">
+        <file>areaDetector/NDOverlayN.bob</file>
+        <macros>
+          <P>$(DEVICE):</P>
+          <R>$(OVERLAY):1:</R>
+        </macros>
+        <target>window</target>
+        <description>Open Overlay</description>
+      </action>
+    </actions>
+    <text>OVERLAY CROSS</text>
+    <x>210</x>
+    <y>350</y>
+    <width>140</width>
+    <font use_class="true">
+      <font name="FLAME Label" family="Noto Sans" style="REGULAR" size="14.0">
+      </font>
+    </font>
+    <foreground_color use_class="true">
+      <color name="FLAME Text Main" red="0" green="0" blue="0">
+      </color>
+    </foreground_color>
+    <background_color use_class="true">
+      <color name="FLAME BackgroundButton" red="200" green="200" blue="200">
+      </color>
+    </background_color>
+    <tooltip>$(actions)</tooltip>
+  </widget>
+  <widget type="polyline" version="2.0.0">
+    <name>Polyline_12</name>
+    <x>170</x>
+    <y>370</y>
+    <width>40</width>
+    <height>1</height>
+    <points>
+      <point x="0.0" y="0.0">
+      </point>
+      <point x="40.0" y="0.0">
+      </point>
+    </points>
+    <line_width>2</line_width>
+    <line_color>
+      <color red="0" green="0" blue="0">
+      </color>
+    </line_color>
+  </widget>
+  <widget type="polyline" version="2.0.0">
+    <name>Polyline_13</name>
+    <x>190</x>
+    <y>230</y>
+    <width>20</width>
+    <height>1</height>
+    <points>
+      <point x="0.0" y="0.0">
+      </point>
+      <point x="20.0" y="0.0">
+      </point>
+    </points>
+    <line_width>2</line_width>
+    <line_color>
+      <color red="0" green="0" blue="0">
+      </color>
+    </line_color>
+  </widget>
+  <widget type="polyline" version="2.0.0">
+    <name>Polyline_15</name>
+    <x>190</x>
+    <y>190</y>
+    <width>1</width>
+    <height>40</height>
+    <points>
+      <point x="0.0" y="40.0">
+      </point>
+      <point x="0.0" y="0.0">
+      </point>
+    </points>
+    <line_width>2</line_width>
+    <line_color>
+      <color red="0" green="0" blue="0">
+      </color>
+    </line_color>
+  </widget>
+  <widget type="polyline" version="2.0.0">
+    <name>Polyline_16</name>
+    <x>190</x>
+    <y>60</y>
+    <width>1</width>
+    <height>40</height>
+    <points>
+      <point x="0.0" y="40.0">
+      </point>
+      <point x="0.0" y="0.0">
+      </point>
+    </points>
+    <line_width>2</line_width>
+    <line_color>
+      <color red="0" green="0" blue="0">
+      </color>
+    </line_color>
+  </widget>
+  <widget type="polyline" version="2.0.0">
+    <name>Polyline_17</name>
+    <x>190</x>
+    <y>100</y>
+    <width>20</width>
+    <height>1</height>
+    <points>
+      <point x="0.0" y="0.0">
+      </point>
+      <point x="20.0" y="0.0">
+      </point>
+    </points>
+    <line_width>2</line_width>
+    <line_color>
+      <color red="0" green="0" blue="0">
+      </color>
+    </line_color>
+  </widget>
+  <widget type="action_button" version="3.0.0">
+    <name>Action Button_1</name>
+    <class>FLAME_ActionButton</class>
+    <actions>
+      <action type="open_display">
+        <file>CameraSpecificScreens/Basler-a2A1920-51gmBAS-features_1.bob</file>
+        <macros>
+          <P>$(DEVICE):</P>
+          <R>$(CAM):</R>
+        </macros>
+        <target>window</target>
+        <description>Open BaslerFeature1</description>
+      </action>
+    </actions>
+    <text>Features #1</text>
+    <x>30</x>
+    <y>430</y>
+    <width>140</width>
+    <font use_class="true">
+      <font name="FLAME Label" family="Noto Sans" style="REGULAR" size="14.0">
+      </font>
+    </font>
+    <foreground_color use_class="true">
+      <color name="FLAME Text Main" red="0" green="0" blue="0">
+      </color>
+    </foreground_color>
+    <background_color use_class="true">
+      <color name="FLAME BackgroundButton" red="200" green="200" blue="200">
+      </color>
+    </background_color>
+    <tooltip>$(actions)</tooltip>
+  </widget>
+  <widget type="rectangle" version="2.0.0">
+    <name>Rectangle_3</name>
+    <class>FLAME_BarHeavy</class>
+    <y>410</y>
+    <width>400</width>
+    <height use_class="true">3</height>
+    <line_color use_class="true">
+      <color name="FLAME Border Dark" red="128" green="128" blue="128">
+      </color>
+    </line_color>
+    <background_color use_class="true">
+      <color name="FLAME Border Dark" red="128" green="128" blue="128">
+      </color>
+    </background_color>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_5</name>
+    <class>FLAME_Title</class>
+    <text>Basler camera screens</text>
+    <x>94</x>
+    <y>395</y>
+    <width>212</width>
+    <height>25</height>
+    <font use_class="true">
+      <font name="FLAME Header" family="Noto Sans" style="BOLD" size="18.0">
+      </font>
+    </font>
+    <foreground_color use_class="true">
+      <color name="FLAME Text Main" red="0" green="0" blue="0">
+      </color>
+    </foreground_color>
+    <background_color use_class="true">
+      <color name="FLAME BackgroundDisplay" red="225" green="225" blue="225">
+      </color>
+    </background_color>
+    <transparent>false</transparent>
+    <horizontal_alignment>1</horizontal_alignment>
+  </widget>
+  <widget type="action_button" version="3.0.0">
+    <name>Action Button_2</name>
+    <class>FLAME_ActionButton</class>
+    <actions>
+      <action type="open_display">
+        <file>CameraSpecificScreens/Basler-a2A1920-51gmBAS-features_2.bob</file>
+        <macros>
+          <P>$(DEVICE):</P>
+          <R>$(CAM):</R>
+        </macros>
+        <target>window</target>
+        <description>Open BaslerFeature2</description>
+      </action>
+    </actions>
+    <text>Features #2</text>
+    <x>210</x>
+    <y>430</y>
+    <width>140</width>
+    <font use_class="true">
+      <font name="FLAME Label" family="Noto Sans" style="REGULAR" size="14.0">
+      </font>
+    </font>
+    <foreground_color use_class="true">
+      <color name="FLAME Text Main" red="0" green="0" blue="0">
+      </color>
+    </foreground_color>
+    <background_color use_class="true">
+      <color name="FLAME BackgroundButton" red="200" green="200" blue="200">
+      </color>
+    </background_color>
+    <tooltip>$(actions)</tooltip>
+  </widget>
+  <widget type="action_button" version="3.0.0">
+    <name>Action Button_3</name>
+    <class>FLAME_ActionButton</class>
+    <actions>
+      <action type="open_display">
+        <file>CameraSpecificScreens/Basler-a2A1920-51gmBAS-features_4.bob</file>
+        <macros>
+          <P>$(DEVICE):</P>
+          <R>$(CAM):</R>
+        </macros>
+        <target>window</target>
+        <description>Open BaslerFeature4</description>
+      </action>
+    </actions>
+    <text>Features #4</text>
+    <x>210</x>
+    <y>470</y>
+    <width>140</width>
+    <font use_class="true">
+      <font name="FLAME Label" family="Noto Sans" style="REGULAR" size="14.0">
+      </font>
+    </font>
+    <foreground_color use_class="true">
+      <color name="FLAME Text Main" red="0" green="0" blue="0">
+      </color>
+    </foreground_color>
+    <background_color use_class="true">
+      <color name="FLAME BackgroundButton" red="200" green="200" blue="200">
+      </color>
+    </background_color>
+    <tooltip>$(actions)</tooltip>
+  </widget>
+  <widget type="action_button" version="3.0.0">
+    <name>Action Button_14</name>
+    <class>FLAME_ActionButton</class>
+    <actions>
+      <action type="open_display">
+        <file>CameraSpecificScreens/Basler-a2A1920-51gmBAS-features_3.bob</file>
+        <macros>
+          <P>$(DEVICE):</P>
+          <R>$(CAM):</R>
+        </macros>
+        <target>window</target>
+        <description>Open BaslerFeature3</description>
+      </action>
+    </actions>
+    <text>Features #3</text>
+    <x>30</x>
+    <y>470</y>
+    <width>140</width>
+    <font use_class="true">
+      <font name="FLAME Label" family="Noto Sans" style="REGULAR" size="14.0">
+      </font>
+    </font>
+    <foreground_color use_class="true">
+      <color name="FLAME Text Main" red="0" green="0" blue="0">
+      </color>
+    </foreground_color>
+    <background_color use_class="true">
+      <color name="FLAME BackgroundButton" red="200" green="200" blue="200">
+      </color>
+    </background_color>
+    <tooltip>$(actions)</tooltip>
+  </widget>
+  <widget type="polyline" version="2.0.0">
+    <name>Polyline_20</name>
+    <x>190</x>
+    <y>100</y>
+    <width>1</width>
+    <height>40</height>
+    <points>
+      <point x="0.0" y="40.0">
+      </point>
+      <point x="0.0" y="0.0">
+      </point>
+    </points>
+    <line_width>2</line_width>
+    <line_color>
+      <color red="0" green="0" blue="0">
+      </color>
+    </line_color>
+  </widget>
+  <widget type="polyline" version="2.0.0">
+    <name>Polyline_21</name>
+    <x>190</x>
+    <y>140</y>
+    <width>20</width>
+    <height>1</height>
+    <points>
+      <point x="0.0" y="0.0">
+      </point>
+      <point x="20.0" y="0.0">
+      </point>
+    </points>
+    <line_width>2</line_width>
+    <line_color>
+      <color red="0" green="0" blue="0">
+      </color>
+    </line_color>
+  </widget>
+  <widget type="action_button" version="3.0.0">
+    <name>Action Button_16</name>
+    <class>FLAME_ActionButton</class>
+    <actions>
+      <action type="open_display">
+        <file>areaDetector/NDFileJPEG.bob</file>
+        <macros>
+          <P>$(DEVICE):</P>
+          <R>RawJPEG:</R>
+        </macros>
+        <target>window</target>
+        <description>Open ADBase</description>
+      </action>
+    </actions>
+    <text>RAW JPEG</text>
+    <x>210</x>
+    <y>80</y>
+    <width>140</width>
+    <font use_class="true">
+      <font name="FLAME Label" family="Noto Sans" style="REGULAR" size="14.0">
+      </font>
+    </font>
+    <foreground_color use_class="true">
+      <color name="FLAME Text Main" red="0" green="0" blue="0">
+      </color>
+    </foreground_color>
+    <background_color use_class="true">
+      <color name="FLAME BackgroundButton" red="200" green="200" blue="200">
+      </color>
+    </background_color>
+    <tooltip>$(actions)</tooltip>
+  </widget>
+  <widget type="action_button" version="3.0.0">
+    <name>Action Button_17</name>
+    <class>FLAME_ActionButton</class>
+    <actions>
+      <action type="open_display">
+        <file>areaDetector/NDFileJPEG.bob</file>
+        <macros>
+          <P>$(DEVICE):</P>
+          <R>ROIJPEG:</R>
+        </macros>
+        <target>window</target>
+        <description>Open TIFF</description>
+      </action>
+    </actions>
+    <text>ROI JPEG</text>
+    <x>210</x>
+    <y>210</y>
+    <width>140</width>
+    <font use_class="true">
+      <font name="FLAME Label" family="Noto Sans" style="REGULAR" size="14.0">
+      </font>
+    </font>
+    <foreground_color use_class="true">
+      <color name="FLAME Text Main" red="0" green="0" blue="0">
+      </color>
+    </foreground_color>
+    <background_color use_class="true">
+      <color name="FLAME BackgroundButton" red="200" green="200" blue="200">
+      </color>
+    </background_color>
+    <tooltip>$(actions)</tooltip>
+  </widget>
+  <widget type="polyline" version="2.0.0">
+    <name>Polyline_22</name>
+    <x>190</x>
+    <y>270</y>
+    <width>20</width>
+    <height>1</height>
+    <points>
+      <point x="0.0" y="0.0">
+      </point>
+      <point x="20.0" y="0.0">
+      </point>
+    </points>
+    <line_width>2</line_width>
+    <line_color>
+      <color red="0" green="0" blue="0">
+      </color>
+    </line_color>
+  </widget>
+  <widget type="polyline" version="2.0.0">
+    <name>Polyline_23</name>
+    <x>190</x>
+    <y>230</y>
+    <width>1</width>
+    <height>40</height>
+    <points>
+      <point x="0.0" y="40.0">
+      </point>
+      <point x="0.0" y="0.0">
+      </point>
+    </points>
+    <line_width>2</line_width>
+    <line_color>
+      <color red="0" green="0" blue="0">
+      </color>
+    </line_color>
+  </widget>
+  <widget type="action_button" version="3.0.0">
+    <name>Action Button_5</name>
+    <class>FLAME_ActionButton</class>
+    <actions>
+      <action type="open_display">
+        <file>CameraSpecificScreens/Basler-a2A1920-51gmBAS-features_5.bob</file>
+        <macros>
+          <P>$(DEVICE):</P>
+          <R>$(CAM):</R>
+        </macros>
+        <target>window</target>
+        <description>Open BaslerFeature5</description>
+      </action>
+    </actions>
+    <text>Features #5</text>
+    <x>30</x>
+    <y>510</y>
+    <width>140</width>
+    <font use_class="true">
+      <font name="FLAME Label" family="Noto Sans" style="REGULAR" size="14.0">
+      </font>
+    </font>
+    <foreground_color use_class="true">
+      <color name="FLAME Text Main" red="0" green="0" blue="0">
+      </color>
+    </foreground_color>
+    <background_color use_class="true">
+      <color name="FLAME BackgroundButton" red="200" green="200" blue="200">
+      </color>
+    </background_color>
+    <tooltip>$(actions)</tooltip>
+  </widget>
+</display>

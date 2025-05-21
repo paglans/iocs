@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Saved on 2023-12-12 15:30:43 by developer-->
+<display version="2.0.0">
+  <name>Display</name>
+  <width>400</width>
+  <height>445</height>
+  <background_color>
+    <color name="FLAME BackgroundDisplay" red="225" green="225" blue="225">
+    </color>
+  </background_color>
+  <widget type="rectangle" version="2.0.0">
+    <name>Rectangle_2</name>
+    <class>FLAME_BarHeavy</class>
+    <y>15</y>
+    <width>400</width>
+    <height use_class="true">3</height>
+    <line_color use_class="true">
+      <color name="FLAME Border Dark" red="128" green="128" blue="128">
+      </color>
+    </line_color>
+    <background_color use_class="true">
+      <color name="FLAME Border Dark" red="128" green="128" blue="128">
+      </color>
+    </background_color>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_4</name>
+    <class>FLAME_Title</class>
+    <text>$(IMG) Filename</text>
+    <x>125</x>
+    <width>150</width>
+    <height>25</height>
+    <font use_class="true">
+      <font name="FLAME Header" family="Noto Sans" style="BOLD" size="18.0">
+      </font>
+    </font>
+    <foreground_color use_class="true">
+      <color name="FLAME Text Main" red="0" green="0" blue="0">
+      </color>
+    </foreground_color>
+    <background_color use_class="true">
+      <color name="FLAME BackgroundDisplay" red="225" green="225" blue="225">
+      </color>
+    </background_color>
+    <transparent>false</transparent>
+    <horizontal_alignment>1</horizontal_alignment>
+  </widget>
+  <widget type="rectangle" version="2.0.0">
+    <name>Rectangle_3</name>
+    <class>FLAME_BarHeavy</class>
+    <y>205</y>
+    <width>400</width>
+    <height use_class="true">3</height>
+    <line_color use_class="true">
+      <color name="FLAME Border Dark" red="128" green="128" blue="128">
+      </color>
+    </line_color>
+    <background_color use_class="true">
+      <color name="FLAME Border Dark" red="128" green="128" blue="128">
+      </color>
+    </background_color>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_5</name>
+    <class>FLAME_Title</class>
+    <text>$(IMG) Capture</text>
+    <x>125</x>
+    <y>190</y>
+    <width>150</width>
+    <height>25</height>
+    <font use_class="true">
+      <font name="FLAME Header" family="Noto Sans" style="BOLD" size="18.0">
+      </font>
+    </font>
+    <foreground_color use_class="true">
+      <color name="FLAME Text Main" red="0" green="0" blue="0">
+      </color>
+    </foreground_color>
+    <background_color use_class="true">
+      <color name="FLAME BackgroundDisplay" red="225" green="225" blue="225">
+      </color>
+    </background_color>
+    <transparent>false</transparent>
+    <horizontal_alignment>1</horizontal_alignment>
+  </widget>
+  <widget type="embedded" version="2.0.0">
+    <name>savepath_rb</name>
+    <macros>
+      <DESC>Save path:</DESC>
+      <PV>$(DEVICE):$(FORMAT):FilePath</PV>
+    </macros>
+    <file>widgets/setpoint_string.bob</file>
+    <y>35</y>
+    <height>30</height>
+    <resize>2</resize>
+    <transparent>true</transparent>
+  </widget>
+  <widget type="embedded" version="2.0.0">
+    <name>savepath_sp</name>
+    <macros>
+      <DESC></DESC>
+      <PV>$(DEVICE):$(FORMAT):FilePath_RBV</PV>
+    </macros>
+    <file>widgets/readback_string.bob</file>
+    <y>65</y>
+    <height>30</height>
+    <resize>2</resize>
+    <transparent>true</transparent>
+  </widget>
+  <widget type="embedded" version="2.0.0">
+    <name>filename_rb</name>
+    <macros>
+      <DESC>File name:</DESC>
+      <PV>$(DEVICE):$(FORMAT):FileName</PV>
+    </macros>
+    <file>widgets/setpoint_string.bob</file>
+    <y>95</y>
+    <height>30</height>
+    <resize>2</resize>
+    <transparent>true</transparent>
+  </widget>
+  <widget type="embedded" version="2.0.0">
+    <name>filename_sp</name>
+    <macros>
+      <DESC></DESC>
+      <PV>$(DEVICE):$(FORMAT):FileName_RBV</PV>
+    </macros>
+    <file>widgets/readback_string.bob</file>
+    <y>125</y>
+    <height>30</height>
+    <resize>2</resize>
+    <transparent>true</transparent>
+  </widget>
+  <widget type="embedded" version="2.0.0">
+    <name>filename_sp</name>
+    <macros>
+      <DESC>File number:</DESC>
+      <PV>$(DEVICE):$(FORMAT):FileNumber</PV>
+    </macros>
+    <file>widgets/spinner.bob</file>
+    <y>155</y>
+    <height>30</height>
+    <resize>2</resize>
+    <transparent>true</transparent>
+  </widget>
+  <widget type="embedded" version="2.0.0">
+    <name>numimages_sp</name>
+    <macros>
+      <DESC>Number of images:</DESC>
+      <PV>$(DEVICE):$(FORMAT):NumCapture</PV>
+    </macros>
+    <file>widgets/spinner.bob</file>
+    <y>255</y>
+    <height>30</height>
+    <resize>2</resize>
+    <transparent>true</transparent>
+  </widget>
+  <widget type="group" version="2.0.0">
+    <name>Capture</name>
+    <y>285</y>
+    <width>400</width>
+    <height>30</height>
+    <style>3</style>
+    <transparent>true</transparent>
+    <widget type="label" version="2.0.0">
+      <name>Label_6</name>
+      <class>FLAME_Label</class>
+      <text>Capture:</text>
+      <x>10</x>
+      <width>180</width>
+      <height>30</height>
+      <font use_class="true">
+        <font name="FLAME Label" family="Noto Sans" style="REGULAR" size="14.0">
+        </font>
+      </font>
+      <foreground_color use_class="true">
+        <color name="FLAME Text Main" red="0" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <background_color use_class="true">
+        <color name="FLAME BackgroundDisplay" red="225" green="225" blue="225">
+        </color>
+      </background_color>
+      <vertical_alignment>1</vertical_alignment>
+    </widget>
+    <widget type="action_button" version="3.0.0">
+      <name>Start Button_2</name>
+      <class>FLAME_ActionButtonSmall</class>
+      <actions execute_as_one="true">
+        <action type="write_pv">
+          <pv_name>$(DEVICE):$(FORMAT):Capture</pv_name>
+          <value>0</value>
+          <description>Stop capture</description>
+        </action>
+      </actions>
+      <text>STOP</text>
+      <x>300</x>
+      <y>4</y>
+      <width>90</width>
+      <height use_class="true">22</height>
+      <font use_class="true">
+        <font name="FLAME Label" family="Noto Sans" style="REGULAR" size="14.0">
+        </font>
+      </font>
+      <foreground_color use_class="true">
+        <color name="FLAME Text Main" red="0" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <background_color use_class="true">
+        <color name="FLAME BackgroundButton" red="200" green="200" blue="200">
+        </color>
+      </background_color>
+      <tooltip></tooltip>
+    </widget>
+    <widget type="action_button" version="3.0.0">
+      <name>Start Button_3</name>
+      <class>FLAME_ActionButtonSmall</class>
+      <actions execute_as_one="true">
+        <action type="write_pv">
+          <pv_name>$(DEVICE):$(FORMAT):Capture</pv_name>
+          <value>1</value>
+          <description>Start capture</description>
+        </action>
+      </actions>
+      <text>START</text>
+      <x>200</x>
+      <y>4</y>
+      <width>90</width>
+      <height use_class="true">22</height>
+      <font use_class="true">
+        <font name="FLAME Label" family="Noto Sans" style="REGULAR" size="14.0">
+        </font>
+      </font>
+      <foreground_color use_class="true">
+        <color name="FLAME Text Main" red="0" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <background_color use_class="true">
+        <color name="FLAME BackgroundButton" red="200" green="200" blue="200">
+        </color>
+      </background_color>
+      <tooltip></tooltip>
+    </widget>
+  </widget>
+  <widget type="embedded" version="2.0.0">
+    <name>lastsaved_rb</name>
+    <macros>
+      <DESC>Last file saved:</DESC>
+      <PV>$(DEVICE):$(FORMAT):FullFileName_RBV</PV>
+    </macros>
+    <file>widgets/readback_string.bob</file>
+    <y>315</y>
+    <height>30</height>
+    <resize>2</resize>
+    <transparent>true</transparent>
+  </widget>
+  <widget type="embedded" version="2.0.0">
+    <name>status_rb</name>
+    <macros>
+      <DESC>Status:</DESC>
+      <PV>$(DEVICE):$(FORMAT):Capture_RBV</PV>
+    </macros>
+    <file>widgets/readback_string.bob</file>
+    <y>345</y>
+    <height>30</height>
+    <resize>2</resize>
+    <transparent>true</transparent>
+  </widget>
+  <widget type="embedded" version="2.0.0">
+    <name>writestatus</name>
+    <macros>
+      <DESC>Write status:</DESC>
+      <PV>$(DEVICE):$(FORMAT):WriteStatus</PV>
+    </macros>
+    <file>widgets/readback_string.bob</file>
+    <y>375</y>
+    <height>30</height>
+    <resize>2</resize>
+    <transparent>true</transparent>
+  </widget>
+  <widget type="embedded" version="2.0.0">
+    <name>savemessage</name>
+    <macros>
+      <DESC>Save message:</DESC>
+      <PV>$(DEVICE):$(FORMAT):WriteMessage</PV>
+    </macros>
+    <file>widgets/readback_string.bob</file>
+    <y>405</y>
+    <height>30</height>
+    <resize>2</resize>
+    <transparent>true</transparent>
+  </widget>
+  <widget type="embedded" version="2.0.0">
+    <name>Embedded Display_12</name>
+    <macros>
+      <DESC>Write mode:</DESC>
+      <RB_PV>$(DEVICE):$(FORMAT):FileWriteMode_RBV</RB_PV>
+      <SP_PV>$(DEVICE):$(FORMAT):FileWriteMode</SP_PV>
+    </macros>
+    <file>widgets/readback&amp;combobox.bob</file>
+    <y>225</y>
+    <height>30</height>
+    <resize>2</resize>
+    <transparent>true</transparent>
+  </widget>
+</display>

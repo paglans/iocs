@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Saved on 2024-01-19 13:55:35 by developer-->
+<display version="2.0.0">
+  <macros>
+    <DATA>ProfileCentroidX_RBV</DATA>
+  </macros>
+  <width>778</width>
+  <height>520</height>
+  <background_color>
+    <color red="237" green="236" blue="235">
+    </color>
+  </background_color>
+  <actions>
+  </actions>
+  <widget type="embedded" version="2.0.0">
+    <name>Embedded Display_14</name>
+    <macros>
+      <DESC>Live feed enable</DESC>
+      <EN_PV>$(DEVICE):$(IMAGE):EnableCallbacks</EN_PV>
+      <RB_PV>$(DEVICE):$(IMAGE):EnableCallbacks_RBV</RB_PV>
+    </macros>
+    <file>widgets/enable.bob</file>
+    <x>10</x>
+    <y>10</y>
+    <width>200</width>
+    <height>30</height>
+    <resize>2</resize>
+    <transparent>true</transparent>
+  </widget>
+  <widget type="image" version="2.0.0">
+    <name>$(DEVICE)_RawImage_1</name>
+    <pv_name>pva://$(DEVICE):RawImg</pv_name>
+    <x>10</x>
+    <y>40</y>
+    <width>$(IMGWIDTH)</width>
+    <height>$(IMGHEIGHT)</height>
+    <background_color>
+      <color name="FLAME BackgroundContainer" red="230" green="230" blue="230">
+      </color>
+    </background_color>
+    <foreground_color>
+      <color name="IO InputPV Fg" red="0" green="32" blue="92">
+      </color>
+    </foreground_color>
+    <color_map>
+      <name>GRAY</name>
+    </color_map>
+    <color_bar>
+      <visible>false</visible>
+      <bar_size>40</bar_size>
+      <scale_font>
+        <font name="IO Normal" family="sans" style="REGULAR" size="10.891089108910892">
+        </font>
+      </scale_font>
+    </color_bar>
+    <x_axis>
+      <visible>false</visible>
+      <title>X</title>
+      <minimum>0.0</minimum>
+      <maximum>100.0</maximum>
+      <title_font>
+        <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+        </font>
+      </title_font>
+      <scale_font>
+        <font name="Default" family="Liberation Sans" style="REGULAR" size="14.0">
+        </font>
+      </scale_font>
+    </x_axis>
+    <y_axis>
+      <visible>false</visible>
+      <title>Y</title>
+      <minimum>100.0</minimum>
+      <maximum>0.0</maximum>
+      <title_font>
+        <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+        </font>
+      </title_font>
+      <scale_font>
+        <font name="Default" family="Liberation Sans" style="REGULAR" size="14.0">
+        </font>
+      </scale_font>
+    </y_axis>
+    <actions>
+    </actions>
+    <rules>
+      <rule name="DataWidth" prop_id="data_width" out_exp="true">
+        <exp bool_exp="true">
+          <expression>pv0</expression>
+        </exp>
+        <pv_name>$(DEVICE):$(IMAGE):ArraySize0_RBV</pv_name>
+      </rule>
+      <rule name="DataHeight" prop_id="data_height" out_exp="true">
+        <exp bool_exp="true">
+          <expression>pv0</expression>
+        </exp>
+        <pv_name>$(DEVICE):$(IMAGE):ArraySize1_RBV</pv_name>
+      </rule>
+      <rule name="xAxisMax" prop_id="x_axis.maximum" out_exp="true">
+        <exp bool_exp="true">
+          <expression>pv0</expression>
+        </exp>
+        <pv_name>$(DEVICE):$(IMAGE):ArraySize0_RBV</pv_name>
+      </rule>
+      <rule name="yAxisMax" prop_id="y_axis.minimum" out_exp="true">
+        <exp bool_exp="true">
+          <expression>pv0</expression>
+        </exp>
+        <pv_name>$(DEVICE):$(IMAGE):ArraySize1_RBV</pv_name>
+      </rule>
+    </rules>
+    <scripts>
+      <script file="EmbeddedPy">
+        <text><![CDATA[# Embedded python script
+from org.csstudio.display.builder.runtime.script import PVUtil, ScriptUtil
+
+process_roi = pvs[4]
+process_roi.write(1)]]></text>
+        <pv_name>$(DEVICE):$(ROI):MinX</pv_name>
+        <pv_name>$(DEVICE):$(ROI):MinY</pv_name>
+        <pv_name>$(DEVICE):$(ROI):SizeX</pv_name>
+        <pv_name>$(DEVICE):$(ROI):SizeY</pv_name>
+        <pv_name trigger="false">$(DEVICE):$(ROI):ProcessPlugin</pv_name>
+      </script>
+    </scripts>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <data_width>500</data_width>
+    <data_height>630</data_height>
+    <interpolation>0</interpolation>
+    <unsigned>true</unsigned>
+    <autoscale>false</autoscale>
+    <maximum>256.0</maximum>
+    <rois>
+      <roi>
+        <name>ROI</name>
+        <color>
+          <color red="255" green="0" blue="0">
+          </color>
+        </color>
+        <visible>true</visible>
+        <interactive>true</interactive>
+        <x_pv>$(DEVICE):$(ROI):MinX</x_pv>
+        <y_pv>$(DEVICE):$(ROI):MinY</y_pv>
+        <width_pv>$(DEVICE):$(ROI):SizeX</width_pv>
+        <height_pv>$(DEVICE):$(ROI):SizeY</height_pv>
+        <file></file>
+      </roi>
+    </rois>
+  </widget>
+</display>
