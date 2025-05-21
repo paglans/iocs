@@ -31,3 +31,9 @@ Last but not least, update your empty repo with the state from the remote:
 ```
     git pull origin main
 ```
+##
+- edit the value of CAMERA_APP in configure/RELEASE
+- edit name
+- edit IP address
+- edit .template(?)
+- 
