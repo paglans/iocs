@@ -2,6 +2,9 @@ AUTO:	ioctestcam
 
 GLOBAL:
 
-ioctestcam:
+ioctestcam: 
+HOMEDIR /home/ioctestcam
+BOOTDIR /home/ioctestcam/iocs/basler-a2a2590-22gcPRO-camera-master-main/camera-epics/iocBoot/ioccameraSample
+PORT 24700
 
 iochomecam:

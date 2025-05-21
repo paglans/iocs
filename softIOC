@@ -18,9 +18,8 @@ HOST=`uname -n`
 
 
 PROCSERV=/usr/bin/procServ
-CONFFILE=/opt/epics/config//softiocs.$HOST
+CONFFILE=/opt/epics/config/softiocs.$HOST
 HOMEDIRS=/home
-
 
 # Check for config file
 if [ ! -r $CONFFILE ] 
@@ -58,13 +57,13 @@ evaluate_options()
                 echo "$CONFFILE: Value(s) required for $TAG.";
                 exit 1 
             else
-                VALUE = $1
+                VALUE=$1
                 shift
             fi
                                 # If more values follow assign them too
             while [ $1 != '#' -a $# != 0 ] 
             do
-                VALUE = "$VALUE $1"
+                VALUE="$VALUE $1"
                 shift;
             done
             eval ${OPTION}=\$VALUE
@@ -83,19 +82,19 @@ default_options()
     IOC_LC=$1
     IOC_UC=`echo $1 | tr [:lower:] [:upper:]`
 
-    if [[ "$IOC_LC" = "mdi"* ]] 
-#    if [ "$IOC_LC" = "mdi"* ]
-        then
-        TOP=DiagR3.14.9.0.1-Tornado2.2.1 
-    elif [[ "$IOC_LC" = *"p" ]]
-        then
-        TOP=MLS-Controls 
-    else
-        TOP=BII-Controls/base-3-14
-    fi
+    #if [[ "$IOC_LC" = "mdi"* ]] 
+    #    then
+    #    TOP=DiagR3.14.9.0.1-Tornado2.2.1 
+    #elif [[ "$IOC_LC" = *"p" ]]
+    #    then
+    #    TOP=MLS-Controls 
+    #else
+    #    TOP=BII-Controls/base-3-14
+    #fi
 
-    BOOTDIR=/opt/IOC/$TOP/boot/$IOC_UC
+    #BOOTDIR=/opt/IOC/$TOP/boot/$IOC_UC
     HOMEDIR=$HOMEDIRS/$IOC_LC
+    BOOTDIR=$HOMEDIR/$TOP
     PIDFILE=$HOMEDIR/$IOC_LC.pid
     ENVFILE=$HOMEDIR/$IOC_LC.env
     IOC_USER=$IOC_LC
@@ -119,6 +118,7 @@ assign_options()
                 -e 's/$/ \#/' \
                 -e 's/[\t ]/ /g'`
     evaluate_options $SECTION
+
 }
 
 get_iocs() 
@@ -190,17 +190,17 @@ do_start()
             then
                 sudo -H -u $IOC sh -c "$SETENV (env > $ENVFILE; /sbin/start-stop-daemon --start --quiet --chdir $BOOTDIR \
                 --pidfile $PIDFILE --startas $PROCSERV --name procServ --test > /dev/null)"
-                if [ "$?" =1 ]
-                then
-                    echo -n "<was running> "
-                else
-                    sudo -H -u $IOC sh -c "$SETENV (env > $ENVFILE; /sbin/start-stop-daemon --start --quiet --chdir $BOOTDIR \
-                    --pidfile $PIDFILE --startas $PROCSERV --name procServ --$PROCSERVOPTS ./st.cmd)"
+                if [ "$?" = 1 ]
+   			then
+                    	echo -n "<was running> "
+                	else
+                    	sudo -H -u $IOC sh -c "$SETENV (env > $ENVFILE; /sbin/start-stop-daemon --start --quiet --chdir $BOOTDIR \
+                    		--pidfile $PIDFILE --startas $PROCSERV --name procServ -- $PROCSERVOPTS ./st.cmd)"
 
-                    if [ "$?" = 1 ]
-                    then 
-                        echo -n "<failed> "
-                    fi
+                    	if [ "$?" = 1 ]
+                    		then 
+                        	echo -n "<failed> "
+                    	fi
                 fi
             else
                 echo -e "\nWarning: Home directory $BOOTDIR does not exist! Ignoring $IOC"
