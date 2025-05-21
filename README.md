@@ -29,5 +29,5 @@ Now you need to define which files/folders you want to actually check out. This 
 ```
 Last but not least, update your empty repo with the state from the remote:
 ```
-    git pull origin master
+    git pull origin main
 ```
