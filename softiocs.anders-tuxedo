@@ -8,3 +8,8 @@ BOOTDIR /home/ioctestcam/iocs/basler-a2a2590-22gcPRO-camera-master-main/camera-e
 PORT 24700
 
 iochomecam:
+HOMEDIR /home/iochomecam
+BOOTDIR /home/iochomecam/iocs/basler-acA1920-40gc-camera-master-main/camera-epics/iocBoot/ioccameraSample
+PORT 24701
+
+
