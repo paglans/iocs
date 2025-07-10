@@ -1,0 +1,3 @@
+medm -x -macro "P=6013SIM1:, R=cam1:" simDetector.adl &
+../../bin/linux-x86_64/simDetector st.cmd
+
