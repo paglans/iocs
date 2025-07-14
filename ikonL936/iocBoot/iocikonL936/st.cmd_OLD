@@ -1,0 +1,25 @@
+#!../../bin/linux-x86_64/ikonL936
+
+#- SPDX-FileCopyrightText: 2003 Argonne National Laboratory
+#-
+#- SPDX-License-Identifier: EPICS
+
+#- You may have to change ikonL936 to something else
+#- everywhere it appears in this file
+
+< envPaths
+
+cd "${TOP}"
+
+## Register all support components
+dbLoadDatabase "dbd/ikonL936.dbd"
+ikonL936_registerRecordDeviceDriver pdbbase
+
+## Load record instances
+#dbLoadRecords("db/ikonL936.db","user=anders")
+
+cd "${TOP}/iocBoot/${IOC}"
+iocInit
+
+## Start any sequence programs
+#seq sncxxx,"user=anders"
