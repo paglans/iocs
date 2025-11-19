@@ -26,7 +26,7 @@
 # the CONFIG_SITE file.
 
 # Variables and paths to dependent modules:
-MODULES = /opt/epics/synApps-R6-3-2a/support
+MODULES = /opt/epics/synApps-R6-3-2/support
 MEASCOMP = $(MODULES)/measComp-R4-3
 SCALER = $(MODULES)/scaler-4-1
 BUSY = $(MODULES)/busy-R1-7-4
