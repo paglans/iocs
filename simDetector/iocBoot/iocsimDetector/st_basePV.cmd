@@ -53,12 +53,12 @@ dbLoadRecords("$(ADSIMDETECTOR)/db/simDetector.template","P=$(PREFIX),R=cam2:,PO
 # Load an NDFile database.  This is not supported for the simDetector which does not write files.
 #dbLoadRecords("NDFile.template","P=$(PREFIX),R=cam1:,PORT=SIM1,ADDR=0,TIMEOUT=1")
 
-# Create a standard arrays plugin, set it to get data from first simDetector driver.
-NDStdArraysConfigure("Image1", 20, 0, "$(PORT)", 0, 0, 0, 0, 0, 5)
-
 # Create a PVA arrays plugin
 NDPvaConfigure("RawImage", "$(QSIZE)", 0, "$(PORT)", 0, "$(PREFIX)RawImg", 0, 0, 0)
 dbLoadRecords("$(ADCORE)/db/NDPva.template", "P=$(PREFIX),R=RawImg:,PORT=RawImage,ADDR=0,TIMEOUT=1,NDARRAY_PORT=$(PORT)")
+
+# Create a standard arrays plugin, set it to get data from first simDetector driver.
+NDStdArraysConfigure("Image1", 20, 0, "$(PORT)", 0, 0, 0, 0, 0, 5)
 
 # This creates a waveform large enough for 2000x2000x3 (e.g. RGB color) arrays.
 # This waveform only allows transporting 8-bit images
@@ -91,4 +91,5 @@ iocInit()
 
 # save things every thirty seconds
 create_monitor_set("auto_settings.req", 30, "P=$(PREFIX)")
+dbpf("$(PREFIX)RawImg:EnableCallbacks", 1)
 dbl > pvs.txt

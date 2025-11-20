@@ -13,7 +13,7 @@ epicsEnvSet("WDIG_POINTS",   "2048")
 #epicsEnvSet("UNIQUE_ID",     "10.54.160.63")
 #epicsEnvSet("UNIQUE_ID",     "gse-e1608-4:54211")
 #epicsEnvSet("UNIQUE_ID",     "01234567")
-epicsEnvSet("UNIQUE_ID",      "192.168.11.101")
+epicsEnvSet("UNIQUE_ID",      "192.168.10.161")
 
 ## Configure port driver
 # MultiFunctionConfig((portName,        # The name to give to this asyn port driver
