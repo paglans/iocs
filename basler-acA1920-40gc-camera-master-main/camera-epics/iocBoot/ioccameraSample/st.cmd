@@ -7,6 +7,9 @@
 #
 
 < envPaths
+
+epicsEnvSet("CAMERA_APP",	"/opt/epics/iocs/basler-acA1920-40gc-camera-master-main/camera-epics")
+
 cd "${TOP}"
 
 ## Register all support components
