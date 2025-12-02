@@ -1,0 +1,6 @@
+NAME=simDetector
+PORT=4051
+HOST=<host>
+USER=softioc
+CHDIR=/opt/epics/iocs/simDetector/iocBoot/iocsimDetector
+EXEC=/opt/epics/iocs/simDetector/iocBoot/iocsimDetector/start_epics
