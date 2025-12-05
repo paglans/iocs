@@ -1,0 +1,6 @@
+NAME=measComp
+PORT=4052
+HOST=<host>
+USER=softioc
+CHDIR=/opt/epics/iocs/measComp/iocBoot/iocmeasComp
+EXEC=/opt/epics/iocs/measComp/iocBoot/iocmeasComp/start_epics.sh
