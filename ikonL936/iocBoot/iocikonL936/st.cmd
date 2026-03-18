@@ -20,7 +20,7 @@ epicsEnvSet("EPICS_DB_INCLUDE_PATH", "$(ADCORE)/db")
 #andorCCDConfig("$(PORT)", "/usr/local/etc/andor/", 0, 0, 0, 0, 0 ,0)
 # select the camera with serial number 1370
 #andorCCDConfig("$(PORT)", "", 1370, 0, 0, 0, 0, 0)
-andorCCDConfig("$(PORT)", "", 20118, 0, 0, 0, 0, 0)
+andorCCDConfig("$(PORT)", "/usr/local/etc/andor/", 20118, 0, 0, 0, 0, 0)
 # select a camera with any serial number
 #andorCCDConfig("$(PORT)", "", 0, 0, 0, 0, 0, 0)
 
@@ -39,15 +39,20 @@ NDStdArraysConfigure("Image1", 5, 0, "$(PORT)", 0, 0)
 # Use the following command for 16-bit images.  This can be used for 16-bit detector as long as accumulate mode would not result in 16-bit overflow
 dbLoadRecords("$(ADCORE)/db/NDStdArrays.template", "P=$(PREFIX),R=image1:,PORT=Image1,ADDR=0,TIMEOUT=1,NDARRAY_PORT=$(PORT),TYPE=Int16,FTVL=SHORT,NELEMENTS=4200000")
 
+# Create a PVA arrays plugin
+NDPvaConfigure("RawImage", $(QSIZE), 0, "$(PORT)", 0, "$(PREFIX)RawImg", 0, 0, 0)
+dbLoadRecords("$(ADCORE)/db/NDPva.template", "P=$(PREFIX),R=RawImg:,PORT=RawImage,ADDR=0,TIMEOUT=1,NDARRAY_PORT=$(PORT)")
+
 # Load all other plugins using commonPlugins.cmd
 < $(ADCORE)/iocBoot/commonPlugins.cmd
 set_requestfile_path("$(ADANDOR)/andorApp/Db")
 
 #asynSetTraceMask("$(PORT)",0,3)
-#asynSetTraceIOMask("$(PORT)",0,4)
+#asynSetMinTimerPeriod(0.001)
+asynSetTraceIOMask("$(PORT)",0,4)
 
 iocInit()
 
 # save things every thirty seconds
 create_monitor_set("auto_settings.req", 30,"P=$(PREFIX)")
-#asynSetTraceMask($(PORT), 0, 255)
+# asynSetTraceMask($(PORT), 0, 255)
