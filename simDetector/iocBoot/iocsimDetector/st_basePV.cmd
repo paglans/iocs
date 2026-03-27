@@ -92,4 +92,5 @@ iocInit()
 # save things every thirty seconds
 create_monitor_set("auto_settings.req", 30, "P=$(PREFIX)")
 dbpf("$(PREFIX)RawImg:EnableCallbacks", 1)
+dbpf("$(PREFIX)cam1:Acquire", 1)
 dbl > pvs.txt

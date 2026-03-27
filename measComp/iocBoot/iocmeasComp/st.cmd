@@ -4,7 +4,7 @@
 dbLoadDatabase "$(TOP)/dbd/measComp.dbd"
 measComp_registerRecordDeviceDriver pdbbase
 
-epicsEnvSet("PREFIX",        "E1608:")
+epicsEnvSet("PREFIX",        "6013E1608:")
 epicsEnvSet("PORT",          "E1608_1")
 epicsEnvSet("WDIG_POINTS",   "2048")
 #epicsEnvSet("UNIQUE_ID",     "00:80:2F:24:53:E5")
