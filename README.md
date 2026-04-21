@@ -37,3 +37,6 @@ Last but not least, update your empty repo with the state from the remote:
 - edit IP address
 - edit .template(?)
 - 
+
+## manage-iocs
+https://github.com/NSLS2/systemd-softioc
