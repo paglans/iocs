@@ -36,7 +36,40 @@ Last but not least, update your empty repo with the state from the remote:
 - edit name
 - edit IP address
 - edit .template(?)
-- 
+
+## caRepeater
+Make sure a caRepeater is running before starting iocs. Example:
+```
+    mkdir -p ~/.config/systemd/user
+    cat > ~/.config/systemd/user/caRepeater.service << 'EOF'
+    [Unit]
+    Description=EPICS Channel Access Repeater
+    After=network.target
+
+    [Service]
+    Type=simple
+    ExecStart=/opt/epics/base/bin/linux-x86_64/caRepeater
+    Restart=on-failure
+    RestartSec=5
+    Environment="EPICS_CA_ADDR_LIST=xxx.xxx.xxx.xxx"
+    Environment="EPICS_CA_AUTO_ADDR_LIST=NO"
+    Environment="EPICS_HOST_ARCH=linux-x86_64"
+    Environment="EPICS_BASE=/opt/epics/base"
+
+    [Install]
+    WantedBy=default.target
+```
+Enable and start:
+```
+    systemctl --user enable caRepeater
+    systemctl --user start caRepeater
+    systemctl --user status caRepeater
+```
+To have it run before logging in and any iocs are started:
+```
+    loginctl enable-linger <user>
+```
+
 
 ## manage-iocs
 https://github.com/NSLS2/systemd-softioc
