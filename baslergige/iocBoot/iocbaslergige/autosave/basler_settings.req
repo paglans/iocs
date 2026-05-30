@@ -1,0 +1,20 @@
+# AD Base camera settings
+file ADBase_settings.req, P=$(P), R=$(R)
+
+# Aravis-specific settings
+$(P)$(R)AravisLeftShift
+$(P)$(R)AravisGetFeatures
+
+# TIFF plugin
+file NDFileTIFF_settings.req, P=$(P), R=TIFF1:
+
+# JPEG plugin  
+file NDFileJPEG_settings.req, P=$(P), R=JPEG1:
+
+# PVA plugin
+$(P)Pva1:EnableCallbacks
+$(P)Pva1:MinCallbackTime
+
+# StdArrays
+$(P)image1:EnableCallbacks
+$(P)image1:MinCallbackTime

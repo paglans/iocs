@@ -1,0 +1,64 @@
+# basler_settings.req
+# Autosave PV list for Basler/Aravis cameras
+# Macros: P (prefix, e.g. BL:SampleOv:), R (cam record, e.g. cam1:)
+# All PVs listed explicitly — avoids macro-in-file-directive issues with autosave R5-11
+
+# ------- AD Base camera settings -------
+$(P)$(R)BinX
+$(P)$(R)BinY
+$(P)$(R)MinX
+$(P)$(R)MinY
+$(P)$(R)SizeX
+$(P)$(R)SizeY
+$(P)$(R)ReverseX
+$(P)$(R)ReverseY
+$(P)$(R)AcquireTime
+$(P)$(R)AcquirePeriod
+$(P)$(R)Gain
+$(P)$(R)ImageMode
+$(P)$(R)TriggerMode
+$(P)$(R)NumImages
+$(P)$(R)NumExposures
+$(P)$(R)ArrayCallbacks
+$(P)$(R)DataType
+$(P)$(R)ColorMode
+
+# ------- Aravis-specific -------
+# $(P)$(R)AravisFrameRetention
+# $(P)$(R)AravisPacketDelay
+# $(P)$(R)AravisPacketSize
+
+# ------- TIFF plugin -------
+$(P)TIFF1:EnableCallbacks
+$(P)TIFF1:MinCallbackTime
+$(P)TIFF1:NDArrayPort
+$(P)TIFF1:FilePath
+$(P)TIFF1:FileName
+$(P)TIFF1:FileTemplate
+$(P)TIFF1:AutoIncrement
+$(P)TIFF1:AutoSave
+$(P)TIFF1:FileWriteMode
+$(P)TIFF1:NumCapture
+
+# ------- JPEG plugin -------
+$(P)JPEG1:EnableCallbacks
+$(P)JPEG1:MinCallbackTime
+$(P)JPEG1:NDArrayPort
+$(P)JPEG1:FilePath
+$(P)JPEG1:FileName
+$(P)JPEG1:FileTemplate
+$(P)JPEG1:AutoIncrement
+$(P)JPEG1:AutoSave
+$(P)JPEG1:FileWriteMode
+$(P)JPEG1:NumCapture
+$(P)JPEG1:JPEGQuality
+
+# ------- PVA plugin -------
+$(P)Pva1:EnableCallbacks
+$(P)Pva1:MinCallbackTime
+$(P)Pva1:NDArrayPort
+
+# ------- StdArrays -------
+$(P)image1:EnableCallbacks
+$(P)image1:MinCallbackTime
+$(P)image1:NDArrayPort

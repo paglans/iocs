@@ -1,0 +1,28 @@
+#!../../bin/linux-x86_64/baslergige
+
+#- SPDX-FileCopyrightText: 2003 Argonne National Laboratory
+#-
+#- SPDX-License-Identifier: EPICS
+
+#- You may have to change baslergige to something else
+#- everywhere it appears in this file
+
+< envPaths
+
+cd "${TOP}"
+
+## Register all support components
+dbLoadDatabase "dbd/baslergige.dbd"
+baslergige_registerRecordDeviceDriver pdbbase
+
+## Load record instances
+#dbLoadRecords("db/baslergige.db","user=anders")
+
+iocshLoad("$(CAMERA_APP)/cmd/main.cmd", "PREFIX=TestCam:", CAMERA_NAME=192.168.11.20")
+cd "${TOP}/iocBoot/${IOC}"
+iocInit
+
+iocshLoad("$(CAMERA_APP)/cmd/post_init.cmd", "PREFIX=TestCam:"
+
+## Start any sequence programs
+#seq sncxxx,"user=anders"
