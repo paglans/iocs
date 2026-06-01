@@ -1,4 +1,4 @@
-#!../../bin/linux-x86_64/baslergige
+#!/opt/epics/iocs/baslergige/bin/linux-x86_64/baslergige
 
 < envPaths
 
