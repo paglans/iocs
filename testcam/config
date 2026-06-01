@@ -1,0 +1,15 @@
+# manage-iocs instance config for <camname>
+# Required by manage-iocs / systemd-softioc
+NAME=testcam
+PORT=4053  
+HOST=anders-tuxedo
+USER=softioc
+
+CAM_IP=192.168.11.20
+CAM_PREFIX=6013CAM:TEST: 
+CAM_PORT=TESTCAM 
+CAM_MAXSIZE_X=1920
+CAM_MAXSIZE_Y=1200
+CAM_BUFFERS=50
+CAM_NELEMENTS=6912000 
+CAM_AUTOSAVE_PATH=/opt/epics/autosave/testcam
