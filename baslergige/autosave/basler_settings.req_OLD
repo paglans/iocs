@@ -1,0 +1,30 @@
+# Basler/Aravis camera autosave request file
+# Macros: P (prefix), R (cam record base, e.g. cam1:)
+
+# AD Base camera settings
+file ADBase_settings.req {"P=$(P)", "R=$(R)"}
+
+# Aravis-specific
+$(P)$(R)AravisCompletedTransferCount
+$(P)$(R)AravisFailedBufferCount
+$(P)$(R)AravisFailedPacketCount
+$(P)$(R)AravisFrameRetention
+$(P)$(R)AravisPacketDelay
+$(P)$(R)AravisPacketSize
+$(P)$(R)AravisReset
+
+# TIFF plugin
+file NDFileTIFF_settings.req {"P=$(P)", "R=TIFF1:"}
+
+# JPEG plugin
+file NDFileJPEG_settings.req {"P=$(P)", "R=JPEG1:"}
+
+# PVA plugin
+file NDPva_settings.req {"P=$(P)", "R=Pva1:"}
+file NDStdArrays_settings.req {"P=$(P)", "R=image1:"}
+$(P)Pva1:EnableCallbacks
+$(P)Pva1:MinCallbackTime
+
+# StdArrays
+$(P)image1:EnableCallbacks
+$(P)image1:MinCallbackTime
