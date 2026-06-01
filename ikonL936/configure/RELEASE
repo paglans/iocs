@@ -26,7 +26,7 @@
 # the CONFIG_SITE file.
 
 # Variables and paths to dependent modules:
-MODULES = /opt/epics/synApps-R6-3-2a/support
+MODULES = /opt/epics/synApps-R6-3-2/support
 AREADETECTOR = $(MODULES)/areaDetector
 #MYMODULE = $(MODULES)/my-module
 ASYN = $(MODULES)/asyn-R4-45
