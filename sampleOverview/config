@@ -1,0 +1,19 @@
+# existing vars...
+NAME=sampleoverview
+PORT=4051
+HOST=localhost
+USER=softioc
+
+CAM_IP=192.168.11.11
+CAM_PREFIX=6013bslr:sampleoverview
+CAM_PORT=CAM11
+CAM_MAXSIZE_X=2448
+CAM_MAXSIZE_Y=2048
+CAM_BUFFERS=50
+
+# Derived — set explicitly so st.cmd doesn't have to compute it
+# For mono: X*Y. For color: X*Y*3. Basler GigE are typically mono.
+CAM_NELEMENTS=5013504        # 2448 * 2048
+
+# Autosave
+CAM_AUTOSAVE_PATH=/opt/epics/autosave/sampleoverview
