@@ -1,0 +1,16 @@
+# existing vars...
+NAME=beamspotmicro
+PORT=4057
+HOST=hirrixs2
+USER=softioc
+
+CAM_IP=192.168.11.12
+CAM_PREFIX=6013CAM:BeamSpot:
+CAM_PORT=BEAMSPOT
+CAM_MAXSIZE_X=2448
+CAM_MAXSIZE_Y=2048
+CAM_BUFFERS=50
+
+CAM_NELEMENTS=15116544        # 2448 * 2048
+
+CAM_AUTOSAVE_PATH=/opt/epics/autosave/beamspotmicro

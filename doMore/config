@@ -1,0 +1,6 @@
+NAME=doMore
+PORT=4053
+HOST=hirrixs2
+USER=softioc
+CHDIR=/opt/epics/iocs/doMore/iocBoot/iocdoMore
+EXEC=/opt/epics/iocs/doMore/iocBoot/iocdoMore/st.cmd

@@ -1,0 +1,6 @@
+NAME=ikonL936
+PORT=4054
+HOST=hirrixs2
+USER=softioc
+CHDIR=/opt/epics/iocs/ikonL936/iocBoot/iocikonL936
+EXEC=/opt/epics/iocs/ikonL936/iocBoot/iocikonL936/start_epics.sh
