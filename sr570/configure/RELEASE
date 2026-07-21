@@ -29,8 +29,10 @@
 MODULES = /opt/epics/synApps-R6-3-2/support
 #MYMODULE = $(MODULES)/my-module
 
-ASYN=$(MODULES)/asyn-R4-45
-IP=$(MODULES)/ip-R2-22
+ASYN = $(MODULES)/asyn-R4-45
+IP = $(MODULES)/ip-R2-22
+CALC = $(MODULES)/calc-R3-7-5
+AUTOSAVE = $(MODULES)/autosave-R5-11
 
 # If using the sequencer, point SNCSEQ at its top directory:
 SNCSEQ = $(MODULES)/sequencer-mirror-R2-2-9
