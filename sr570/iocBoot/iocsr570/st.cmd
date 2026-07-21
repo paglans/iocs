@@ -6,6 +6,8 @@ epicsEnvSet("EPICS_DB_INCLUDE_PATH", "$(TOP)/db")
 dbLoadDatabase("../../dbd/sr570.dbd")
 sr570_registerRecordDeviceDriver(pdbbase)
 
+epicsEnvSet("EPICS_CAS_INTF_ADDR_LIST", "192.168.10.3")
+
 #------------------------------------------------------------------
 # Serial ports: Moxa CN2650-16 in Real COM mode.
 # npreal2 maps each configured channel to a local tty device.
