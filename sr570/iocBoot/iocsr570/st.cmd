@@ -141,6 +141,15 @@ dbpf("BL:SR570_6:init.PROC", "1")
 dbpf("BL:SR570_7:init.PROC", "1")
 dbpf("BL:SR570_8:init.PROC", "1")
 
+dbpf("BL:SR570_1:init.DESC", "TEY UP, COM11, ttyr00")
+dbpf("BL:SR570_2:init.DESC", "TEY DN, COM12, ttyr01")
+dbpf("BL:SR570_3:init.DESC", "DIAG134 Izero, COM13, ttyr02")
+dbpf("BL:SR570_4:init.DESC", "DIAG134 Diode, COM14, ttyr03")
+dbpf("BL:SR570_5:init.DESC", "DIAG133 Izero, COM15, ttyr04")
+dbpf("BL:SR570_6:init.DESC", "DIAG133 Diode, COM16, ttyr05")
+dbpf("BL:SR570_7:init.DESC", "TFY Ch, COM17, ttyr06")
+dbpf("BL:SR570_8:init.DESC", "TFY Diode, COM18, ttyr07")
+
 # Ongoing periodic saves, one independent set per amp (see note above on
 # why each needs its own request-file name).
 create_monitor_set("SR570_1_settings.req", 5, "P=BL:SR570_1:,A=")
