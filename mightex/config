@@ -1,0 +1,13 @@
+# manage-iocs instance config for sr570
+# Required by manage-iocs / systemd-softioc
+
+NAME=mightex
+PORT=4059
+HOST=hirrixs2
+USER=softioc
+CHDIR=/opt/epics/iocs/mightex/iocBoot/iocmightex
+EXEC=/opt/epics/iocs/mightex/iocBoot/iocmightex/start_epics.sh
+
+# This is a single IOC managing all 8 SR570 channels -- unlike baslergige,
+# there is one instance total here, not one per amplifier. See st.cmd for
+# the per-channel serial port / PV prefix assignments.
