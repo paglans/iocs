@@ -38,11 +38,24 @@ dbLoadRecords("$(TOP)/db/mightexChannel.template","P=BL:LED:,R=Ch15:,PORT=MIGHTE
 dbLoadRecords("$(TOP)/db/mightexChannel.template","P=BL:LED:,R=Ch16:,PORT=MIGHTEX1,CHL=16")
 dbLoadRecords("$(TOP)/db/mightexDevice.template","P=BL:LED:,R=,PORT=MIGHTEX1")
 
+epicsEnvSet("AUTOSAVE_DIR", "/opt/epics/autosave/mightex")
+save_restoreSet_status_prefix("BL:LED:")
+set_savefile_path("$(AUTOSAVE_DIR)", "save")
+set_requestfile_path("$(TOP)/mightexApp/Db")
+save_restoreSet_NumSeqFiles(3)
+save_restoreSet_SeqPeriodInSeconds(300)
+set_pass0_restoreFile("mightex_autosave.req")
+set_pass1_restoreFile("mightex_autosave.req")
+
+dbLoadRecords("$(AUTOSAVE)/db/save_restoreStatus.db", "P=BL:LED:")
+
 ## Load record instances
 #dbLoadRecords("db/mightex.db","user=anders")
 
 cd "${TOP}/iocBoot/${IOC}"
 iocInit
+
+create_monitor_set("mightex_autosave.req", 30, "P=BL:LED:")
 
 ## Start any sequence programs
 #seq sncxxx,"user=anders"

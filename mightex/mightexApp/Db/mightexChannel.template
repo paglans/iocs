@@ -37,7 +37,14 @@ record(mbbo, "$(P)$(R)Mode-Sel") {
     field(TWVL, "2")
     field(THST, "Trigger")
     field(THVL, "3")
-    field(PINI, "NO")
+    # PINI=YES forces this to process at iocInit, sending a real
+    # "MODE <chl> 0" (Disable) command to the device on every IOC boot --
+    # deliberately NOT autosaved and NOT read back from prior device
+    # state. Every IOC start begins from a known, guaranteed-off
+    # condition, independent of whatever the device or a previous IOC
+    # session was doing. VAL defaults to 0 (Disable) with no explicit
+    # field(VAL, ...) needed, matching ZRVL below.
+    field(PINI, "YES")
 }
 
 record(longin, "$(P)$(R)Mode-Sts") {
@@ -77,6 +84,71 @@ record(longin, "$(P)$(R)Mode-Sts") {
     # caput <PV>.PROC 1 still available for on-demand manual reads.
     field(SCAN, "Passive")
 }
+
+# ---------------------------------------------------------------------
+# Max on-time watchdog. Deliberately built entirely from standard EPICS
+# record types (calc/calcout), not custom C code -- this sits above the
+# HID/StreamDevice transport entirely and carries none of that layer's
+# fragility. Source of truth is Mode-Sel.VAL (the commanded state this
+# IOC itself wrote), not Mode-Sts (Passive/manual-only, unreliable as a
+# continuous state source without polling).
+# ---------------------------------------------------------------------
+
+# Per-channel ceiling. Autosaved (see mightexChannel.req) -- restoring
+# this on IOC restart is safe on its own, since setting a limit doesn't
+# turn anything on.
+record(ao, "$(P)$(R)MaxOnTime-SP") {
+    field(DESC, "Max LED on-time")
+    field(EGU,  "sec")
+    field(VAL,  "300")
+    field(PINI, "NO")
+}
+
+# Accumulates seconds since Mode-Sel last left Disable; resets to 0 the
+# instant Mode-Sel returns to Disable, whether that happened because the
+# operator turned it off or because this same watchdog just did.
+# Standard EPICS self-referencing accumulator idiom (INPB reads the
+# record's own prior VAL).
+record(calc, "$(P)$(R)OnTimeAccum") {
+    field(DESC, "Seconds since last enabled")
+    field(SCAN, "1 second")
+    field(INPA, "$(P)$(R)Mode-Sel.VAL NPP")
+    field(INPB, "$(P)$(R)OnTimeAccum.VAL NPP")
+    field(CALC, "A=0?0:B+1")
+    field(FLNK, "$(P)$(R)OnTimeCheck")
+}
+
+# Triggered via FLNK from OnTimeAccum (same scan tick, guaranteed
+# ordering -- not an independent periodic scan, to avoid ever reading a
+# stale accumulator value). Writes Mode-Sel back to Disable the moment
+# the per-channel ceiling is exceeded.
+record(calcout, "$(P)$(R)OnTimeCheck") {
+    field(DESC, "Max on-time watchdog")
+    field(SCAN, "Passive")
+    field(INPA, "$(P)$(R)OnTimeAccum.VAL NPP")
+    field(INPB, "$(P)$(R)MaxOnTime-SP.VAL NPP")
+    field(CALC, "A>=B&&B>0")
+    field(OOPT, "When Non-zero")
+    field(DOPT, "Use OCAL")
+    field(OCAL, "0")
+    field(OUT,  "$(P)$(R)Mode-Sel.VAL PP MS")
+    field(FLNK, "$(P)$(R)TimedOut-Sts")
+}
+
+# Continuously reflects whether the channel is currently past its
+# on-time limit. Not latched/manually reset -- it recomputes every
+# cycle and clears on its own once OnTimeAccum resets to 0 (which
+# happens automatically once Mode-Sel is back at Disable, from either
+# the operator or the watchdog above), so there's no separate "clear
+# fault" step needed.
+record(calc, "$(P)$(R)TimedOut-Sts") {
+    field(DESC, "Auto-off due to max on-time")
+    field(SCAN, "Passive")
+    field(INPA, "$(P)$(R)OnTimeAccum.VAL NPP")
+    field(INPB, "$(P)$(R)MaxOnTime-SP.VAL NPP")
+    field(CALC, "A>=B&&B>0")
+}
+
 
 # Config-time write: sets Imax and Iset together in one NORMAL command.
 # VAL[0] = Imax (mA), VAL[1] = Iset (mA). Deliberately NOT split into two

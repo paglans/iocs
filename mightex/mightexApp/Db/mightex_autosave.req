@@ -1,0 +1,20 @@
+# mightex_autosave.req
+#
+# Top-level autosave request file. Includes mightexChannel.req once per
+# channel with different P=/R= macros -- this is the standard mitigation
+# for autosave's known create_monitor_set() filename-collision behavior
+# when the same request file name is loaded many times for different
+# instances (documented from prior SR570 bring-up experience).
+#
+# Load THIS file once via set_pass0_restoreFile/set_pass1_restoreFile in
+# st.cmd -- do not call those functions per-channel.
+#
+# STARTING WITH 3 CHANNELS FOR INITIAL TESTING. Extend to all 16 (same
+# "file mightexChannel.req {...}" pattern, CHL 4-16) only after
+# confirming autosave saves and restores correctly for these three,
+# given the collision risk noted above -- same cautious rollout used for
+# every other part of this IOC's bring-up.
+
+file mightexChannel.req {"P=BL:LED:","R=Ch1:"}
+file mightexChannel.req {"P=BL:LED:","R=Ch2:"}
+file mightexChannel.req {"P=BL:LED:","R=Ch3:"}

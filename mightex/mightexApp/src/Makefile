@@ -24,11 +24,14 @@ mightex_DBD += asyn.dbd
 mightex_DBD += calc.dbd
 mightex_DBD += mightexHidPort.dbd
 mightex_DBD += stream.dbd
+mightex_DBD += calcSupport.dbd
+mightex_DBD += asSupport.dbd
 
 # Add all the support libraries needed by this IOC
 mightex_LIBS += asyn
 mightex_LIBS += calc
 mightex_LIBS += stream
+mightex_LIBS += autosave
 
 # mightex driver
 mightex_SRCS += mightexHidPort.cpp

@@ -13,6 +13,9 @@ include $(TOP)/configure/CONFIG
 DB += mightexChannel.template
 DB += mightexDevice.template
 
+DB += mightexChannel.req
+DB += mightex_autosave.req
+
 #----------------------------------------------------
 # If <anyname>.db template is not named <anyname>*.template add
 # <anyname>_template = <templatename>

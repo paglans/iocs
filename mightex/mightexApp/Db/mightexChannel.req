@@ -1,0 +1,24 @@
+# mightexChannel.req
+#
+# Per-channel autosave request file, instantiated once per channel via
+# the top-level mightex_autosave.req (one "file" line per channel with
+# different P=/R= macros -- NOT loaded directly with 16 separate
+# set_pass0_restoreFile calls, to sidestep the known create_monitor_set()
+# filename-collision issue when many instances share one request file
+# name).
+#
+# Deliberately excluded:
+#   - Mode-Sel: restoring commanded mode on IOC boot could silently
+#     re-enable an LED with no operator action. Mode-Sel is forced to
+#     Disable via PINI=YES instead (see mightexChannel.template) --
+#     every IOC start is guaranteed off, never "whatever it was before".
+#   - Mode-Sts, Current-RB, TimedOut-Sts, OnTimeAccum, OnTimeCheck:
+#     readbacks/internal computed state, not configuration -- nothing
+#     to restore.
+#
+# Included: pure configuration. Restoring these alone never turns
+# anything on by itself.
+$(P)$(R)Normal-SP
+$(P)$(R)Current-SP
+$(P)$(R)Strobe-SP
+$(P)$(R)MaxOnTime-SP
