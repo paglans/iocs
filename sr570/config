@@ -1,0 +1,13 @@
+# manage-iocs instance config for sr570
+# Required by manage-iocs / systemd-softioc
+
+NAME=sr570
+PORT=4058
+HOST=hirrixs2
+USER=softioc
+CHDIR=/opt/epics/iocs/sr570/iocBoot/iocsr570
+EXEC=/opt/epics/iocs/sr570/iocBoot/iocsr570/start_epics.sh
+
+# This is a single IOC managing all 8 SR570 channels -- unlike baslergige,
+# there is one instance total here, not one per amplifier. See st.cmd for
+# the per-channel serial port / PV prefix assignments.
