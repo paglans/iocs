@@ -1,0 +1,159 @@
+# mightex.proto
+#
+# StreamDevice protocol for the Mightex Sirius SLC-series LED controller.
+# Transport is the mightexHidPort asyn driver (chunked HID Feature reports
+# over /dev/hidraw*), but as far as this protocol file is concerned, it's
+# just talking ASCII commands over an asynOctet port -- identical in
+# spirit to an SR570 protocol file. Command set is the RS232 command set,
+# confirmed identical for the USB variant in the Mightex SDK doc.
+#
+# Response conventions (from the Mightex SDK doc):
+#   ##          -- command valid, executed OK
+#   #!          -- command valid, executed, but a device error occurred
+#   #?          -- command valid, argument out of range
+#   #<data>     -- command valid, returns data
+#   DEVICEINFO is the one exception: it returns a raw info line with no
+#   leading '#'.
+#
+# Channel numbers are ONE-based per the SDK doc, passed in as a
+# positional protocol argument from each record's db link, e.g.:
+#   field(OUT, "@mightex.proto setMode($(CHL)) $(PORT)")
+# where $(CHL) is an ordinary macro substituted at db-load time (from
+# the template's CHL= macro), turning into e.g. "setMode(1)" in the
+# link string. Inside the protocol body, that argument is referenced
+# as $1 outside quotes, or \$1 INSIDE a quoted string (StreamDevice
+# requires the backslash escape within quotes -- omitting it, as an
+# earlier version of this file did, sends the literal text "$1" to
+# the device instead of substituting the argument).
+
+# NOTE: the device is asymmetric here, confirmed via USB capture and
+# repeated live testing -- commands sent TO the device terminate with
+# LF-CR (0x0A 0x0D), matching the SDK doc's stated <LF><CR> convention,
+# but responses FROM the device terminate with CR-LF (0x0D 0x0A), the
+# opposite order. A single symmetric "Terminator" directive gets this
+# wrong for one direction or the other -- hence separate In/Out here.
+OutTerminator = "\n\r";
+InTerminator  = "\r\n";
+ReplyTimeout = 2000;
+LockTimeout  = 5000;
+
+# ---------------------------------------------------------------------
+# Current working mode (Disable / Normal / Strobe / Trigger)
+# ---------------------------------------------------------------------
+
+setMode {
+    out "MODE \$1 %d";
+    in  "##";
+}
+
+getMode {
+    out "?MODE \$1";
+    in  "#%d";
+}
+
+# ---------------------------------------------------------------------
+# Normal mode: Imax/Iset pair (config-time, sets both together) and
+# Iset alone (routine operational current changes).
+#
+# setNormal expects a 2-element array record (aao) bound as
+# [Imax, Iset]. A SINGLE %f/%.0f format specifier plus an explicit
+# "separator" variable is used here, NOT one specifier per element --
+# confirmed via write() byte tracing that a format specifier bound to
+# a multi-element array record expands to ALL elements at once (joined
+# by "separator"), not just the next element. Using two %.0f specifiers
+# (as an earlier version of this file did) caused each one to
+# independently expand to the full array, producing duplicated,
+# unseparated garbage on the wire.
+# ---------------------------------------------------------------------
+
+setNormal {
+    separator = " ";
+    out "NORMAL \$1 %.0f";
+    in  "##";
+}
+
+setCurrent {
+    out "CURRENT \$1 %.0f";
+    in  "##";
+}
+
+# ?CURRENT returns 8 fields: 6 per-channel calibration/linearization
+# values (undocumented in the generic SDK description, confirmed via
+# live testing to be stable/per-channel, NOT noise) followed by the
+# real Imax and Iset. Skip the first 6 with %*f.
+getCurrent {
+    out "?CURRENT \$1";
+    in  "#%*f %*f %*f %*f %*f %*f %f %f";
+}
+
+# ---------------------------------------------------------------------
+# Strobe mode
+# ---------------------------------------------------------------------
+
+setStrobe {
+    separator = " ";
+    out "STROBE \$1 %.0f";
+    in  "##";
+}
+
+# getStrobe -- REMOVED / DEFERRED. The write side (setStrobe, above)
+# works correctly and is confirmed against real hardware. The read side
+# consistently fails inside StreamDevice's own parsing despite the
+# driver demonstrably delivering the correct, complete, correctly-
+# terminated response every time (confirmed via byte-level tracing on
+# two separate fresh IOC boots, with both %f and %d format specifiers).
+# A mysterious ~32-iteration empty read-with-no-preceding-write occurs
+# before every attempt (asyn eomReason=END, i.e. "successful but
+# empty") -- possibly a StreamDevice-internal drain/flush step whose
+# empty result is mistakenly treated as the real answer, ahead of the
+# actual write+read pair that follows and succeeds. Root-causing this
+# further would mean reading StreamDevice's own source rather than
+# anything in this protocol file or the asyn driver -- deferred as not
+# worth the effort for a readback-only convenience, especially given
+# the SP side (which is what actually matters for operation) works.
+
+# ---------------------------------------------------------------------
+# Trigger mode -- REMOVED. The SDK doc states explicitly that the
+# "MA/CA" module family (which includes the CA16-U) does not have
+# Trigger mode and that related APIs "should not be invoked on this
+# module." Confirmed empirically: a TRIGGER write got no response at
+# all (not even an error ack) -- a distinctly different, "command not
+# recognized" failure signature than every other command tested, all
+# of which returned at least "##" or a real value.
+# ---------------------------------------------------------------------
+
+# ---------------------------------------------------------------------
+# Load voltage readback -- REMOVED. Per the SDK doc this feature is
+# only meaningful on XV/AV/HV-style (voltage-capable) modules; the
+# CA16-U is a current-only module family. Confirmed empirically: a
+# LoadVoltage query got no response at all, the same "command not
+# recognized" signature as TRIGGER, rather than any error ack.
+# ---------------------------------------------------------------------
+
+# ---------------------------------------------------------------------
+# Device-level commands (no channel parameter)
+# ---------------------------------------------------------------------
+
+deviceInfo {
+    out "DEVICEINFO";
+    # Bind to a waveform record (FTVL=CHAR, NELM>=100), NOT a stringin --
+    # a plain stringin/DBF_STRING field caps at 39 usable characters,
+    # which silently truncates this response (confirmed empirically via
+    # asynRecord's IFMT=ASCII vs Hybrid difference during driver bring-up).
+    in  "%99c";
+}
+
+resetDevice {
+    out "Reset";
+    in  "##";
+}
+
+restoreDefault {
+    out "RESTOREDEF";
+    in  "##";
+}
+
+storeSettings {
+    out "STORE";
+    in  "##";
+}

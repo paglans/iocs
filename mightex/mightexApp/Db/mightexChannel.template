@@ -1,0 +1,155 @@
+## mightexChannel.template
+##
+## One instance per LED channel. Macros:
+##   P     - PV prefix
+##   R     - record name suffix (should be unique per channel, e.g. "Ch1:")
+##   PORT  - asyn port name (the mightexHidPort instance)
+##   CHL   - channel number, ONE-based (1-16 for the CA16-U)
+##   SCAN  - poll period for Current-RB only, optional, defaults to
+##           "10 second" if omitted (the longest period menuScan
+##           supports). Mode-Sts is intentionally Passive-only, not
+##           macro-driven -- see that record's comment.
+##   TIMEOUT - StreamDevice timeout override, optional (defaults if omitted)
+##
+## Example instantiation from st.cmd:
+##   dbLoadRecords("db/mightexChannel.template","P=BL:LED:,R=Ch1:,PORT=MIGHTEX1,CHL=1")
+## Example overriding the default poll period:
+##   dbLoadRecords("db/mightexChannel.template","P=BL:LED:,R=Ch1:,PORT=MIGHTEX1,CHL=1,SCAN=1 second")
+
+record(mbbo, "$(P)$(R)Mode-Sel") {
+    field(DESC, "LED channel mode")
+    field(DTYP, "stream")
+    field(OUT,  "@mightex.proto setMode($(CHL)) $(PORT)")
+    # NOBT is required -- mbbo/mbbi compute their bitmask (MASK) from
+    # this field at init. Without it, MASK defaults to 0, meaning EVERY
+    # RVAL collapses to VAL=0 regardless of what the device actually
+    # reports -- confirmed as a real, previously-undetected bug: Mode-Sts
+    # silently always read back "Disable" no matter the true device
+    # state, because Disable/Normal differ by only 1 bit and every write
+    # test happened to be checked against the physical LED rather than
+    # the PV's reported value. 2 bits covers the 4 states (0-3) below.
+    field(NOBT, "2")
+    field(ZRST, "Disable")
+    field(ZRVL, "0")
+    field(ONST, "Normal")
+    field(ONVL, "1")
+    field(TWST, "Strobe")
+    field(TWVL, "2")
+    field(THST, "Trigger")
+    field(THVL, "3")
+    field(PINI, "NO")
+}
+
+record(longin, "$(P)$(R)Mode-Sts") {
+    field(DESC, "LED mode readback (raw)")
+    field(DTYP, "stream")
+    field(INP,  "@mightex.proto getMode($(CHL)) $(PORT)")
+    # DEFERRED: this was originally an mbbi record with NOBT/ZRVL-THVL
+    # matching the Mode-Sel enum, giving a readable "Disable"/"Normal"/
+    # etc. string. That mbbi's RVAL was confirmed updating correctly on
+    # every read (1, then 2, matching real device state exactly), but
+    # VAL never updated to match -- despite MASK, NOBT, SDEF, and every
+    # *VL field being confirmed individually correct against the
+    # documented mbbi conversion algorithm. Root cause not found; this
+    # looks like a genuine EPICS record-support issue below anything
+    # inspectable from iocsh, not a bug in this driver, the protocol
+    # file, or StreamDevice's mbbi handling (which matches its own
+    # documented RVAL=x&MASK behavior exactly). Switched to a plain
+    # longin (raw 0-3 integer, no state-table matching involved) as a
+    # pragmatic, confirmed-working alternative rather than continuing
+    # to debug EPICS internals. 0=Disable, 1=Normal, 2=Strobe,
+    # 3=Trigger (matches Mode-Sel's ZRVL/ONVL/TWVL/THVL numbering).
+    #
+    # SCAN intentionally left Passive, not periodic. Mode changes are
+    # operator-initiated via Mode-Sel, which already reflects the
+    # intended state the instant it's written -- there's no independent
+    # value in polling the device for something the operator just
+    # commanded. Measured evidence: periodic scanning of both this and
+    # Current-RB across 16 channels caused the scan list itself to
+    # fall behind and drift (confirmed via console timestamps showing
+    # irregular ~5-10s+ gaps instead of a clean period, and individual
+    # channels dropping out of the cycle entirely for extended periods)
+    # even though isolated single reads measured a fast, consistent
+    # ~45-170ms -- the bottleneck is scan-list/asyn-queue contention
+    # under many simultaneous scanned records, not per-read cost.
+    # Dropping this from the periodic list halves the polled record
+    # count and gives the remaining Current-RB scan real headroom.
+    # caput <PV>.PROC 1 still available for on-demand manual reads.
+    field(SCAN, "Passive")
+}
+
+# Config-time write: sets Imax and Iset together in one NORMAL command.
+# VAL[0] = Imax (mA), VAL[1] = Iset (mA). Deliberately NOT split into two
+# independent ao's -- NORMAL sets both at once, and coordinating two
+# separate scalar records writing into the same wire command is more
+# fragile than just using a 2-element array record for the pair.
+record(aao, "$(P)$(R)Normal-SP") {
+    field(DESC, "Set Imax/Iset (Normal)")
+    field(DTYP, "stream")
+    field(OUT,  "@mightex.proto setNormal($(CHL)) $(PORT)")
+    field(FTVL, "DOUBLE")
+    field(NELM, "2")
+    field(PINI, "NO")
+}
+
+# Routine operational current change -- doesn't touch Imax.
+record(ao, "$(P)$(R)Current-SP") {
+    field(DESC, "Set working current")
+    field(DTYP, "stream")
+    field(OUT,  "@mightex.proto setCurrent($(CHL)) $(PORT)")
+    field(EGU,  "mA")
+    field(PINI, "NO")
+}
+
+# Readback of Imax/Iset together. VAL[0] = Imax, VAL[1] = Iset. The 6
+# leading calibration fields in the device's response are skipped by
+# the protocol file itself (%*f), not visible here.
+record(aai, "$(P)$(R)Current-RB") {
+    field(DESC, "Imax/Iset readback")
+    field(DTYP, "stream")
+    field(INP,  "@mightex.proto getCurrent($(CHL)) $(PORT)")
+    field(FTVL, "DOUBLE")
+    field(NELM, "2")
+    # Macro with a default: override per-instantiation via SCAN= if
+    # needed, without touching this template. "10 second" is the
+    # longest period menuScan supports (there is no "30 second" -- a
+    # real constraint hit during bring-up). Even at this ceiling and
+    # with Mode-Sts no longer sharing the scan list (see that record's
+    # comment), confirm actual behavior across all 16 channels rather
+    # than assuming this is sufficient headroom -- the underlying
+    # scan-list/asyn-queue contention that motivated dropping Mode-Sts
+    # was never fully root-caused, only mitigated.
+    field(SCAN, "$(SCAN=10 second)")
+}
+
+# Strobe mode: VAL[0] = Imax (mA), VAL[1] = Repeat count.
+# Strobe-RB (readback) has been removed -- deferred, not broken-and-
+# forgotten. The write side below is confirmed working against real
+# hardware; the read side consistently failed inside StreamDevice's own
+# parsing despite the driver correctly delivering the right, complete,
+# correctly-terminated response every time (confirmed via byte-level
+# tracing). See mightex.proto's comment at the former getStrobe block
+# for the full evidence trail. To verify current Strobe settings in the
+# meantime, query ?STROBE directly via the raw asynRecord test harness
+# (IFMT/OFMT=Hybrid, caput -S ... "?STROBE <chl>\n\r", caget -S ...).
+record(aao, "$(P)$(R)Strobe-SP") {
+    field(DESC, "Set Strobe Imax/Rep")
+    field(DTYP, "stream")
+    field(OUT,  "@mightex.proto setStrobe($(CHL)) $(PORT)")
+    field(FTVL, "DOUBLE")
+    field(NELM, "2")
+    field(PINI, "NO")
+}
+
+# Trigger mode -- REMOVED. Not supported on this module family (CA16-U);
+# a raw TRIGGER write got no response at all (not even an error ack),
+# consistent with the SDK doc's explicit statement that "MA/CA" modules
+# don't have Trigger mode. The Mode-Sel/Mode-Sts enum above still lists
+# "Trigger" as a selectable state (THST/THVL) since that reflects the
+# device's raw protocol space, not a guarantee it does anything useful
+# on this hardware -- selecting it is not expected to be meaningful.
+
+# LoadVoltage -- REMOVED. Confirmed unsupported on this module family
+# (CA16-U is current-only); a raw query got no response at all, same
+# "command not recognized" signature as TRIGGER. See mightex.proto for
+# the full note.

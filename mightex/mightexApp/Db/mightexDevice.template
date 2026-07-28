@@ -1,0 +1,50 @@
+## mightexDevice.template
+##
+## Single instance per controller (not per channel). Macros:
+##   P     - PV prefix
+##   R     - record name suffix (e.g. "" or "Ctrl:")
+##   PORT  - asyn port name (the mightexHidPort instance)
+##
+## Example instantiation from st.cmd:
+##   dbLoadRecords("db/mightexDevice.template","P=BL:LED:,R=,PORT=MIGHTEX1")
+
+record(waveform, "$(P)$(R)DeviceInfo-RB") {
+    field(DESC, "Device info string")
+    field(DTYP, "stream")
+    field(INP,  "@mightex.proto deviceInfo $(PORT)")
+    field(FTVL, "CHAR")
+    field(NELM, "100")
+    field(SCAN, "Passive")
+    # Static device identity data -- doesn't change at runtime, so
+    # there's no value in periodic polling. PINI populates it once at
+    # boot instead; caput <PV>.PROC 1 still works for a manual re-read
+    # if ever needed (e.g. after physically swapping the device).
+    field(PINI, "YES")
+}
+
+record(bo, "$(P)$(R)Reset-Cmd") {
+    field(DESC, "Soft reset device")
+    field(DTYP, "stream")
+    field(OUT,  "@mightex.proto resetDevice $(PORT)")
+    field(ZNAM, "Reset")
+    field(ONAM, "Reset")
+    field(PINI, "NO")
+}
+
+record(bo, "$(P)$(R)RestoreDefault-Cmd") {
+    field(DESC, "Restore factory default")
+    field(DTYP, "stream")
+    field(OUT,  "@mightex.proto restoreDefault $(PORT)")
+    field(ZNAM, "Restore")
+    field(ONAM, "Restore")
+    field(PINI, "NO")
+}
+
+record(bo, "$(P)$(R)Store-Cmd") {
+    field(DESC, "Store settings to NV mem")
+    field(DTYP, "stream")
+    field(OUT,  "@mightex.proto storeSettings $(PORT)")
+    field(ZNAM, "Store")
+    field(ONAM, "Store")
+    field(PINI, "NO")
+}
