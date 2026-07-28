@@ -12,9 +12,9 @@
 #     re-enable an LED with no operator action. Mode-Sel is forced to
 #     Disable via PINI=YES instead (see mightexChannel.template) --
 #     every IOC start is guaranteed off, never "whatever it was before".
-#   - Mode-Sts, Current-RB, TimedOut-Sts, OnTimeAccum, OnTimeCheck:
-#     readbacks/internal computed state, not configuration -- nothing
-#     to restore.
+#   - Mode-Sts, Current-RB, TimedOut-Sts, OnTimeAccum, OnTimeCheck,
+#     TimeoutAction, ClearTimedOut-Sts: readbacks/internal watchdog
+#     plumbing, not configuration -- nothing meaningful to restore.
 #
 # Included: pure configuration. Restoring these alone never turns
 # anything on by itself.

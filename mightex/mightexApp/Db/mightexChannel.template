@@ -45,6 +45,13 @@ record(mbbo, "$(P)$(R)Mode-Sel") {
     # session was doing. VAL defaults to 0 (Disable) with no explicit
     # field(VAL, ...) needed, matching ZRVL below.
     field(PINI, "YES")
+    # Clears the TimedOut-Sts latch whenever the operator (or PINI,
+    # harmlessly -- see ClearTimedOut-Sts below) processes this record.
+    # This is what makes TimedOut-Sts a real, observable latch rather
+    # than a value that self-clears within about a second of the
+    # watchdog firing (see that record's comment for what was actually
+    # wrong with the original design, found via live testing).
+    field(FLNK, "$(P)$(R)ClearTimedOut-Sts")
 }
 
 record(longin, "$(P)$(R)Mode-Sts") {
@@ -120,33 +127,76 @@ record(calc, "$(P)$(R)OnTimeAccum") {
 
 # Triggered via FLNK from OnTimeAccum (same scan tick, guaranteed
 # ordering -- not an independent periodic scan, to avoid ever reading a
-# stale accumulator value). Writes Mode-Sel back to Disable the moment
-# the per-channel ceiling is exceeded.
+# stale accumulator value). Does not write Mode-Sel directly -- see
+# TimeoutAction below for why.
 record(calcout, "$(P)$(R)OnTimeCheck") {
     field(DESC, "Max on-time watchdog")
     field(SCAN, "Passive")
     field(INPA, "$(P)$(R)OnTimeAccum.VAL NPP")
     field(INPB, "$(P)$(R)MaxOnTime-SP.VAL NPP")
     field(CALC, "A>=B&&B>0")
+    # OOPT/DOPT/OCAL don't matter much here since OUT just triggers
+    # TimeoutAction's .PROC rather than carrying a meaningful value --
+    # the real gating condition (A>=B&&B>0) is what determines whether
+    # OUT fires at all.
+    field(OOPT, "When Non-zero")
+    field(DOPT, "Use CALC")
+    field(OUT,  "$(P)$(R)TimeoutAction.PROC PP")
+}
+
+# Fires both actions of a timeout TOGETHER, atomically, only when
+# triggered by OnTimeCheck: disables the channel AND sets the TimedOut
+# latch. A calcout only has one OUT link, which isn't enough to do both
+# from OnTimeCheck directly -- a seq record can drive multiple output
+# links (DOL1/LNK1, DOL2/LNK2, ...) every time it's processed, with no
+# conditional logic of its own, which is exactly what's needed once
+# OnTimeCheck has already done the gating. NOTE: this record type's
+# output link fields are named LNK0-LNKF, not OUT1/OUT2 -- confirmed the
+# hard way, via a dbLoadRecords error ("does not have a field 'OUT1'")
+# that got buried among otherwise-successful record loads and needed to
+# be dug out of the console log after the fact.
+record(seq, "$(P)$(R)TimeoutAction") {
+    field(DESC, "Disable channel + set TimedOut latch")
+    field(SCAN, "Passive")
+    field(SELM, "All")
+    field(DOL1, "0")
+    field(LNK1, "$(P)$(R)Mode-Sel.VAL PP MS")
+    field(DOL2, "1")
+    field(LNK2, "$(P)$(R)TimedOut-Sts PP")
+}
+
+# Latched flag: set to 1 only by TimeoutAction above (i.e. only when the
+# watchdog itself fires), cleared to 0 only by ClearTimedOut-Sts below
+# (i.e. only when the operator explicitly re-enables the channel).
+# Deliberately NOT a continuously-recomputed calc record -- an earlier
+# version of this design did that, and it was found via live testing to
+# self-clear within about one scan cycle (~1 second) of the watchdog
+# firing: the very next "1 second" tick sees Mode-Sel already back at
+# Disable, resets OnTimeAccum to 0, and a same-shaped recompute of this
+# flag would immediately follow it back to 0 too -- defeating the
+# entire point of the flag being observable after the fact.
+record(bo, "$(P)$(R)TimedOut-Sts") {
+    field(DESC, "Auto-off due to max on-time")
+    field(ZNAM, "Normal")
+    field(ONAM, "Timed out")
+    field(PINI, "NO")
+}
+
+# Clears the TimedOut-Sts latch, but ONLY when Mode-Sel is genuinely
+# being set away from Disable by an operator (or anything else writing
+# Mode-Sel) -- not on every possible trigger. Also runs harmlessly at
+# iocInit via Mode-Sel's PINI=YES (Mode-Sel.VAL=0 at that point, so the
+# gating condition below is false and no clear-write happens then;
+# TimedOut-Sts simply starts at its power-up default of 0 regardless).
+record(calcout, "$(P)$(R)ClearTimedOut-Sts") {
+    field(DESC, "Clear TimedOut latch on re-enable")
+    field(SCAN, "Passive")
+    field(INPA, "$(P)$(R)Mode-Sel.VAL NPP")
+    field(CALC, "A#0")
     field(OOPT, "When Non-zero")
     field(DOPT, "Use OCAL")
     field(OCAL, "0")
-    field(OUT,  "$(P)$(R)Mode-Sel.VAL PP MS")
-    field(FLNK, "$(P)$(R)TimedOut-Sts")
-}
-
-# Continuously reflects whether the channel is currently past its
-# on-time limit. Not latched/manually reset -- it recomputes every
-# cycle and clears on its own once OnTimeAccum resets to 0 (which
-# happens automatically once Mode-Sel is back at Disable, from either
-# the operator or the watchdog above), so there's no separate "clear
-# fault" step needed.
-record(calc, "$(P)$(R)TimedOut-Sts") {
-    field(DESC, "Auto-off due to max on-time")
-    field(SCAN, "Passive")
-    field(INPA, "$(P)$(R)OnTimeAccum.VAL NPP")
-    field(INPB, "$(P)$(R)MaxOnTime-SP.VAL NPP")
-    field(CALC, "A>=B&&B>0")
+    field(OUT,  "$(P)$(R)TimedOut-Sts PP")
 }
 
 
