@@ -15,6 +15,8 @@ cd "${TOP}"
 dbLoadDatabase "dbd/mightex.dbd"
 mightex_registerRecordDeviceDriver pdbbase
 
+epicsEnvSet("EPICS_CAS_INTF_ADDR_LIST", "192.168.10.3")
+
 mightexHidPortConfigure("MIGHTEX1", "/dev/mightex-led", 0, 0)
 
 epicsEnvSet("STREAM_PROTOCOL_PATH", "$(TOP)/mightexApp/Db")

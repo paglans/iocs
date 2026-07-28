@@ -287,9 +287,14 @@ asynStatus mightexHidPort::reconnectLocked(asynUser *pasynUser) {
     if (connected_) {
         return asynSuccess;
     }
+    pasynTrace->print(pasynUser, ASYN_TRACE_FLOW,
+                       "%s: attempting to open %s\n", DRIVER_NAME,
+                       hidrawDevice_.c_str());
     asynStatus status = openDevice(pasynUser);
     if (status == asynSuccess) {
         connected_ = true;
+        pasynTrace->print(pasynUser, ASYN_TRACE_FLOW, "%s: connected\n",
+                           DRIVER_NAME);
         pasynManager->exceptionConnect(pasynUser);
     }
     return status;
@@ -307,6 +312,8 @@ asynStatus mightexHidPort::disconnect(asynUser *pasynUser) {
     closeDevice();
     connected_ = false;
     epicsMutexUnlock(lock_);
+    pasynTrace->print(pasynUser, ASYN_TRACE_FLOW, "%s: disconnected\n",
+                       DRIVER_NAME);
     pasynManager->exceptionDisconnect(pasynUser);
     return asynSuccess;
 }
@@ -345,6 +352,17 @@ asynStatus mightexHidPort::setFeatureReport(asynUser *pasynUser,
         unsigned char buf[1 + REPORT_SIZE];
         buf[0] = 0;  // report ID 0 -- device does not use numbered reports
         memcpy(&buf[1], chunkData18, REPORT_SIZE);
+
+        // Trace the outgoing HID Feature report at the same byte-level
+        // detail that ad-hoc printf debugging relied on all through this
+        // driver's development -- now available on demand via
+        // asynSetTraceIOMask("<port>", 0, 0x8) (ASYN_TRACEIO_DRIVER)
+        // rather than needing to add/remove debug code by hand.
+        pasynTrace->printIO(pasynUser, ASYN_TRACEIO_DRIVER,
+                             reinterpret_cast<const char *>(chunkData18),
+                             REPORT_SIZE, "%s: HIDIOCSFEATURE ->",
+                             DRIVER_NAME);
+
         int ret = ioctl(fd_, HIDIOCSFEATURE(sizeof(buf)), buf);
         if (ret >= 0) {
             return asynSuccess;
@@ -353,11 +371,18 @@ asynStatus mightexHidPort::setFeatureReport(asynUser *pasynUser,
         epicsSnprintf(pasynUser->errorMessage, pasynUser->errorMessageSize,
                        "%s: HIDIOCSFEATURE failed: %s", DRIVER_NAME,
                        strerror(errno));
+        pasynTrace->print(pasynUser, ASYN_TRACE_ERROR,
+                           "%s: HIDIOCSFEATURE failed: %s\n", DRIVER_NAME,
+                           strerror(errno));
 
         if (attempt == 0) {
             // First failure: assume a stale fd (e.g. from device
             // re-enumeration) and try exactly one inline recover-and-
             // retry before giving up.
+            pasynTrace->print(pasynUser, ASYN_TRACE_FLOW,
+                               "%s: attempting inline reconnect after "
+                               "ioctl failure\n",
+                               DRIVER_NAME);
             handleIoctlFailure(pasynUser);
             if (openDevice(pasynUser) == asynSuccess) {
                 connected_ = true;
@@ -377,14 +402,25 @@ asynStatus mightexHidPort::getFeatureReport(asynUser *pasynUser,
         int ret = ioctl(fd_, HIDIOCGFEATURE(sizeof(buf)), buf);
         if (ret >= 0) {
             memcpy(chunkData18, &buf[1], REPORT_SIZE);
+            pasynTrace->printIO(pasynUser, ASYN_TRACEIO_DRIVER,
+                                 reinterpret_cast<const char *>(chunkData18),
+                                 REPORT_SIZE, "%s: HIDIOCGFEATURE <-",
+                                 DRIVER_NAME);
             return asynSuccess;
         }
 
         epicsSnprintf(pasynUser->errorMessage, pasynUser->errorMessageSize,
                        "%s: HIDIOCGFEATURE failed: %s", DRIVER_NAME,
                        strerror(errno));
+        pasynTrace->print(pasynUser, ASYN_TRACE_ERROR,
+                           "%s: HIDIOCGFEATURE failed: %s\n", DRIVER_NAME,
+                           strerror(errno));
 
         if (attempt == 0) {
+            pasynTrace->print(pasynUser, ASYN_TRACE_FLOW,
+                               "%s: attempting inline reconnect after "
+                               "ioctl failure\n",
+                               DRIVER_NAME);
             handleIoctlFailure(pasynUser);
             if (openDevice(pasynUser) == asynSuccess) {
                 connected_ = true;
@@ -400,6 +436,9 @@ asynStatus mightexHidPort::write(asynUser *pasynUser, const char *data,
                                   size_t numchars, size_t *nbytesTransfered) {
     epicsMutexLock(lock_);
     *nbytesTransfered = 0;
+
+    pasynTrace->printIO(pasynUser, ASYN_TRACEIO_DRIVER, data, numchars,
+                         "%s: write() numchars=%zu", DRIVER_NAME, numchars);
 
     if (!connected_) {
         asynStatus reconnectStatus = reconnectLocked(pasynUser);
@@ -482,6 +521,11 @@ asynStatus mightexHidPort::read(asynUser *pasynUser, char *data,
         std::string assembled;
         bool eosFound = false;
         double timeoutSec = pasynUser->timeout;
+
+        pasynTrace->print(pasynUser, ASYN_TRACE_FLOW,
+                           "%s: read() maxchars=%zu timeout=%f (%s)\n",
+                           DRIVER_NAME, maxchars, timeoutSec,
+                           timeoutSec <= 0.0 ? "quick probe" : "timed read");
 
         if (timeoutSec <= 0.0) {
             // A timeout of exactly 0 (or negative) is standard asyn
@@ -602,6 +646,12 @@ asynStatus mightexHidPort::read(asynUser *pasynUser, char *data,
             *eomReason = ASYN_EOM_END;
         }
     }
+
+    pasynTrace->printIO(pasynUser, ASYN_TRACEIO_DRIVER, data, nCopy,
+                         "%s: read() served nCopy=%zu eomReason=%d "
+                         "remainingPending=%zu",
+                         DRIVER_NAME, nCopy, eomReason ? *eomReason : -1,
+                         pendingBuffer_.size());
 
     epicsMutexUnlock(lock_);
     return asynSuccess;

@@ -201,17 +201,35 @@ record(calcout, "$(P)$(R)ClearTimedOut-Sts") {
 
 
 # Config-time write: sets Imax and Iset together in one NORMAL command.
-# VAL[0] = Imax (mA), VAL[1] = Iset (mA). Deliberately NOT split into two
-# independent ao's -- NORMAL sets both at once, and coordinating two
-# separate scalar records writing into the same wire command is more
-# fragile than just using a 2-element array record for the pair.
-record(aao, "$(P)$(R)Normal-SP") {
+# Built as a calcout, NOT an aao array -- confirmed via real MEDM testing
+# that a 2-element array record is unusable from a GUI: a plain
+# text-entry widget can only edit one scalar value, with no way to type
+# multiple space-separated numbers into a single field (only `caput -a`
+# from the command line can populate an array this way). A calcout's own
+# A/B fields are each independently scalar and directly GUI-bindable.
+#
+# Usage: caput/GUI-write $(P)$(R)Normal-SP.A (Imax) and
+# $(P)$(R)Normal-SP.B (Iset) individually -- writing to .A/.B alone does
+# NOT process the record or touch the device. Then write anything to
+# the plain PV name ($(P)$(R)Normal-SP, e.g. an MEDM "message button"
+# with press_msg="1") to actually process it and send the combined
+# NORMAL command using both fields' current values. CALC is a
+# placeholder ("0") -- its result is unused; StreamDevice binds directly
+# to the named A/B fields (%(A)f/%(B)f in mightex.proto), not to VAL.
+record(calcout, "$(P)$(R)Normal-SP") {
     field(DESC, "Set Imax/Iset (Normal)")
     field(DTYP, "stream")
+    field(CALC, "0")
     field(OUT,  "@mightex.proto setNormal($(CHL)) $(PORT)")
-    field(FTVL, "DOUBLE")
-    field(NELM, "2")
+    field(EGU,  "mA")
     field(PINI, "NO")
+    # Without this, Current-RB only reflects a change made here once its
+    # own independent periodic SCAN next ticks (up to 10s later) -- easy
+    # to mistake for "the write didn't take" when really it's just
+    # readback latency. Forces an immediate re-read right after the
+    # write completes, in addition to (not instead of) the ongoing
+    # periodic scan.
+    field(FLNK, "$(P)$(R)Current-RB")
 }
 
 # Routine operational current change -- doesn't touch Imax.
@@ -221,6 +239,8 @@ record(ao, "$(P)$(R)Current-SP") {
     field(OUT,  "@mightex.proto setCurrent($(CHL)) $(PORT)")
     field(EGU,  "mA")
     field(PINI, "NO")
+    # See Normal-SP above for why this matters.
+    field(FLNK, "$(P)$(R)Current-RB")
 }
 
 # Readback of Imax/Iset together. VAL[0] = Imax, VAL[1] = Iset. The 6
@@ -254,12 +274,11 @@ record(aai, "$(P)$(R)Current-RB") {
 # for the full evidence trail. To verify current Strobe settings in the
 # meantime, query ?STROBE directly via the raw asynRecord test harness
 # (IFMT/OFMT=Hybrid, caput -S ... "?STROBE <chl>\n\r", caget -S ...).
-record(aao, "$(P)$(R)Strobe-SP") {
+record(calcout, "$(P)$(R)Strobe-SP") {
     field(DESC, "Set Strobe Imax/Rep")
     field(DTYP, "stream")
+    field(CALC, "0")
     field(OUT,  "@mightex.proto setStrobe($(CHL)) $(PORT)")
-    field(FTVL, "DOUBLE")
-    field(NELM, "2")
     field(PINI, "NO")
 }
 
