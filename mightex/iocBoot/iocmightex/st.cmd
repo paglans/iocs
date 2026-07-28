@@ -44,8 +44,8 @@ set_savefile_path("$(AUTOSAVE_DIR)", "save")
 set_requestfile_path("$(TOP)/mightexApp/Db")
 save_restoreSet_NumSeqFiles(3)
 save_restoreSet_SeqPeriodInSeconds(300)
-set_pass0_restoreFile("mightex_autosave.req")
-set_pass1_restoreFile("mightex_autosave.req")
+set_pass0_restoreFile("mightex_autosave.sav")
+set_pass1_restoreFile("mightex_autosave.sav")
 
 dbLoadRecords("$(AUTOSAVE)/db/save_restoreStatus.db", "P=BL:LED:")
 
