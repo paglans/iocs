@@ -45,6 +45,13 @@ record(mbbo, "$(P)$(R)Mode-Sel") {
     # session was doing. VAL defaults to 0 (Disable) with no explicit
     # field(VAL, ...) needed, matching ZRVL below.
     field(PINI, "YES")
+    # Clears the TimedOut-Sts latch whenever the operator (or PINI,
+    # harmlessly -- see ClearTimedOut-Sts below) processes this record.
+    # This is what makes TimedOut-Sts a real, observable latch rather
+    # than a value that self-clears within about a second of the
+    # watchdog firing (see that record's comment for what was actually
+    # wrong with the original design, found via live testing).
+    field(FLNK, "$(P)$(R)ClearTimedOut-Sts")
 }
 
 record(longin, "$(P)$(R)Mode-Sts") {
@@ -120,48 +127,109 @@ record(calc, "$(P)$(R)OnTimeAccum") {
 
 # Triggered via FLNK from OnTimeAccum (same scan tick, guaranteed
 # ordering -- not an independent periodic scan, to avoid ever reading a
-# stale accumulator value). Writes Mode-Sel back to Disable the moment
-# the per-channel ceiling is exceeded.
+# stale accumulator value). Does not write Mode-Sel directly -- see
+# TimeoutAction below for why.
 record(calcout, "$(P)$(R)OnTimeCheck") {
     field(DESC, "Max on-time watchdog")
     field(SCAN, "Passive")
     field(INPA, "$(P)$(R)OnTimeAccum.VAL NPP")
     field(INPB, "$(P)$(R)MaxOnTime-SP.VAL NPP")
     field(CALC, "A>=B&&B>0")
+    # OOPT/DOPT/OCAL don't matter much here since OUT just triggers
+    # TimeoutAction's .PROC rather than carrying a meaningful value --
+    # the real gating condition (A>=B&&B>0) is what determines whether
+    # OUT fires at all.
+    field(OOPT, "When Non-zero")
+    field(DOPT, "Use CALC")
+    field(OUT,  "$(P)$(R)TimeoutAction.PROC PP")
+}
+
+# Fires both actions of a timeout TOGETHER, atomically, only when
+# triggered by OnTimeCheck: disables the channel AND sets the TimedOut
+# latch. A calcout only has one OUT link, which isn't enough to do both
+# from OnTimeCheck directly -- a seq record can drive multiple output
+# links (DOL1/LNK1, DOL2/LNK2, ...) every time it's processed, with no
+# conditional logic of its own, which is exactly what's needed once
+# OnTimeCheck has already done the gating. NOTE: this record type's
+# output link fields are named LNK0-LNKF, not OUT1/OUT2 -- confirmed the
+# hard way, via a dbLoadRecords error ("does not have a field 'OUT1'")
+# that got buried among otherwise-successful record loads and needed to
+# be dug out of the console log after the fact.
+record(seq, "$(P)$(R)TimeoutAction") {
+    field(DESC, "Disable channel + set TimedOut latch")
+    field(SCAN, "Passive")
+    field(SELM, "All")
+    field(DOL1, "0")
+    field(LNK1, "$(P)$(R)Mode-Sel.VAL PP MS")
+    field(DOL2, "1")
+    field(LNK2, "$(P)$(R)TimedOut-Sts PP")
+}
+
+# Latched flag: set to 1 only by TimeoutAction above (i.e. only when the
+# watchdog itself fires), cleared to 0 only by ClearTimedOut-Sts below
+# (i.e. only when the operator explicitly re-enables the channel).
+# Deliberately NOT a continuously-recomputed calc record -- an earlier
+# version of this design did that, and it was found via live testing to
+# self-clear within about one scan cycle (~1 second) of the watchdog
+# firing: the very next "1 second" tick sees Mode-Sel already back at
+# Disable, resets OnTimeAccum to 0, and a same-shaped recompute of this
+# flag would immediately follow it back to 0 too -- defeating the
+# entire point of the flag being observable after the fact.
+record(bo, "$(P)$(R)TimedOut-Sts") {
+    field(DESC, "Auto-off due to max on-time")
+    field(ZNAM, "Normal")
+    field(ONAM, "Timed out")
+    field(PINI, "NO")
+}
+
+# Clears the TimedOut-Sts latch, but ONLY when Mode-Sel is genuinely
+# being set away from Disable by an operator (or anything else writing
+# Mode-Sel) -- not on every possible trigger. Also runs harmlessly at
+# iocInit via Mode-Sel's PINI=YES (Mode-Sel.VAL=0 at that point, so the
+# gating condition below is false and no clear-write happens then;
+# TimedOut-Sts simply starts at its power-up default of 0 regardless).
+record(calcout, "$(P)$(R)ClearTimedOut-Sts") {
+    field(DESC, "Clear TimedOut latch on re-enable")
+    field(SCAN, "Passive")
+    field(INPA, "$(P)$(R)Mode-Sel.VAL NPP")
+    field(CALC, "A#0")
     field(OOPT, "When Non-zero")
     field(DOPT, "Use OCAL")
     field(OCAL, "0")
-    field(OUT,  "$(P)$(R)Mode-Sel.VAL PP MS")
-    field(FLNK, "$(P)$(R)TimedOut-Sts")
-}
-
-# Continuously reflects whether the channel is currently past its
-# on-time limit. Not latched/manually reset -- it recomputes every
-# cycle and clears on its own once OnTimeAccum resets to 0 (which
-# happens automatically once Mode-Sel is back at Disable, from either
-# the operator or the watchdog above), so there's no separate "clear
-# fault" step needed.
-record(calc, "$(P)$(R)TimedOut-Sts") {
-    field(DESC, "Auto-off due to max on-time")
-    field(SCAN, "Passive")
-    field(INPA, "$(P)$(R)OnTimeAccum.VAL NPP")
-    field(INPB, "$(P)$(R)MaxOnTime-SP.VAL NPP")
-    field(CALC, "A>=B&&B>0")
+    field(OUT,  "$(P)$(R)TimedOut-Sts PP")
 }
 
 
 # Config-time write: sets Imax and Iset together in one NORMAL command.
-# VAL[0] = Imax (mA), VAL[1] = Iset (mA). Deliberately NOT split into two
-# independent ao's -- NORMAL sets both at once, and coordinating two
-# separate scalar records writing into the same wire command is more
-# fragile than just using a 2-element array record for the pair.
-record(aao, "$(P)$(R)Normal-SP") {
+# Built as a calcout, NOT an aao array -- confirmed via real MEDM testing
+# that a 2-element array record is unusable from a GUI: a plain
+# text-entry widget can only edit one scalar value, with no way to type
+# multiple space-separated numbers into a single field (only `caput -a`
+# from the command line can populate an array this way). A calcout's own
+# A/B fields are each independently scalar and directly GUI-bindable.
+#
+# Usage: caput/GUI-write $(P)$(R)Normal-SP.A (Imax) and
+# $(P)$(R)Normal-SP.B (Iset) individually -- writing to .A/.B alone does
+# NOT process the record or touch the device. Then write anything to
+# the plain PV name ($(P)$(R)Normal-SP, e.g. an MEDM "message button"
+# with press_msg="1") to actually process it and send the combined
+# NORMAL command using both fields' current values. CALC is a
+# placeholder ("0") -- its result is unused; StreamDevice binds directly
+# to the named A/B fields (%(A)f/%(B)f in mightex.proto), not to VAL.
+record(calcout, "$(P)$(R)Normal-SP") {
     field(DESC, "Set Imax/Iset (Normal)")
     field(DTYP, "stream")
+    field(CALC, "0")
     field(OUT,  "@mightex.proto setNormal($(CHL)) $(PORT)")
-    field(FTVL, "DOUBLE")
-    field(NELM, "2")
+    field(EGU,  "mA")
     field(PINI, "NO")
+    # Without this, Current-RB only reflects a change made here once its
+    # own independent periodic SCAN next ticks (up to 10s later) -- easy
+    # to mistake for "the write didn't take" when really it's just
+    # readback latency. Forces an immediate re-read right after the
+    # write completes, in addition to (not instead of) the ongoing
+    # periodic scan.
+    field(FLNK, "$(P)$(R)Current-RB")
 }
 
 # Routine operational current change -- doesn't touch Imax.
@@ -171,6 +239,8 @@ record(ao, "$(P)$(R)Current-SP") {
     field(OUT,  "@mightex.proto setCurrent($(CHL)) $(PORT)")
     field(EGU,  "mA")
     field(PINI, "NO")
+    # See Normal-SP above for why this matters.
+    field(FLNK, "$(P)$(R)Current-RB")
 }
 
 # Readback of Imax/Iset together. VAL[0] = Imax, VAL[1] = Iset. The 6
@@ -204,12 +274,11 @@ record(aai, "$(P)$(R)Current-RB") {
 # for the full evidence trail. To verify current Strobe settings in the
 # meantime, query ?STROBE directly via the raw asynRecord test harness
 # (IFMT/OFMT=Hybrid, caput -S ... "?STROBE <chl>\n\r", caget -S ...).
-record(aao, "$(P)$(R)Strobe-SP") {
+record(calcout, "$(P)$(R)Strobe-SP") {
     field(DESC, "Set Strobe Imax/Rep")
     field(DTYP, "stream")
+    field(CALC, "0")
     field(OUT,  "@mightex.proto setStrobe($(CHL)) $(PORT)")
-    field(FTVL, "DOUBLE")
-    field(NELM, "2")
     field(PINI, "NO")
 }
 

@@ -12,13 +12,22 @@
 #     re-enable an LED with no operator action. Mode-Sel is forced to
 #     Disable via PINI=YES instead (see mightexChannel.template) --
 #     every IOC start is guaranteed off, never "whatever it was before".
-#   - Mode-Sts, Current-RB, TimedOut-Sts, OnTimeAccum, OnTimeCheck:
-#     readbacks/internal computed state, not configuration -- nothing
-#     to restore.
+#   - Mode-Sts, Current-RB, TimedOut-Sts, OnTimeAccum, OnTimeCheck,
+#     TimeoutAction, ClearTimedOut-Sts: readbacks/internal watchdog
+#     plumbing, not configuration -- nothing meaningful to restore.
+#
+# Normal-SP and Strobe-SP are calcout records (rebuilt from an earlier
+# aao-array design that turned out unusable from MEDM -- see
+# mightexChannel.template). Their actual configuration values live in
+# the .A/.B fields, not VAL (which just holds a placeholder CALC
+# result) -- autosave needs the specific field names below, not the
+# bare PV name, or it would silently save/restore nothing meaningful.
 #
 # Included: pure configuration. Restoring these alone never turns
 # anything on by itself.
-$(P)$(R)Normal-SP
+$(P)$(R)Normal-SP.A
+$(P)$(R)Normal-SP.B
 $(P)$(R)Current-SP
-$(P)$(R)Strobe-SP
+$(P)$(R)Strobe-SP.A
+$(P)$(R)Strobe-SP.B
 $(P)$(R)MaxOnTime-SP

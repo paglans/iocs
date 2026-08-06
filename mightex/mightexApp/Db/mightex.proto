@@ -55,20 +55,22 @@ getMode {
 # Normal mode: Imax/Iset pair (config-time, sets both together) and
 # Iset alone (routine operational current changes).
 #
-# setNormal expects a 2-element array record (aao) bound as
-# [Imax, Iset]. A SINGLE %f/%.0f format specifier plus an explicit
-# "separator" variable is used here, NOT one specifier per element --
-# confirmed via write() byte tracing that a format specifier bound to
-# a multi-element array record expands to ALL elements at once (joined
-# by "separator"), not just the next element. Using two %.0f specifiers
-# (as an earlier version of this file did) caused each one to
-# independently expand to the full array, producing duplicated,
-# unseparated garbage on the wire.
+# setNormal binds directly to a calcout record's own A/B fields
+# (%(A)f/%(B)f), NOT an aao array. An earlier version of this file used
+# a 2-element aao array record for Imax/Iset, editable via `caput -a`
+# from the command line -- but this turned out to be fundamentally
+# unusable from MEDM (or any GUI): a plain text-entry widget can only
+# edit a single scalar value, with no way to type multiple
+# space-separated numbers into one field. Rebuilt as a calcout so each
+# value is its own independently GUI-editable field
+# (Normal-SP.A/Normal-SP.B), with an explicit "Apply" action (writing
+# to the record's plain PV name) triggering the combined device write --
+# confirmed working syntax straight from StreamDevice's own shipped
+# example.proto, not guessed.
 # ---------------------------------------------------------------------
 
 setNormal {
-    separator = " ";
-    out "NORMAL \$1 %.0f";
+    out "NORMAL \$1 %(A).0f %(B).0f";
     in  "##";
 }
 
@@ -91,8 +93,7 @@ getCurrent {
 # ---------------------------------------------------------------------
 
 setStrobe {
-    separator = " ";
-    out "STROBE \$1 %.0f";
+    out "STROBE \$1 %(A).0f %(B).0f";
     in  "##";
 }
 

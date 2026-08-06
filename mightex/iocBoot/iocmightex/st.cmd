@@ -15,6 +15,8 @@ cd "${TOP}"
 dbLoadDatabase "dbd/mightex.dbd"
 mightex_registerRecordDeviceDriver pdbbase
 
+epicsEnvSet("EPICS_CAS_INTF_ADDR_LIST", "192.168.10.3")
+
 mightexHidPortConfigure("MIGHTEX1", "/dev/mightex-led", 0, 0)
 
 epicsEnvSet("STREAM_PROTOCOL_PATH", "$(TOP)/mightexApp/Db")
@@ -44,8 +46,8 @@ set_savefile_path("$(AUTOSAVE_DIR)", "save")
 set_requestfile_path("$(TOP)/mightexApp/Db")
 save_restoreSet_NumSeqFiles(3)
 save_restoreSet_SeqPeriodInSeconds(300)
-set_pass0_restoreFile("mightex_autosave.req")
-set_pass1_restoreFile("mightex_autosave.req")
+set_pass0_restoreFile("mightex_autosave.sav")
+set_pass1_restoreFile("mightex_autosave.sav")
 
 dbLoadRecords("$(AUTOSAVE)/db/save_restoreStatus.db", "P=BL:LED:")
 

@@ -1,0 +1,1583 @@
+
+file {
+	name="mightexOverview.adl"
+	version=030109
+}
+display {
+	object {
+		x=50
+		y=50
+		width=760
+		height=560
+	}
+	clr=14
+	bclr=4
+	cmap=""
+	gridSpacing=5
+	gridOn=0
+	snapToGrid=0
+}
+"color map" {
+	ncolors=65
+	colors {
+		ffffff,
+		ececec,
+		dadada,
+		c8c8c8,
+		bbbbbb,
+		aeaeae,
+		9e9e9e,
+		919191,
+		858585,
+		787878,
+		696969,
+		5a5a5a,
+		464646,
+		2d2d2d,
+		000000,
+		00d800,
+		1ebb00,
+		339900,
+		2d7f00,
+		216c00,
+		fd0000,
+		de1309,
+		be190b,
+		a01207,
+		820400,
+		5893ff,
+		597ee1,
+		4b6ec7,
+		3a5eab,
+		27548d,
+		fbf34a,
+		f9da3c,
+		eeb62b,
+		e19015,
+		cd6100,
+		ffb0ff,
+		d67fe2,
+		ae4ebc,
+		8b1a96,
+		610a75,
+		a4aaff,
+		8793e2,
+		6a73c1,
+		4d52a4,
+		343386,
+		c7bb6d,
+		b79d5c,
+		a47e3c,
+		7d5627,
+		58340f,
+		99ffff,
+		73dfff,
+		4ea5f9,
+		2a63e4,
+		0a00b8,
+		ebf1b5,
+		d4db9d,
+		bbc187,
+		a6a462,
+		8b8239,
+		73ff6b,
+		52da3b,
+		3cb420,
+		289315,
+		1a7309,
+	}
+}
+
+text {
+	object {
+		x=10
+		y=5
+		width=740
+		height=25
+	}
+	"basic attribute" {
+		clr=14
+	}
+	textix="Mightex 16-Channel LED Controller -- Overview"
+	align="horiz. centered"
+}
+
+"related display" {
+	object {
+		x=10
+		y=35
+		width=120
+		height=22
+	}
+	display[0] {
+		label="Device"
+		name="mightexDevice.adl"
+		args="P=$(P)"
+	}
+	clr=14
+	bclr=51
+	label="Device Screen"
+}
+
+text {
+	object {
+		x=10
+		y=65
+		width=60
+		height=18
+	}
+	"basic attribute" {
+		clr=14
+	}
+	textix="Channel"
+}
+text {
+	object {
+		x=140
+		y=65
+		width=110
+		height=18
+	}
+	"basic attribute" {
+		clr=14
+	}
+	textix="Mode"
+}
+text {
+	object {
+		x=260
+		y=65
+		width=60
+		height=18
+	}
+	"basic attribute" {
+		clr=14
+	}
+	textix="raw"
+}
+text {
+	object {
+		x=340
+		y=65
+		width=170
+		height=18
+	}
+	"basic attribute" {
+		clr=14
+	}
+	textix="Imax / Iset (mA)"
+}
+text {
+	object {
+		x=530
+		y=65
+		width=90
+		height=18
+	}
+	"basic attribute" {
+		clr=14
+	}
+	textix="Timed out"
+}
+text {
+	object {
+		x=640
+		y=65
+		width=100
+		height=18
+	}
+	"basic attribute" {
+		clr=14
+	}
+	textix="Detail"
+}
+
+"related display" {
+	object {
+		x=10
+		y=90
+		width=100
+		height=20
+	}
+	display[0] {
+		label="Ch1"
+		name="mightexChannel.adl"
+		args="P=$(P),R=Ch1:"
+	}
+	clr=14
+	bclr=51
+	label="Ch1"
+}
+menu {
+	object {
+		x=140
+		y=90
+		width=110
+		height=20
+	}
+	control {
+		chan="$(P)Ch1:Mode-Sel"
+		clr=14
+		bclr=51
+	}
+}
+"text update" {
+	object {
+		x=260
+		y=90
+		width=60
+		height=20
+	}
+	monitor {
+		chan="$(P)Ch1:Mode-Sts"
+		clr=14
+		bclr=3
+	}
+	align="horiz. centered"
+	format="decimal"
+	limits {
+	}
+}
+"text update" {
+	object {
+		x=340
+		y=90
+		width=170
+		height=20
+	}
+	monitor {
+		chan="$(P)Ch1:Current-RB"
+		clr=14
+		bclr=3
+	}
+	align="horiz. centered"
+	format="decimal"
+	limits {
+	}
+}
+"text update" {
+	object {
+		x=530
+		y=90
+		width=90
+		height=20
+	}
+	monitor {
+		chan="$(P)Ch1:TimedOut-Sts"
+		clr=14
+		bclr=3
+	}
+	"dynamic attribute" {
+		vis="if not zero"
+		calc="A"
+		chan="$(P)Ch1:TimedOut-Sts"
+	}
+	align="horiz. centered"
+	format="string"
+	limits {
+	}
+}
+
+"related display" {
+	object {
+		x=10
+		y=114
+		width=100
+		height=20
+	}
+	display[0] {
+		label="Ch2"
+		name="mightexChannel.adl"
+		args="P=$(P),R=Ch2:"
+	}
+	clr=14
+	bclr=51
+	label="Ch2"
+}
+menu {
+	object {
+		x=140
+		y=114
+		width=110
+		height=20
+	}
+	control {
+		chan="$(P)Ch2:Mode-Sel"
+		clr=14
+		bclr=51
+	}
+}
+"text update" {
+	object {
+		x=260
+		y=114
+		width=60
+		height=20
+	}
+	monitor {
+		chan="$(P)Ch2:Mode-Sts"
+		clr=14
+		bclr=3
+	}
+	align="horiz. centered"
+	format="decimal"
+	limits {
+	}
+}
+"text update" {
+	object {
+		x=340
+		y=114
+		width=170
+		height=20
+	}
+	monitor {
+		chan="$(P)Ch2:Current-RB"
+		clr=14
+		bclr=3
+	}
+	align="horiz. centered"
+	format="decimal"
+	limits {
+	}
+}
+"text update" {
+	object {
+		x=530
+		y=114
+		width=90
+		height=20
+	}
+	monitor {
+		chan="$(P)Ch2:TimedOut-Sts"
+		clr=14
+		bclr=3
+	}
+	"dynamic attribute" {
+		vis="if not zero"
+		calc="A"
+		chan="$(P)Ch2:TimedOut-Sts"
+	}
+	align="horiz. centered"
+	format="string"
+	limits {
+	}
+}
+
+"related display" {
+	object {
+		x=10
+		y=138
+		width=100
+		height=20
+	}
+	display[0] {
+		label="Ch3"
+		name="mightexChannel.adl"
+		args="P=$(P),R=Ch3:"
+	}
+	clr=14
+	bclr=51
+	label="Ch3"
+}
+menu {
+	object {
+		x=140
+		y=138
+		width=110
+		height=20
+	}
+	control {
+		chan="$(P)Ch3:Mode-Sel"
+		clr=14
+		bclr=51
+	}
+}
+"text update" {
+	object {
+		x=260
+		y=138
+		width=60
+		height=20
+	}
+	monitor {
+		chan="$(P)Ch3:Mode-Sts"
+		clr=14
+		bclr=3
+	}
+	align="horiz. centered"
+	format="decimal"
+	limits {
+	}
+}
+"text update" {
+	object {
+		x=340
+		y=138
+		width=170
+		height=20
+	}
+	monitor {
+		chan="$(P)Ch3:Current-RB"
+		clr=14
+		bclr=3
+	}
+	align="horiz. centered"
+	format="decimal"
+	limits {
+	}
+}
+"text update" {
+	object {
+		x=530
+		y=138
+		width=90
+		height=20
+	}
+	monitor {
+		chan="$(P)Ch3:TimedOut-Sts"
+		clr=14
+		bclr=3
+	}
+	"dynamic attribute" {
+		vis="if not zero"
+		calc="A"
+		chan="$(P)Ch3:TimedOut-Sts"
+	}
+	align="horiz. centered"
+	format="string"
+	limits {
+	}
+}
+
+"related display" {
+	object {
+		x=10
+		y=162
+		width=100
+		height=20
+	}
+	display[0] {
+		label="Ch4"
+		name="mightexChannel.adl"
+		args="P=$(P),R=Ch4:"
+	}
+	clr=14
+	bclr=51
+	label="Ch4"
+}
+menu {
+	object {
+		x=140
+		y=162
+		width=110
+		height=20
+	}
+	control {
+		chan="$(P)Ch4:Mode-Sel"
+		clr=14
+		bclr=51
+	}
+}
+"text update" {
+	object {
+		x=260
+		y=162
+		width=60
+		height=20
+	}
+	monitor {
+		chan="$(P)Ch4:Mode-Sts"
+		clr=14
+		bclr=3
+	}
+	align="horiz. centered"
+	format="decimal"
+	limits {
+	}
+}
+"text update" {
+	object {
+		x=340
+		y=162
+		width=170
+		height=20
+	}
+	monitor {
+		chan="$(P)Ch4:Current-RB"
+		clr=14
+		bclr=3
+	}
+	align="horiz. centered"
+	format="decimal"
+	limits {
+	}
+}
+"text update" {
+	object {
+		x=530
+		y=162
+		width=90
+		height=20
+	}
+	monitor {
+		chan="$(P)Ch4:TimedOut-Sts"
+		clr=14
+		bclr=3
+	}
+	"dynamic attribute" {
+		vis="if not zero"
+		calc="A"
+		chan="$(P)Ch4:TimedOut-Sts"
+	}
+	align="horiz. centered"
+	format="string"
+	limits {
+	}
+}
+
+"related display" {
+	object {
+		x=10
+		y=186
+		width=100
+		height=20
+	}
+	display[0] {
+		label="Ch5"
+		name="mightexChannel.adl"
+		args="P=$(P),R=Ch5:"
+	}
+	clr=14
+	bclr=51
+	label="Ch5"
+}
+menu {
+	object {
+		x=140
+		y=186
+		width=110
+		height=20
+	}
+	control {
+		chan="$(P)Ch5:Mode-Sel"
+		clr=14
+		bclr=51
+	}
+}
+"text update" {
+	object {
+		x=260
+		y=186
+		width=60
+		height=20
+	}
+	monitor {
+		chan="$(P)Ch5:Mode-Sts"
+		clr=14
+		bclr=3
+	}
+	align="horiz. centered"
+	format="decimal"
+	limits {
+	}
+}
+"text update" {
+	object {
+		x=340
+		y=186
+		width=170
+		height=20
+	}
+	monitor {
+		chan="$(P)Ch5:Current-RB"
+		clr=14
+		bclr=3
+	}
+	align="horiz. centered"
+	format="decimal"
+	limits {
+	}
+}
+"text update" {
+	object {
+		x=530
+		y=186
+		width=90
+		height=20
+	}
+	monitor {
+		chan="$(P)Ch5:TimedOut-Sts"
+		clr=14
+		bclr=3
+	}
+	"dynamic attribute" {
+		vis="if not zero"
+		calc="A"
+		chan="$(P)Ch5:TimedOut-Sts"
+	}
+	align="horiz. centered"
+	format="string"
+	limits {
+	}
+}
+
+"related display" {
+	object {
+		x=10
+		y=210
+		width=100
+		height=20
+	}
+	display[0] {
+		label="Ch6"
+		name="mightexChannel.adl"
+		args="P=$(P),R=Ch6:"
+	}
+	clr=14
+	bclr=51
+	label="Ch6"
+}
+menu {
+	object {
+		x=140
+		y=210
+		width=110
+		height=20
+	}
+	control {
+		chan="$(P)Ch6:Mode-Sel"
+		clr=14
+		bclr=51
+	}
+}
+"text update" {
+	object {
+		x=260
+		y=210
+		width=60
+		height=20
+	}
+	monitor {
+		chan="$(P)Ch6:Mode-Sts"
+		clr=14
+		bclr=3
+	}
+	align="horiz. centered"
+	format="decimal"
+	limits {
+	}
+}
+"text update" {
+	object {
+		x=340
+		y=210
+		width=170
+		height=20
+	}
+	monitor {
+		chan="$(P)Ch6:Current-RB"
+		clr=14
+		bclr=3
+	}
+	align="horiz. centered"
+	format="decimal"
+	limits {
+	}
+}
+"text update" {
+	object {
+		x=530
+		y=210
+		width=90
+		height=20
+	}
+	monitor {
+		chan="$(P)Ch6:TimedOut-Sts"
+		clr=14
+		bclr=3
+	}
+	"dynamic attribute" {
+		vis="if not zero"
+		calc="A"
+		chan="$(P)Ch6:TimedOut-Sts"
+	}
+	align="horiz. centered"
+	format="string"
+	limits {
+	}
+}
+
+"related display" {
+	object {
+		x=10
+		y=234
+		width=100
+		height=20
+	}
+	display[0] {
+		label="Ch7"
+		name="mightexChannel.adl"
+		args="P=$(P),R=Ch7:"
+	}
+	clr=14
+	bclr=51
+	label="Ch7"
+}
+menu {
+	object {
+		x=140
+		y=234
+		width=110
+		height=20
+	}
+	control {
+		chan="$(P)Ch7:Mode-Sel"
+		clr=14
+		bclr=51
+	}
+}
+"text update" {
+	object {
+		x=260
+		y=234
+		width=60
+		height=20
+	}
+	monitor {
+		chan="$(P)Ch7:Mode-Sts"
+		clr=14
+		bclr=3
+	}
+	align="horiz. centered"
+	format="decimal"
+	limits {
+	}
+}
+"text update" {
+	object {
+		x=340
+		y=234
+		width=170
+		height=20
+	}
+	monitor {
+		chan="$(P)Ch7:Current-RB"
+		clr=14
+		bclr=3
+	}
+	align="horiz. centered"
+	format="decimal"
+	limits {
+	}
+}
+"text update" {
+	object {
+		x=530
+		y=234
+		width=90
+		height=20
+	}
+	monitor {
+		chan="$(P)Ch7:TimedOut-Sts"
+		clr=14
+		bclr=3
+	}
+	"dynamic attribute" {
+		vis="if not zero"
+		calc="A"
+		chan="$(P)Ch7:TimedOut-Sts"
+	}
+	align="horiz. centered"
+	format="string"
+	limits {
+	}
+}
+
+"related display" {
+	object {
+		x=10
+		y=258
+		width=100
+		height=20
+	}
+	display[0] {
+		label="Ch8"
+		name="mightexChannel.adl"
+		args="P=$(P),R=Ch8:"
+	}
+	clr=14
+	bclr=51
+	label="Ch8"
+}
+menu {
+	object {
+		x=140
+		y=258
+		width=110
+		height=20
+	}
+	control {
+		chan="$(P)Ch8:Mode-Sel"
+		clr=14
+		bclr=51
+	}
+}
+"text update" {
+	object {
+		x=260
+		y=258
+		width=60
+		height=20
+	}
+	monitor {
+		chan="$(P)Ch8:Mode-Sts"
+		clr=14
+		bclr=3
+	}
+	align="horiz. centered"
+	format="decimal"
+	limits {
+	}
+}
+"text update" {
+	object {
+		x=340
+		y=258
+		width=170
+		height=20
+	}
+	monitor {
+		chan="$(P)Ch8:Current-RB"
+		clr=14
+		bclr=3
+	}
+	align="horiz. centered"
+	format="decimal"
+	limits {
+	}
+}
+"text update" {
+	object {
+		x=530
+		y=258
+		width=90
+		height=20
+	}
+	monitor {
+		chan="$(P)Ch8:TimedOut-Sts"
+		clr=14
+		bclr=3
+	}
+	"dynamic attribute" {
+		vis="if not zero"
+		calc="A"
+		chan="$(P)Ch8:TimedOut-Sts"
+	}
+	align="horiz. centered"
+	format="string"
+	limits {
+	}
+}
+
+"related display" {
+	object {
+		x=10
+		y=282
+		width=100
+		height=20
+	}
+	display[0] {
+		label="Ch9"
+		name="mightexChannel.adl"
+		args="P=$(P),R=Ch9:"
+	}
+	clr=14
+	bclr=51
+	label="Ch9"
+}
+menu {
+	object {
+		x=140
+		y=282
+		width=110
+		height=20
+	}
+	control {
+		chan="$(P)Ch9:Mode-Sel"
+		clr=14
+		bclr=51
+	}
+}
+"text update" {
+	object {
+		x=260
+		y=282
+		width=60
+		height=20
+	}
+	monitor {
+		chan="$(P)Ch9:Mode-Sts"
+		clr=14
+		bclr=3
+	}
+	align="horiz. centered"
+	format="decimal"
+	limits {
+	}
+}
+"text update" {
+	object {
+		x=340
+		y=282
+		width=170
+		height=20
+	}
+	monitor {
+		chan="$(P)Ch9:Current-RB"
+		clr=14
+		bclr=3
+	}
+	align="horiz. centered"
+	format="decimal"
+	limits {
+	}
+}
+"text update" {
+	object {
+		x=530
+		y=282
+		width=90
+		height=20
+	}
+	monitor {
+		chan="$(P)Ch9:TimedOut-Sts"
+		clr=14
+		bclr=3
+	}
+	"dynamic attribute" {
+		vis="if not zero"
+		calc="A"
+		chan="$(P)Ch9:TimedOut-Sts"
+	}
+	align="horiz. centered"
+	format="string"
+	limits {
+	}
+}
+
+"related display" {
+	object {
+		x=10
+		y=306
+		width=100
+		height=20
+	}
+	display[0] {
+		label="Ch10"
+		name="mightexChannel.adl"
+		args="P=$(P),R=Ch10:"
+	}
+	clr=14
+	bclr=51
+	label="Ch10"
+}
+menu {
+	object {
+		x=140
+		y=306
+		width=110
+		height=20
+	}
+	control {
+		chan="$(P)Ch10:Mode-Sel"
+		clr=14
+		bclr=51
+	}
+}
+"text update" {
+	object {
+		x=260
+		y=306
+		width=60
+		height=20
+	}
+	monitor {
+		chan="$(P)Ch10:Mode-Sts"
+		clr=14
+		bclr=3
+	}
+	align="horiz. centered"
+	format="decimal"
+	limits {
+	}
+}
+"text update" {
+	object {
+		x=340
+		y=306
+		width=170
+		height=20
+	}
+	monitor {
+		chan="$(P)Ch10:Current-RB"
+		clr=14
+		bclr=3
+	}
+	align="horiz. centered"
+	format="decimal"
+	limits {
+	}
+}
+"text update" {
+	object {
+		x=530
+		y=306
+		width=90
+		height=20
+	}
+	monitor {
+		chan="$(P)Ch10:TimedOut-Sts"
+		clr=14
+		bclr=3
+	}
+	"dynamic attribute" {
+		vis="if not zero"
+		calc="A"
+		chan="$(P)Ch10:TimedOut-Sts"
+	}
+	align="horiz. centered"
+	format="string"
+	limits {
+	}
+}
+
+"related display" {
+	object {
+		x=10
+		y=330
+		width=100
+		height=20
+	}
+	display[0] {
+		label="Ch11"
+		name="mightexChannel.adl"
+		args="P=$(P),R=Ch11:"
+	}
+	clr=14
+	bclr=51
+	label="Ch11"
+}
+menu {
+	object {
+		x=140
+		y=330
+		width=110
+		height=20
+	}
+	control {
+		chan="$(P)Ch11:Mode-Sel"
+		clr=14
+		bclr=51
+	}
+}
+"text update" {
+	object {
+		x=260
+		y=330
+		width=60
+		height=20
+	}
+	monitor {
+		chan="$(P)Ch11:Mode-Sts"
+		clr=14
+		bclr=3
+	}
+	align="horiz. centered"
+	format="decimal"
+	limits {
+	}
+}
+"text update" {
+	object {
+		x=340
+		y=330
+		width=170
+		height=20
+	}
+	monitor {
+		chan="$(P)Ch11:Current-RB"
+		clr=14
+		bclr=3
+	}
+	align="horiz. centered"
+	format="decimal"
+	limits {
+	}
+}
+"text update" {
+	object {
+		x=530
+		y=330
+		width=90
+		height=20
+	}
+	monitor {
+		chan="$(P)Ch11:TimedOut-Sts"
+		clr=14
+		bclr=3
+	}
+	"dynamic attribute" {
+		vis="if not zero"
+		calc="A"
+		chan="$(P)Ch11:TimedOut-Sts"
+	}
+	align="horiz. centered"
+	format="string"
+	limits {
+	}
+}
+
+"related display" {
+	object {
+		x=10
+		y=354
+		width=100
+		height=20
+	}
+	display[0] {
+		label="Ch12"
+		name="mightexChannel.adl"
+		args="P=$(P),R=Ch12:"
+	}
+	clr=14
+	bclr=51
+	label="Ch12"
+}
+menu {
+	object {
+		x=140
+		y=354
+		width=110
+		height=20
+	}
+	control {
+		chan="$(P)Ch12:Mode-Sel"
+		clr=14
+		bclr=51
+	}
+}
+"text update" {
+	object {
+		x=260
+		y=354
+		width=60
+		height=20
+	}
+	monitor {
+		chan="$(P)Ch12:Mode-Sts"
+		clr=14
+		bclr=3
+	}
+	align="horiz. centered"
+	format="decimal"
+	limits {
+	}
+}
+"text update" {
+	object {
+		x=340
+		y=354
+		width=170
+		height=20
+	}
+	monitor {
+		chan="$(P)Ch12:Current-RB"
+		clr=14
+		bclr=3
+	}
+	align="horiz. centered"
+	format="decimal"
+	limits {
+	}
+}
+"text update" {
+	object {
+		x=530
+		y=354
+		width=90
+		height=20
+	}
+	monitor {
+		chan="$(P)Ch12:TimedOut-Sts"
+		clr=14
+		bclr=3
+	}
+	"dynamic attribute" {
+		vis="if not zero"
+		calc="A"
+		chan="$(P)Ch12:TimedOut-Sts"
+	}
+	align="horiz. centered"
+	format="string"
+	limits {
+	}
+}
+
+"related display" {
+	object {
+		x=10
+		y=378
+		width=100
+		height=20
+	}
+	display[0] {
+		label="Ch13"
+		name="mightexChannel.adl"
+		args="P=$(P),R=Ch13:"
+	}
+	clr=14
+	bclr=51
+	label="Ch13"
+}
+menu {
+	object {
+		x=140
+		y=378
+		width=110
+		height=20
+	}
+	control {
+		chan="$(P)Ch13:Mode-Sel"
+		clr=14
+		bclr=51
+	}
+}
+"text update" {
+	object {
+		x=260
+		y=378
+		width=60
+		height=20
+	}
+	monitor {
+		chan="$(P)Ch13:Mode-Sts"
+		clr=14
+		bclr=3
+	}
+	align="horiz. centered"
+	format="decimal"
+	limits {
+	}
+}
+"text update" {
+	object {
+		x=340
+		y=378
+		width=170
+		height=20
+	}
+	monitor {
+		chan="$(P)Ch13:Current-RB"
+		clr=14
+		bclr=3
+	}
+	align="horiz. centered"
+	format="decimal"
+	limits {
+	}
+}
+"text update" {
+	object {
+		x=530
+		y=378
+		width=90
+		height=20
+	}
+	monitor {
+		chan="$(P)Ch13:TimedOut-Sts"
+		clr=14
+		bclr=3
+	}
+	"dynamic attribute" {
+		vis="if not zero"
+		calc="A"
+		chan="$(P)Ch13:TimedOut-Sts"
+	}
+	align="horiz. centered"
+	format="string"
+	limits {
+	}
+}
+
+"related display" {
+	object {
+		x=10
+		y=402
+		width=100
+		height=20
+	}
+	display[0] {
+		label="Ch14"
+		name="mightexChannel.adl"
+		args="P=$(P),R=Ch14:"
+	}
+	clr=14
+	bclr=51
+	label="Ch14"
+}
+menu {
+	object {
+		x=140
+		y=402
+		width=110
+		height=20
+	}
+	control {
+		chan="$(P)Ch14:Mode-Sel"
+		clr=14
+		bclr=51
+	}
+}
+"text update" {
+	object {
+		x=260
+		y=402
+		width=60
+		height=20
+	}
+	monitor {
+		chan="$(P)Ch14:Mode-Sts"
+		clr=14
+		bclr=3
+	}
+	align="horiz. centered"
+	format="decimal"
+	limits {
+	}
+}
+"text update" {
+	object {
+		x=340
+		y=402
+		width=170
+		height=20
+	}
+	monitor {
+		chan="$(P)Ch14:Current-RB"
+		clr=14
+		bclr=3
+	}
+	align="horiz. centered"
+	format="decimal"
+	limits {
+	}
+}
+"text update" {
+	object {
+		x=530
+		y=402
+		width=90
+		height=20
+	}
+	monitor {
+		chan="$(P)Ch14:TimedOut-Sts"
+		clr=14
+		bclr=3
+	}
+	"dynamic attribute" {
+		vis="if not zero"
+		calc="A"
+		chan="$(P)Ch14:TimedOut-Sts"
+	}
+	align="horiz. centered"
+	format="string"
+	limits {
+	}
+}
+
+"related display" {
+	object {
+		x=10
+		y=426
+		width=100
+		height=20
+	}
+	display[0] {
+		label="Ch15"
+		name="mightexChannel.adl"
+		args="P=$(P),R=Ch15:"
+	}
+	clr=14
+	bclr=51
+	label="Ch15"
+}
+menu {
+	object {
+		x=140
+		y=426
+		width=110
+		height=20
+	}
+	control {
+		chan="$(P)Ch15:Mode-Sel"
+		clr=14
+		bclr=51
+	}
+}
+"text update" {
+	object {
+		x=260
+		y=426
+		width=60
+		height=20
+	}
+	monitor {
+		chan="$(P)Ch15:Mode-Sts"
+		clr=14
+		bclr=3
+	}
+	align="horiz. centered"
+	format="decimal"
+	limits {
+	}
+}
+"text update" {
+	object {
+		x=340
+		y=426
+		width=170
+		height=20
+	}
+	monitor {
+		chan="$(P)Ch15:Current-RB"
+		clr=14
+		bclr=3
+	}
+	align="horiz. centered"
+	format="decimal"
+	limits {
+	}
+}
+"text update" {
+	object {
+		x=530
+		y=426
+		width=90
+		height=20
+	}
+	monitor {
+		chan="$(P)Ch15:TimedOut-Sts"
+		clr=14
+		bclr=3
+	}
+	"dynamic attribute" {
+		vis="if not zero"
+		calc="A"
+		chan="$(P)Ch15:TimedOut-Sts"
+	}
+	align="horiz. centered"
+	format="string"
+	limits {
+	}
+}
+
+"related display" {
+	object {
+		x=10
+		y=450
+		width=100
+		height=20
+	}
+	display[0] {
+		label="Ch16"
+		name="mightexChannel.adl"
+		args="P=$(P),R=Ch16:"
+	}
+	clr=14
+	bclr=51
+	label="Ch16"
+}
+menu {
+	object {
+		x=140
+		y=450
+		width=110
+		height=20
+	}
+	control {
+		chan="$(P)Ch16:Mode-Sel"
+		clr=14
+		bclr=51
+	}
+}
+"text update" {
+	object {
+		x=260
+		y=450
+		width=60
+		height=20
+	}
+	monitor {
+		chan="$(P)Ch16:Mode-Sts"
+		clr=14
+		bclr=3
+	}
+	align="horiz. centered"
+	format="decimal"
+	limits {
+	}
+}
+"text update" {
+	object {
+		x=340
+		y=450
+		width=170
+		height=20
+	}
+	monitor {
+		chan="$(P)Ch16:Current-RB"
+		clr=14
+		bclr=3
+	}
+	align="horiz. centered"
+	format="decimal"
+	limits {
+	}
+}
+"text update" {
+	object {
+		x=530
+		y=450
+		width=90
+		height=20
+	}
+	monitor {
+		chan="$(P)Ch16:TimedOut-Sts"
+		clr=14
+		bclr=3
+	}
+	"dynamic attribute" {
+		vis="if not zero"
+		calc="A"
+		chan="$(P)Ch16:TimedOut-Sts"
+	}
+	align="horiz. centered"
+	format="string"
+	limits {
+	}
+}
+
+text {
+	object {
+		x=10
+		y=530
+		width=740
+		height=18
+	}
+	"basic attribute" {
+		clr=10
+	}
+	textix="Mode: 0=Disable 1=Normal 2=Strobe 3=Trigger. Timed out shows only when watchdog has tripped."
+	align="horiz. centered"
+}
