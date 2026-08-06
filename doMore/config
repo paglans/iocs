@@ -2,5 +2,7 @@ NAME=doMore
 PORT=4053
 HOST=hirrixs2
 USER=softioc
+P=BL6013:
+R=doMore:
 CHDIR=/opt/epics/iocs/doMore/iocBoot/iocdoMore
 EXEC=/opt/epics/iocs/doMore/iocBoot/iocdoMore/st.cmd

@@ -51,8 +51,15 @@ drvModbusAsynConfigure("K1_MHR_Out_3", "Koyo1", 0, 16, 360, 120, 0,   0, "DoMore
 
 #---------------------------------------------------------
 ## Load record instances
+## P and R are set in the manage-iocs config file, e.g.:
+##   P=BL6013ES:
+##   R=doMore:
+## Together they form the full PV prefix: $(P)$(R) -> BL6013ES:doMore:
+## Defaults below are used when running st.cmd directly for testing.
 #---------------------------------------------------------
-dbLoadRecords("db/doMore.db")
+epicsEnvSet("P", "$(P=BL99:)")
+epicsEnvSet("R", "$(R=doMore:)")
+dbLoadRecords("db/doMore.db", "P=$(P),R=$(R)")
 
 cd "${TOP}/iocBoot/${IOC}"
 iocInit
