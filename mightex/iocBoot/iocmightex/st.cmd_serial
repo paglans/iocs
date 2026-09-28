@@ -1,0 +1,63 @@
+#!../../bin/linux-aarch64/mightex
+< envPaths
+epicsEnvSet("IOC","iocmightex")
+cd "${TOP}"
+
+## Register all support components
+dbLoadDatabase "dbd/mightex.dbd"
+mightex_registerRecordDeviceDriver pdbbase
+
+## Serial port configuration -- Mightex Sirius SLC-CA16-S via Tripp Lite
+## U209-000-R USB-to-serial dongle. Settings per the SDK doc (9600, 8N1,
+## no flow control), confirmed working via a raw pyserial test before
+## ever touching EPICS.
+drvAsynSerialPortConfigure("MIGHTEX1", "/dev/ttyUSB0", 0, 0, 0)
+asynSetOption("MIGHTEX1", 0, "baud", "9600")
+asynSetOption("MIGHTEX1", 0, "bits", "8")
+asynSetOption("MIGHTEX1", 0, "parity", "none")
+asynSetOption("MIGHTEX1", 0, "stop", "1")
+asynSetOption("MIGHTEX1", 0, "clocal", "Y")
+asynSetOption("MIGHTEX1", 0, "crtscts", "N")
+
+epicsEnvSet("STREAM_PROTOCOL_PATH", "${TOP}/mightexApp/Db")
+
+## Distinct PV prefix -- this is a parallel dev/test deployment, not a
+## replacement for the production hirrixs2 IOC. Using the same "BL:LED:"
+## prefix as that IOC on the same CA network would cause exactly the
+## "Identical process variable names on multiple servers" collision
+## documented in the main operations manual (Architecture Notes).
+## Change PREFIX below if this deployment's role changes.
+epicsEnvSet("PREFIX", "BL:LED:")
+
+dbLoadRecords("db/mightexChannel.template","P=${PREFIX},R=Ch1:,PORT=MIGHTEX1,CHL=1")
+dbLoadRecords("db/mightexChannel.template","P=${PREFIX},R=Ch2:,PORT=MIGHTEX1,CHL=2")
+dbLoadRecords("db/mightexChannel.template","P=${PREFIX},R=Ch3:,PORT=MIGHTEX1,CHL=3")
+dbLoadRecords("db/mightexChannel.template","P=${PREFIX},R=Ch4:,PORT=MIGHTEX1,CHL=4")
+dbLoadRecords("db/mightexChannel.template","P=${PREFIX},R=Ch5:,PORT=MIGHTEX1,CHL=5")
+dbLoadRecords("db/mightexChannel.template","P=${PREFIX},R=Ch6:,PORT=MIGHTEX1,CHL=6")
+dbLoadRecords("db/mightexChannel.template","P=${PREFIX},R=Ch7:,PORT=MIGHTEX1,CHL=7")
+dbLoadRecords("db/mightexChannel.template","P=${PREFIX},R=Ch8:,PORT=MIGHTEX1,CHL=8")
+dbLoadRecords("db/mightexChannel.template","P=${PREFIX},R=Ch9:,PORT=MIGHTEX1,CHL=9")
+dbLoadRecords("db/mightexChannel.template","P=${PREFIX},R=Ch10:,PORT=MIGHTEX1,CHL=10")
+dbLoadRecords("db/mightexChannel.template","P=${PREFIX},R=Ch11:,PORT=MIGHTEX1,CHL=11")
+dbLoadRecords("db/mightexChannel.template","P=${PREFIX},R=Ch12:,PORT=MIGHTEX1,CHL=12")
+dbLoadRecords("db/mightexChannel.template","P=${PREFIX},R=Ch13:,PORT=MIGHTEX1,CHL=13")
+dbLoadRecords("db/mightexChannel.template","P=${PREFIX},R=Ch14:,PORT=MIGHTEX1,CHL=14")
+dbLoadRecords("db/mightexChannel.template","P=${PREFIX},R=Ch15:,PORT=MIGHTEX1,CHL=15")
+dbLoadRecords("db/mightexChannel.template","P=${PREFIX},R=Ch16:,PORT=MIGHTEX1,CHL=16")
+dbLoadRecords("db/mightexDevice.template","P=${PREFIX},R=,PORT=MIGHTEX1")
+
+## Autosave
+epicsEnvSet("AUTOSAVE_DIR", "/opt/epics/autosave/mightex")
+save_restoreSet_status_prefix("${PREFIX}")
+set_savefile_path("${AUTOSAVE_DIR}", "save")
+set_requestfile_path("${TOP}/mightexApp/Db")
+set_pass0_restoreFile("mightex_autosave.sav")
+set_pass1_restoreFile("mightex_autosave.sav")
+
+dbLoadRecords("${AUTOSAVE}/db/save_restoreStatus.db", "P=${PREFIX}")
+
+cd "${TOP}/iocBoot/${IOC}"
+iocInit
+
+create_monitor_set("mightex_autosave.req", 30, "P=${PREFIX}")

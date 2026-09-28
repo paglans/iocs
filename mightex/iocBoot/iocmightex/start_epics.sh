@@ -1,4 +1,5 @@
 #!/bin/bash
 # medm -x -macro "P=E1608:, R=E1608_1:" measCompTop.adl & # E1608_module.adl &
-../../bin/linux-x86_64/mightex st.cmd
+#../../bin/linux-x86_64/mightex st.cmd
+../../bin/linux-aarch64/mightex st.cmd_serial
 

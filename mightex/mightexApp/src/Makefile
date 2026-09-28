@@ -21,8 +21,10 @@ mightex_DBD += base.dbd
 
 # Include dbd files from all support applications:
 mightex_DBD += asyn.dbd
+mightex_DBD += drvAsynSerialPort.dbd
 mightex_DBD += calc.dbd
-mightex_DBD += mightexHidPort.dbd
+# Uncomment the below for the usb version
+# mightex_DBD += mightexHidPort.dbd
 mightex_DBD += stream.dbd
 mightex_DBD += calcSupport.dbd
 mightex_DBD += asSupport.dbd
@@ -33,8 +35,8 @@ mightex_LIBS += calc
 mightex_LIBS += stream
 mightex_LIBS += autosave
 
-# mightex driver
-mightex_SRCS += mightexHidPort.cpp
+# mightex driver; Uncomment the below for the usb version
+# mightex_SRCS += mightexHidPort.cpp
 
 # mightex_registerRecordDeviceDriver.cpp derives from mightex.dbd
 mightex_SRCS += mightex_registerRecordDeviceDriver.cpp
